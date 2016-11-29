@@ -5,11 +5,21 @@
  */
 package mytunes.GUI.Model;
 
+import javafx.beans.property.StringProperty;
+import mytunes.BLL.FileParser;
+
 /**
  *
  * @author jeppe
  */
 public class SongManager
 {
+    
+    FileParser fileParser = new FileParser();
+    
+    public void addSong(StringProperty songName, StringProperty songPath)
+    {
+        fileParser.addSong(songName, songPath);
+    }
     
 }
