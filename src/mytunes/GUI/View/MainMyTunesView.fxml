@@ -49,7 +49,7 @@
       <Button layoutX="914.0" layoutY="29.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
       <Slider layoutX="16.0" layoutY="58.0" />
       <RadioButton layoutX="37.0" layoutY="33.0" mnemonicParsing="false" />
-      <RadioButton layoutX="72.0" layoutY="33.0" mnemonicParsing="false" />
+      <RadioButton layoutX="72.0" layoutY="33.0" mnemonicParsing="false" onAction="#clickPlayButton" />
       <RadioButton layoutX="104.0" layoutY="33.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>
