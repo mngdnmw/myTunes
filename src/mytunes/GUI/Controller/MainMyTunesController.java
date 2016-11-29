@@ -5,16 +5,25 @@
  */
 package mytunes.GUI.Controller;
 
+import mytunes.BE.Playlist;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import mytunes.MyTunes;
 
 /**
  * FXML Controller class
@@ -32,6 +41,7 @@ public class MainMyTunesController implements Initializable
     private TableView<?> tblViewLibrary;
     @FXML
     private TextField textFieldFilterSearch;
+    private Window primaryStage;
 
     /**
      * Initializes the controller class.
@@ -50,7 +60,26 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickNewPlaylist(ActionEvent event)
     {
+        try{
+        // Load the fxml file and create a new stage for the popup dialog.
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MyTunes.class.getResource("GUI/View/PlaylistView.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
         
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("New Playlist");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        
+        dialogStage.showAndWait();
+//
+//        return controller.isOkClicked();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML

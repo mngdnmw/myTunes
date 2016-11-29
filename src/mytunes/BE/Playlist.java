@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.GUI.Controller;
+package mytunes.BE;
 
 /**
  *
  * @author jonas
  */
-class Playlist
+public class Playlist
 {
     
 }
