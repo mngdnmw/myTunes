@@ -4,6 +4,8 @@ import mytunes.BE.Playlist;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +18,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import mytunes.BLL.FileParser;
+import mytunes.GUI.Model.SongManager;
 import mytunes.MyTunes;
 
-public class MainMyTunesController implements Initializable {
+public class MainMyTunesController implements Initializable
+{
 
     @FXML
     private TableView<Playlist> tblViewPlaylists;
@@ -30,19 +35,26 @@ public class MainMyTunesController implements Initializable {
     private TextField textFieldFilterSearch;
     private Window primaryStage;
 
+    private FileParser fileParser = new FileParser();
+    private SongManager songManager = new SongManager();
+
     //Initializes the controller class.
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
     }
 
     @FXML
-    private void clickAddSongPlaylist(ActionEvent event) {
+    private void clickAddSongPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickNewPlaylist(ActionEvent event) {
-        try {
+    private void clickNewPlaylist(ActionEvent event)
+    {
+        try
+        {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MyTunes.class.getResource("GUI/View/PlaylistView.fxml"));
@@ -58,49 +70,79 @@ public class MainMyTunesController implements Initializable {
 
             dialogStage.show();
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event) {
+    private void clickEditPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickDeletePlaylist(ActionEvent event) {
+    private void clickDeletePlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickToggleUpPlaylist(ActionEvent event) {
+    private void clickToggleUpPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clcikToggleDownPlaylist(ActionEvent event) {
+    private void clcikToggleDownPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickRemoveSongPlaylist(ActionEvent event) {
+    private void clickRemoveSongPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickNewSongLibrary(ActionEvent event) {
+    private void clickNewSongLibrary(ActionEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MyTunes.class.getResource("GUI/View/SongTableView.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Song");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            dialogStage.showAndWait();
+
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    private void clickEditSongLibrary(ActionEvent event) {
+    private void clickEditSongLibrary(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickRemoveSongLibrary(ActionEvent event) {
+    private void clickRemoveSongLibrary(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickCloseProgram(ActionEvent event) {
+    private void clickCloseProgram(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickSearch(ActionEvent event) {
+    private void clickSearch(ActionEvent event)
+    {
     }
 
 }
