@@ -6,6 +6,8 @@
 package mytunes.GUI.Controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +25,7 @@ public class MainMyTunesController implements Initializable
 {
 
     @FXML
-    private TableView<?> tblViewPlaylists;
+    private TableView<Playlist> tblViewPlaylists;
     @FXML
     private TextArea tblSongsOnPlaylist;
     @FXML
@@ -48,6 +50,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickNewPlaylist(ActionEvent event)
     {
+        
     }
 
     @FXML
