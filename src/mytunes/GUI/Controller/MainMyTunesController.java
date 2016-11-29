@@ -7,7 +7,12 @@ package mytunes.GUI.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -17,6 +22,15 @@ import javafx.fxml.Initializable;
 public class MainMyTunesController implements Initializable
 {
 
+    @FXML
+    private TableView<?> tblViewPlaylists;
+    @FXML
+    private TextArea tblSongsOnPlaylist;
+    @FXML
+    private TableView<?> tblViewLibrary;
+    @FXML
+    private TextField textFieldFilterSearch;
+
     /**
      * Initializes the controller class.
      */
@@ -25,5 +39,65 @@ public class MainMyTunesController implements Initializable
     {
         // TODO
     }    
+
+    @FXML
+    private void clickAddSongPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickNewPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickEditPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickDeletePlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickToggleUpPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clcikToggleDownPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickRemoveSongPlaylist(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickNewSongLibrary(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickEditSongLibrary(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickRemoveSongLibrary(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickCloseProgram(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void clickSearch(ActionEvent event)
+    {
+    }
     
 }
