@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -34,6 +35,9 @@ public class MainMyTunesController implements Initializable
     @FXML
     private TextField textFieldFilterSearch;
     private Window primaryStage;
+   
+    private MediaPlayer mediaPlayer;
+    private boolean atEndOfMedia = false;
 
     private FileParser fileParser = new FileParser();
     private SongManager songManager = new SongManager();
@@ -144,5 +148,32 @@ public class MainMyTunesController implements Initializable
     private void clickSearch(ActionEvent event)
     {
     }
+    
+    @FXML
+    private void clickPlayButton(ActionEvent event)
+    {
+        MediaPlayer.Status status = mediaPlayer.getStatus();
+        
+        if(status == MediaPlayer.Status.UNKNOWN || status == status.HALTED)
+        {
+            return;
+        }
+        
+        if(status == MediaPlayer.Status.PAUSED
+                || status == status.READY
+                || status == status.STOPPED)
+        {
+            if(atEndOfMedia)
+            {
+                mediaPlayer.seek(mediaPlayer.getStartTime());
+                atEndOfMedia = false;
+            }
+            mediaPlayer.play();
+        }
+        else
+        {
+            mediaPlayer.pause();
+        }
 
+}
 }
