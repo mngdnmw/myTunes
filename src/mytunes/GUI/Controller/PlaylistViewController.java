@@ -1,38 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.GUI.Controller;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Fjord82
- */
 public class PlaylistViewController implements Initializable
 {
 
     @FXML
     private TextField textFiledNamePlaylist;
+    @FXML
+    private Button cancelBtn;
+    @FXML
+    private Button saveBtn;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -53,6 +44,8 @@ public class PlaylistViewController implements Initializable
             Logger.getLogger(PlaylistViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        Stage stage = (Stage) saveBtn.getScene().getWindow();
+        stage.close();
     }
 
     public TextField getTextFiledNamePlaylist()
@@ -64,11 +57,12 @@ public class PlaylistViewController implements Initializable
     {
         this.textFiledNamePlaylist = textFiledNamePlaylist;
     }
-    
 
     @FXML
-    private void clickCloseNewPlaylist(ActionEvent event)
+    private void clickCancelNewPlaylist(ActionEvent event)
     {
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+        stage.close();
     }
     
 }
