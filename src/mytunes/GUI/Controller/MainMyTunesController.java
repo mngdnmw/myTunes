@@ -40,7 +40,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private TextField textFieldFilterSearch;
     private Window primaryStage;
-    
+
     @FXML
     Slider volumeSlider;
     // Create Media and MediaPlayer
@@ -54,7 +54,7 @@ public class MainMyTunesController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        String path = "/Users/Kristoffers/Desktop/School/RedArmyChoir.mp3";
+        String path = "src/mytunes/MusicLibrary/" + "RedArmyChoir.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
