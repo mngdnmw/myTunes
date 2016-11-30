@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Fjord82/NetBeansProjects/MyTunes/myTunes/src/mytunes/MyTunes.java</file>
-            <file>file:/Users/Fjord82/NetBeansProjects/MyTunes/myTunes/src/mytunes/GUI/Controller/PlaylistViewController.java</file>
-            <file>file:/Users/Fjord82/NetBeansProjects/MyTunes/myTunes/src/mytunes/GUI/View/PlaylistView.fxml</file>
-            <file>file:/Users/Fjord82/NetBeansProjects/MyTunes/myTunes/src/mytunes/GUI/View/MainMyTunesView.fxml</file>
-            <file>file:/Users/Fjord82/NetBeansProjects/MyTunes/myTunes/src/mytunes/GUI/Controller/MainMyTunesController.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/DAL/FileManager.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/GUI/Controller/MainMyTunesController.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/BE/Song.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/GUI/Controller/SongTableViewController.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/BLL/FileParser.java</file>
+            <file>file:/C:/Users/jeppe/Documents/GitHub/myTunes/src/mytunes/GUI/Model/SongManager.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,8 +5,13 @@
  */
 package mytunes.DAL;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.StringProperty;
 import mytunes.BE.Song;
 
@@ -25,8 +30,19 @@ public class FileManager
         else return songList;
     }
     
-    public void addSong(StringProperty songName, StringProperty songPath)
+    public void addSong(String songName, String songPath)
     {
         Song s = new Song(songName, songPath);
-    }
+        songList.add(s);
+        
+       /* try
+            (BufferedWriter bw = new BufferedWriter(new FileWriter("Songlist.txt")))
+        {
+            bw.write(songList.);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+*/
+    } 
 }

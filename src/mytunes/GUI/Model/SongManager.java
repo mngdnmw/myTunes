@@ -12,12 +12,12 @@ import mytunes.BLL.FileParser;
  *
  * @author jeppe
  */
-public class SongManager
+public abstract class SongManager
 {
     
     FileParser fileParser = new FileParser();
     
-    public void addSong(StringProperty songName, StringProperty songPath)
+    public void addSong(String songName, String songPath)
     {
         fileParser.addSong(songName, songPath);
     }

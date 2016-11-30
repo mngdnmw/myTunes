@@ -13,17 +13,17 @@ import javafx.beans.property.StringProperty;
  */
 public class Song
 {
-    private StringProperty songName;
-    private StringProperty songPath;
-    private StringProperty songArtist;
+    private String songName;
+    private String songPath;
+    private String songArtist;
     
-    public Song(StringProperty songName, StringProperty songPath)
+    public Song(String songName, String songPath)
     {
         this.songName = songName;
         this.songPath = songPath;
     }
     
-    public void setArtist(StringProperty artist)
+    public void setArtist(String artist)
     {
         this.songArtist = artist;
     }

@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +21,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import mytunes.BE.Song;
 import mytunes.BLL.FileParser;
 import mytunes.GUI.Model.SongManager;
 import mytunes.MyTunes;
 
-public class MainMyTunesController implements Initializable
+public class MainMyTunesController extends SongManager implements Initializable
 {
 
     @FXML
@@ -40,14 +43,20 @@ public class MainMyTunesController implements Initializable
     private boolean atEndOfMedia = false;
 
     private FileParser fileParser = new FileParser();
-    private SongManager songManager = new SongManager();
+    //private SongManager songManager = new SongManager();
+    
+    
 
     //Initializes the controller class.
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-    }
+        if (fileParser.getSongs() != null)
+        {
+        ObservableList<Song> songLibrary = FXCollections.observableArrayList(fileParser.getSongs());
+        }
+}
 
     @FXML
     private void clickAddSongPlaylist(ActionEvent event)

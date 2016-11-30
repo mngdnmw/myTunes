@@ -23,7 +23,7 @@ public class FileParser
         return fileManager.getAllSongs();
     }
     
-    public void addSong(StringProperty songName, StringProperty songPath)
+    public void addSong(String songName, String songPath)
     {
         fileManager.addSong(songName, songPath);
     }
