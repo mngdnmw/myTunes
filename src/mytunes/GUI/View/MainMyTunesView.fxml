@@ -13,6 +13,7 @@
 
 <AnchorPane id="AnchorPane" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
    <children>
+      <Slider fx:id="volumeSlider" layoutX="178.0" layoutY="14.0" orientation="VERTICAL" prefHeight="89.0" prefWidth="16.0" />
       <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" prefHeight="400.0" prefWidth="228.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Name" />
@@ -47,9 +48,9 @@
       <Label layoutX="688.0" layoutY="34.0" text="Filter" />
       <TextField fx:id="textFieldFilterSearch" layoutX="738.0" layoutY="29.0" />
       <Button layoutX="914.0" layoutY="29.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
-      <Slider layoutX="16.0" layoutY="58.0" />
       <RadioButton layoutX="37.0" layoutY="33.0" mnemonicParsing="false" />
       <RadioButton layoutX="72.0" layoutY="33.0" mnemonicParsing="false" onAction="#clickPlayButton" />
-      <RadioButton layoutX="104.0" layoutY="33.0" mnemonicParsing="false" />
+      <RadioButton layoutX="104.0" layoutY="33.0" mnemonicParsing="false" onAction="#clickPauseButton" />
+      <RadioButton layoutX="133.0" layoutY="33.0" mnemonicParsing="false" onAction="#clickStopButton" />
    </children>
 </AnchorPane>
