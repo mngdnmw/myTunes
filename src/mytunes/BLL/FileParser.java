@@ -23,9 +23,9 @@ public class FileParser
         return fileManager.getAllSongs();
     }
     
-    public void addSong(String songName, String songPath)
+    public void addSong(String songName, String songPath, String songArtist)
     {
-        fileManager.addSong(songName, songPath);
+        fileManager.addSong(songName, songPath, songArtist);
     }
     
 }

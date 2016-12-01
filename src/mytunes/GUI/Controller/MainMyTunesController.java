@@ -13,16 +13,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import mytunes.BE.Song;
-import mytunes.BLL.FileParser;
 import mytunes.GUI.Model.SongManager;
 import mytunes.MyTunes;
 
@@ -34,7 +35,7 @@ public class MainMyTunesController extends SongManager implements Initializable
     @FXML
     private TextArea tblSongsOnPlaylist;
     @FXML
-    private TableView<?> tblViewLibrary;
+    private TableView<Song> tblViewLibrary;
     @FXML
     private TextField textFieldFilterSearch;
     private Window primaryStage;
@@ -42,8 +43,15 @@ public class MainMyTunesController extends SongManager implements Initializable
     private MediaPlayer mediaPlayer;
     private boolean atEndOfMedia = false;
 
-    private FileParser fileParser = new FileParser();
     //private SongManager songManager = new SongManager();
+    @FXML
+    private TableColumn<Song, String> tblViewLibraryColumnTitle;
+    @FXML
+    private TableColumn<Song, String> tblViewLibraryColumnArtist;
+    @FXML
+    private TableColumn<Song, String> tblViewLibraryColumnCategory;
+    @FXML
+    private TableColumn<Song, String> tblViewLibraryColumnTime;
     
     
 
@@ -52,10 +60,10 @@ public class MainMyTunesController extends SongManager implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-        if (fileParser.getSongs() != null)
-        {
-        ObservableList<Song> songLibrary = FXCollections.observableArrayList(fileParser.getSongs());
-        }
+        
+        
+                tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
 }
 
     @FXML
@@ -136,6 +144,7 @@ public class MainMyTunesController extends SongManager implements Initializable
         {
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
         }
+       readSongsIntoLibrary();
     }
 
     @FXML
@@ -185,4 +194,14 @@ public class MainMyTunesController extends SongManager implements Initializable
         }
 
 }
+    
+    private void readSongsIntoLibrary()
+    {
+        if (super.getAllSongs() == null)
+        {
+        }
+        ObservableList<Song> songLibrary = FXCollections.observableArrayList(super.getAllSongs());
+        
+        tblViewLibrary.setItems(songLibrary);
+    }
 }

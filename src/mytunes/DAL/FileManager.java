@@ -30,9 +30,9 @@ public class FileManager
         else return songList;
     }
     
-    public void addSong(String songName, String songPath)
+    public void addSong(String songName, String songPath, String songArtist)
     {
-        Song s = new Song(songName, songPath);
+        Song s = new Song(songName, songPath, songArtist);
         songList.add(s);
         
        /* try

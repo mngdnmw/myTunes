@@ -73,7 +73,7 @@ public class SongTableViewController extends SongManager implements Initializabl
     @FXML
     private void clickSaveAddSong(ActionEvent event)
     {
-        super.addSong(textFieldArtist.getText(), textFieldFilePath.getText());
+        super.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
