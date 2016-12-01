@@ -174,14 +174,28 @@ public class MainMyTunesController implements Initializable
     }
 
     @FXML
-    private void clickPauseButton(ActionEvent event)
+    private void clickPlayPauseButton(ActionEvent event)
     {
-        mediaPlayer.pause();
+        if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            mediaPlayer.pause();
+        }
+        else
+        {
+        mediaPlayer.play();
+        }
     }
 
     @FXML
-    private void clickPlayButton(ActionEvent event)
+    private void clickNextButton(ActionEvent event)
     {
+        mediaPlayer.seek(mediaPlayer.getTotalDuration());
+    }
+
+    @FXML
+    private void clickReloadButton(ActionEvent event)
+    {
+        mediaPlayer.seek(mediaPlayer.getStartTime());
         mediaPlayer.play();
     }
 }
