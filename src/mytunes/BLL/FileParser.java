@@ -6,7 +6,6 @@
 package mytunes.BLL;
 
 import java.util.List;
-import javafx.beans.property.StringProperty;
 import mytunes.BE.Song;
 import mytunes.DAL.FileManager;
 
