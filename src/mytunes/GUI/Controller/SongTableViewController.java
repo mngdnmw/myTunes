@@ -20,7 +20,7 @@ import mytunes.GUI.Model.SongManager;
  *
  * @author Fjord82
  */
-public class SongTableViewController implements Initializable
+public class SongTableViewController extends SongManager implements Initializable
 {
 
     @FXML
@@ -33,8 +33,6 @@ public class SongTableViewController implements Initializable
     private TextField textFieldTime;
     @FXML
     private TextField textFieldFilePath;
-    
-    SongManager model = new SongManager();
 
     /**
      * Initializes the controller class.
