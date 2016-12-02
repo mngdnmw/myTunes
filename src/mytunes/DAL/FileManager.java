@@ -5,14 +5,8 @@
  */
 package mytunes.DAL;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.StringProperty;
 import mytunes.BE.Song;
 
 /**
