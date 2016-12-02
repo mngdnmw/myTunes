@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.StringProperty;
 import mytunes.BE.Playlist;
+
 import mytunes.BE.Song;
 
 /**
  *
  * @author jeppe
  */
-public class FileManager {
+public class FileManager
+{
 
     //private String playlist;
-
     private static final int PLAYLIST_SIZE = 50;
     private static final int SONG_SIZE = 50;
     private static final int RECORD_SIZE = PLAYLIST_SIZE + SONG_SIZE;
@@ -26,18 +26,21 @@ public class FileManager {
     private List<Song> songList = new ArrayList();
     private List<Playlist> playlistList = new ArrayList();
 
-    public FileManager() {
+    public FileManager()
+    {
     }
 
 //    public FileManager(String playlistName) {
 //
 //        this.playlistName = playlistName;
 //    }
-
-    public List<Song> getAllSongs() {
-        if (songList.isEmpty()) {
+    public List<Song> getAllSongs()
+    {
+        if (songList.isEmpty())
+        {
             return null;
-        } else {
+        } else
+        {
             return songList;
         }
     }
@@ -49,12 +52,8 @@ public class FileManager {
 //            return playlistList;
 //        }
 //    }
-
-    public void addSong(StringProperty songName, StringProperty songPath) {
-        Song s = new Song(songName, songPath);
-    }
-
-    public void savePlaylist(String playlistName) {
+    public void savePlaylist(String playlistName)
+    {
 //
 //        try (BufferedWriter bw
 //                = new BufferedWriter(new FileWriter(playlistName + ".txt"))) {
@@ -64,22 +63,26 @@ public class FileManager {
 //        }
 
         Playlist playlist = new Playlist(playlistName);
-        try {
+        try
+        {
             //        playlistList.add(playlist);
             addPlaylist(playlist);
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void addPlaylist(Playlist p) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw")) {
+    public void addPlaylist(Playlist p) throws IOException
+    {
+        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
+        {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
             //raf.writeInt(p.getId());
-            raf.writeBytes(String.format("\n"+"%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
+            raf.writeBytes(String.format("\n" + "%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
         }
     }
-    
+
     public List<Playlist> getAll() throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
@@ -93,7 +96,7 @@ public class FileManager {
             return playlists;
         }
     }
-    
+
     private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_SIZE];
@@ -102,7 +105,7 @@ public class FileManager {
         String playlistName = new String(bytes).trim();
         return new Playlist(playlistName);
     }
-    
+
     public Playlist getByPlaylist(String playlistName) throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
@@ -112,7 +115,7 @@ public class FileManager {
                 raf.seek(pos);
                 //int id = raf.readInt();
                 String playlist = raf.readLine();
-                        
+
                 if (playlist.equals(playlistName))
                 {
                     raf.seek(pos);
@@ -138,5 +141,11 @@ public class FileManager {
                 }
             }
         }
+    }
+
+    public void addSong(String songName, String songPath, String songArtist)
+    {
+        Song s = new Song(songName, songPath, songArtist);
+        songList.add(s);
     }
 }
