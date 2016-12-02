@@ -1,25 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.GUI.Model;
 
-import javafx.beans.property.StringProperty;
+import java.util.List;
+import mytunes.BE.Playlist;
+import mytunes.BE.Song;
 import mytunes.BLL.FileParser;
 
 /**
  *
  * @author jeppe
  */
-public class SongManager
+public abstract class SongManager
 {
-    
+
     FileParser fileParser = new FileParser();
-    
-    public void addSong(StringProperty songName, StringProperty songPath)
+
+    public void addSong(String songName, String songPath, String songArtist)
     {
-        fileParser.addSong(songName, songPath);
+        fileParser.addSong(songName, songPath, songArtist);
     }
-    
+
+    public List<Song> getAllSongs()
+    {
+        return fileParser.getSongs();
+    }
+
+    public void addPlaylist(String playlistName)
+    {
+        fileParser.sendPlaylistName(playlistName);
+    }
+
+    public List<Playlist> getAllPlaylists()
+    {
+        return fileParser.getAllPlaylists();
+    }
 }

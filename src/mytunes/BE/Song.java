@@ -5,26 +5,36 @@
  */
 package mytunes.BE;
 
-import javafx.beans.property.StringProperty;
-
 /**
  *
  * @author jeppe
  */
 public class Song
 {
-    private StringProperty songName;
-    private StringProperty songPath;
-    private StringProperty songArtist;
-    
-    public Song(StringProperty songName, StringProperty songPath)
+
+    private final String songName;
+    private final String songPath;
+    private final String songArtist;
+
+    public Song(String songName, String songPath, String songArtist)
     {
         this.songName = songName;
         this.songPath = songPath;
+        this.songArtist = songArtist;
     }
-    
-    public void setArtist(StringProperty artist)
+
+    public String getSongName()
     {
-        this.songArtist = artist;
+        return songName;
+    }
+
+    public String getSongPath()
+    {
+        return songPath;
+    }
+
+    public String getSongArtist()
+    {
+        return songArtist;
     }
 }
