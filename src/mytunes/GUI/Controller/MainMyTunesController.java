@@ -38,12 +38,19 @@ public class MainMyTunesController extends SongManager implements Initializable
     private TableView<Song> tblViewLibrary;
     @FXML
     private TextField textFieldFilterSearch;
+
     private Window primaryStage;
-   
+
     private MediaPlayer mediaPlayer;
+
     private boolean atEndOfMedia = false;
 
-    //private SongManager songManager = new SongManager();
+    @FXML
+    private TableColumn<Playlist, String> columnPlaylistName;
+    @FXML
+    private TableColumn<Playlist, String> columnNumSongs;
+    @FXML
+    private TableColumn<Playlist, String> columnDuration;
     @FXML
     private TableColumn<Song, String> tblViewLibraryColumnTitle;
     @FXML
@@ -52,19 +59,17 @@ public class MainMyTunesController extends SongManager implements Initializable
     private TableColumn<Song, String> tblViewLibraryColumnCategory;
     @FXML
     private TableColumn<Song, String> tblViewLibraryColumnTime;
-    
-    
 
     //Initializes the controller class.
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
-        
-        
-                tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+
+        columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
+        tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
         tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
-}
+        loadPlaylistsIntoViewer();
+    }
 
     @FXML
     private void clickAddSongPlaylist(ActionEvent event)
@@ -89,7 +94,8 @@ public class MainMyTunesController extends SongManager implements Initializable
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            dialogStage.show();
+            dialogStage.showAndWait();
+            loadPlaylistsIntoViewer();
 
         } catch (IOException e)
         {
@@ -97,9 +103,17 @@ public class MainMyTunesController extends SongManager implements Initializable
         }
     }
 
+    private void loadPlaylistsIntoViewer()
+    {
+        ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(super.getAllPlaylists());
+        tblViewPlaylists.setItems(playlistLists);
+
+    }
+
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
+
     }
 
     @FXML
@@ -144,7 +158,7 @@ public class MainMyTunesController extends SongManager implements Initializable
         {
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       readSongsIntoLibrary();
+        readSongsIntoLibrary();
     }
 
     @FXML
@@ -166,42 +180,41 @@ public class MainMyTunesController extends SongManager implements Initializable
     private void clickSearch(ActionEvent event)
     {
     }
-    
+
     @FXML
     private void clickPlayButton(ActionEvent event)
     {
         MediaPlayer.Status status = mediaPlayer.getStatus();
-        
-        if(status == MediaPlayer.Status.UNKNOWN || status == status.HALTED)
+
+        if (status == MediaPlayer.Status.UNKNOWN || status == status.HALTED)
         {
             return;
         }
-        
-        if(status == MediaPlayer.Status.PAUSED
+
+        if (status == MediaPlayer.Status.PAUSED
                 || status == status.READY
                 || status == status.STOPPED)
         {
-            if(atEndOfMedia)
+            if (atEndOfMedia)
             {
                 mediaPlayer.seek(mediaPlayer.getStartTime());
                 atEndOfMedia = false;
             }
             mediaPlayer.play();
-        }
-        else
+        } else
         {
             mediaPlayer.pause();
         }
 
-}
-    
+    }
+
     private void readSongsIntoLibrary()
     {
         if (super.getAllSongs() == null)
         {
         }
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(super.getAllSongs());
-        
+
         tblViewLibrary.setItems(songLibrary);
     }
 }

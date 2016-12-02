@@ -35,19 +35,13 @@ public class SongTableViewController extends SongManager implements Initializabl
     private TextField textFieldTime;
     @FXML
     private TextField textFieldFilePath;
-    
-    
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-        
-        
-        
+
     }
 
     @FXML
@@ -60,7 +54,7 @@ public class SongTableViewController extends SongManager implements Initializabl
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-        new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
+                new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
                 new FileChooser.ExtensionFilter(".mp3", "*.mp3"),
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );

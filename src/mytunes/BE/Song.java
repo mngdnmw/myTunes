@@ -5,25 +5,23 @@
  */
 package mytunes.BE;
 
-
 /**
  *
  * @author jeppe
  */
 public class Song
 {
+
     private final String songName;
     private final String songPath;
     private final String songArtist;
-    
+
     public Song(String songName, String songPath, String songArtist)
     {
         this.songName = songName;
         this.songPath = songPath;
         this.songArtist = songArtist;
     }
-    
-
 
     public String getSongName()
     {
