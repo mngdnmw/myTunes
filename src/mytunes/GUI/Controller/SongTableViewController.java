@@ -5,6 +5,7 @@
  */
 package mytunes.GUI.Controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.GUI.Model.SongManager;
 
@@ -34,13 +36,12 @@ public class SongTableViewController extends SongManager implements Initializabl
     @FXML
     private TextField textFieldFilePath;
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
+
     }
 
     @FXML
@@ -51,12 +52,24 @@ public class SongTableViewController extends SongManager implements Initializabl
     @FXML
     private void clickChooseFromFile(ActionEvent event)
     {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
+                new FileChooser.ExtensionFilter(".mp3", "*.mp3"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+        fileChooser.setTitle("Vælg sang...");
+        fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow());
+        textFieldFilePath.setText(file.getAbsolutePath());
     }
 
     @FXML
     private void clickSaveAddSong(ActionEvent event)
     {
-        
+        super.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
+        Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

@@ -1,8 +1,8 @@
 package mytunes.GUI.Model;
 
 import java.util.List;
-import javafx.beans.property.StringProperty;
 import mytunes.BE.Playlist;
+import mytunes.BE.Song;
 import mytunes.BLL.FileParser;
 
 /**
@@ -11,19 +11,26 @@ import mytunes.BLL.FileParser;
  */
 public abstract class SongManager
 {
-    
+
     FileParser fileParser = new FileParser();
-    
-    public void addSong(StringProperty songName, StringProperty songPath)
+
+    public void addSong(String songName, String songPath, String songArtist)
     {
-        fileParser.addSong(songName, songPath);
+        fileParser.addSong(songName, songPath, songArtist);
     }
-    
-    public void addPlaylist(String playlistName){
+
+    public List<Song> getAllSongs()
+    {
+        return fileParser.getSongs();
+    }
+
+    public void addPlaylist(String playlistName)
+    {
         fileParser.sendPlaylistName(playlistName);
     }
-    
-    public List<Playlist> getAllPlaylists(){
+
+    public List<Playlist> getAllPlaylists()
+    {
         return fileParser.getAllPlaylists();
     }
 }
