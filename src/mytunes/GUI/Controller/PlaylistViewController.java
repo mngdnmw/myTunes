@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 import mytunes.BE.Playlist;
 import mytunes.GUI.Model.SongManager;
 
-public class PlaylistViewController extends SongManager implements Initializable
+public class PlaylistViewController implements Initializable
 {
+    private SongManager songManager = SongManager.getInstance();
 
     @FXML
     private TextField textFiledNamePlaylist;
@@ -32,7 +33,7 @@ public class PlaylistViewController extends SongManager implements Initializable
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
-        super.addPlaylist(textFiledNamePlaylist.getText());
+        songManager.addPlaylist(textFiledNamePlaylist.getText());
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }

@@ -39,4 +39,15 @@ public class FileParser
         }
         return null;
     }
+    
+    public void removePlaylist(int id)
+    {
+        try
+        {
+            fileManager.deleteByPlaylist(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

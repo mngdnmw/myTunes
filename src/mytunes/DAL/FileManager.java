@@ -25,10 +25,8 @@ public class FileManager
 
     private List<Song> songList = new ArrayList();
     private List<Playlist> playlistList = new ArrayList();
+    private final String filename = "playlist.txt";
 
-    public FileManager()
-    {
-    }
 
 //    public FileManager(String playlistName) {
 //
@@ -44,6 +42,7 @@ public class FileManager
             return songList;
         }
     }
+    
 
 //    public List<Playlist> getAllPlaylists() {
 //        if (playlistList.isEmpty()) {
@@ -75,17 +74,17 @@ public class FileManager
 
     public void addPlaylist(Playlist p) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
+        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
         {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
-            //raf.writeInt(p.getId());
-            raf.writeBytes(String.format("\n" + "%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
+            raf.writeInt(p.getID());
+            raf.writeBytes(String.format("%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
         }
     }
 
     public List<Playlist> getAll() throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
+        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
         {
             List<Playlist> playlists = new ArrayList<>();
 
@@ -100,23 +99,23 @@ public class FileManager
     private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_SIZE];
-        //int id = raf.readInt();
+        int id = raf.readInt();
         raf.read(bytes);
         String playlistName = new String(bytes).trim();
         return new Playlist(playlistName);
     }
 
-    public Playlist getByPlaylist(String playlistName) throws IOException
+    public Playlist getByPlaylist(int playlistID) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
+        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
         {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE)
             {
                 raf.seek(pos);
-                //int id = raf.readInt();
-                String playlist = raf.readLine();
+                int id = raf.readInt();
+                //String playlist = raf.readLine();
 
-                if (playlist.equals(playlistName))
+                if (id == playlistID)
                 {
                     raf.seek(pos);
                     return getOnePlaylist(raf);
@@ -126,15 +125,17 @@ public class FileManager
         }
     }
 
-    public void deleteByPlaylist(String playlistName) throws IOException
+    public void deleteByPlaylist(int id) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw"))
+        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
         {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE)
             {
                 raf.seek(pos);
-                String playlist = raf.readLine();
-                if (playlist.equals(playlistName))
+                //String playlist = raf.readLine();
+                //if (playlist.equals(playlistName))
+                    int currentId = raf.readInt();
+                if (currentId == id)    
                 {
                     raf.seek(pos);
                     raf.write(new byte[RECORD_SIZE]); // write as many blank bytes as one record
