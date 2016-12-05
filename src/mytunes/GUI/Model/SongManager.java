@@ -1,5 +1,6 @@
 package mytunes.GUI.Model;
 
+import java.io.IOException;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
@@ -16,10 +17,10 @@ public abstract class SongManager
 
     public void addSong(String songName, String songPath, String songArtist)
     {
-        fileParser.addSong(songName, songPath, songArtist);
+        fileParser.sendSongInfo(songName, songPath, songArtist);
     }
 
-    public List<Song> getAllSongs()
+    public List<Song> getAllSongs() throws IOException
     {
         return fileParser.getSongs();
     }

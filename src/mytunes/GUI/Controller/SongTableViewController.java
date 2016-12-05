@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.GUI.Controller;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import mytunes.BE.Song;
 import mytunes.GUI.Model.SongManager;
 
 /**
@@ -47,6 +45,7 @@ public class SongTableViewController extends SongManager implements Initializabl
     @FXML
     private void clickMoreInfo(ActionEvent event)
     {
+        //TODO
     }
 
     @FXML
@@ -63,6 +62,10 @@ public class SongTableViewController extends SongManager implements Initializabl
         File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow());
         textFieldFilePath.setText(file.getAbsolutePath());
     }
+    
+    public void saveSongsFromView(){
+        List<Song> song = new ArrayList();
+    }
 
     @FXML
     private void clickSaveAddSong(ActionEvent event)
@@ -78,5 +81,46 @@ public class SongTableViewController extends SongManager implements Initializabl
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
+    
+    //Getters for song info 
 
+    public TextField getTextFieldTitle() {
+        return textFieldTitle;
+    }
+
+    public TextField getTextFieldArtist() {
+        return textFieldArtist;
+    }
+
+    public TextField getTextFieldTime() {
+        return textFieldTime;
+    }
+
+    public TextField getTextFieldFilePath() {
+        return textFieldFilePath;
+    }
+    
+    //Setters
+
+    public void setComboCategory(ComboBox<?> comboCategory) {
+        this.comboCategory = comboCategory;
+    }
+
+    public void setTextFieldTitle(TextField textFieldTitle) {
+        this.textFieldTitle = textFieldTitle;
+    }
+
+    public void setTextFieldArtist(TextField textFieldArtist) {
+        this.textFieldArtist = textFieldArtist;
+    }
+
+    public void setTextFieldTime(TextField textFieldTime) {
+        this.textFieldTime = textFieldTime;
+    }
+
+    public void setTextFieldFilePath(TextField textFieldFilePath) {
+        this.textFieldFilePath = textFieldFilePath;
+    }
+    
+    
 }

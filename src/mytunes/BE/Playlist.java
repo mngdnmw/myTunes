@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Playlist {
 
-    //private final int id;
+    private int id = 0;
+    //private final int id; need to come back and to change id to final 
     private String name;
     private String playlistDuration;
     private List<Integer> songsRelations;
@@ -14,6 +15,7 @@ public class Playlist {
         //this.id = id;
         this.name = name;
         songsRelations = new ArrayList<>();
+        id++;//need to change implementation
     }
 
     public String getName() {
@@ -40,8 +42,8 @@ public class Playlist {
         this.songsRelations = songsRelations;
     }
 
-//    public int getId() {
-//        return id;
-//    }
+    public int getId() {
+        return id;
+    }
 
 }

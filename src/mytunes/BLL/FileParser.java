@@ -13,14 +13,14 @@ public class FileParser
 
     FileManager fileManager = new FileManager();
 
-    public List<Song> getSongs()
+    public List<Song> getSongs() throws IOException
     {
         return fileManager.getAllSongs();
     }
 
-    public void addSong(String songName, String songPath, String songArtist)
+    public void sendSongInfo(String songName, String songPath, String songArtist)
     {
-        fileManager.addSong(songName, songPath, songArtist);
+        fileManager.saveSong(songName, songPath, songArtist);
     }
 
     public void sendPlaylistName(String playlistName)
