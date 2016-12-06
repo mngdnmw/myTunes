@@ -251,7 +251,9 @@ public class MainMyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickCloseProgram(ActionEvent event) {
+    private void clickCloseProgram(ActionEvent event) 
+    {
+        System.exit(0);
     }
 
     @FXML

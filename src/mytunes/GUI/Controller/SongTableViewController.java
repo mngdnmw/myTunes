@@ -54,14 +54,15 @@ public class SongTableViewController implements Initializable
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
+                //new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
                 new FileChooser.ExtensionFilter(".mp3", "*.mp3"),
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );
         fileChooser.setTitle("Vælg sang...");
-        fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow());
-        File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow()).getAbsoluteFile();
         textFieldFilePath.setText(file.getAbsolutePath());
+        
+        
     }
     
     public void saveSongsFromView(){
