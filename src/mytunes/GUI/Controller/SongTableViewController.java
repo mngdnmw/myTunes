@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +27,7 @@ public class SongTableViewController implements Initializable
     private SongManager songManager = SongManager.getInstance();
 
     @FXML
-    private ComboBox<?> comboCategory;
+    private ComboBox<String> comboCategory;
     @FXML
     private TextField textFieldTitle;
     @FXML
@@ -39,8 +41,7 @@ public class SongTableViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
-
+        fillComboBox();
     }
 
     @FXML
@@ -72,7 +73,8 @@ public class SongTableViewController implements Initializable
     @FXML
     private void clickSaveAddSong(ActionEvent event)
     {
-        songManager.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
+        songManager.addSong(textFieldTitle.getText(), textFieldArtist.getText(), comboCategory.getValue(),textFieldFilePath.getText());
+        
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
@@ -84,8 +86,17 @@ public class SongTableViewController implements Initializable
         stage.close();
     }
     
+    private void fillComboBox(){
+        ObservableList<String> comboItems 
+                = FXCollections.observableArrayList("", "Blues", "Classical", 
+                        "Country", "Folk", "Electronic", "Jazz","Hip-hop",
+                        "Reggae", "Funk&Soul", "Rock", "Pop", "Soundtrack", "Religious",
+                        "Traditional");
+        comboCategory.setItems(comboItems);
+        comboCategory.getSelectionModel().selectFirst();
+    }
+    
     //Getters for song info 
-
     public TextField getTextFieldTitle() {
         return textFieldTitle;
     }
@@ -101,13 +112,13 @@ public class SongTableViewController implements Initializable
     public TextField getTextFieldFilePath() {
         return textFieldFilePath;
     }
+
+    public ComboBox<String> getComboCategory() {
+        return comboCategory;
+    }
+    
     
     //Setters
-
-    public void setComboCategory(ComboBox<?> comboCategory) {
-        this.comboCategory = comboCategory;
-    }
-
     public void setTextFieldTitle(TextField textFieldTitle) {
         this.textFieldTitle = textFieldTitle;
     }

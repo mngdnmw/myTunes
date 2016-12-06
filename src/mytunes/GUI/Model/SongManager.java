@@ -31,9 +31,9 @@ public class SongManager
     
     FileParser fileParser = new FileParser();
 
-    public void addSong(String songName, String songPath, String songArtist)
+    public void addSong(String songTitle, String songArtist, String songCategory, String songPath)
     {
-        fileParser.sendSongInfo(songName, songPath, songArtist);
+        fileParser.sendSongInfo(songTitle, songArtist, songCategory, songPath);
     }
 
     public List<Song> getAllSongs() throws IOException

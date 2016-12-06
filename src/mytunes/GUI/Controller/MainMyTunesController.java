@@ -95,10 +95,10 @@ public class MainMyTunesController implements Initializable {
         loadPlaylistsIntoViewer();
 
         //Song viewer
-        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("songName"));
+        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("songTitle"));
         tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("songArtist"));
-        tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("category"));
-        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("duration"));
+        tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("songCategory"));
+        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("songDuration"));
         try {
             loadSongsIntoLibrary();
         } catch (IOException ex) {
@@ -121,6 +121,7 @@ public class MainMyTunesController implements Initializable {
         });
 
     }
+    
 
     @FXML
     private void clickAddSongPlaylist(ActionEvent event) {
@@ -308,7 +309,7 @@ public class MainMyTunesController implements Initializable {
 //        tblViewLibrary.setItems(songLibrary);
 //    }
     private void loadSongsIntoLibrary() throws IOException {
-        //if (super.getAllSongs() == null) {}
+        
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
     }
