@@ -10,9 +10,25 @@ import mytunes.BLL.FileParser;
  *
  * @author jeppe
  */
-public abstract class SongManager
+public class SongManager
 {
+    private static SongManager instance;
+    
+    public static SongManager getInstance()
+    {
+        if(instance==null)
+            instance = new SongManager();
+        
+        return instance;
+        
+    }
 
+    private SongManager()
+    {
+    }
+    
+    
+    
     FileParser fileParser = new FileParser();
 
     public void addSong(String songName, String songPath, String songArtist)
@@ -33,5 +49,10 @@ public abstract class SongManager
     public List<Playlist> getAllPlaylists()
     {
         return fileParser.getAllPlaylists();
+    }
+    
+    public void removePlaylist(int id)
+    {
+        fileParser.removePlaylist(id);
     }
 }

@@ -34,14 +34,31 @@ public class FileManager {
 
     private List<Song> songList = new ArrayList();
     private List<Playlist> playlistList = new ArrayList();
+    private final String filename = "playlist.txt";
 
     public FileManager() {
     }
+
 
 //    public FileManager(String playlistName) {
 //
 //        this.playlistName = playlistName;
 //    }
+
+
+//    public List<Song> getAllSongs()
+//    {
+//        if (songList.isEmpty())
+//        {
+//            return null;
+//        } else
+//        {
+//            return songList;
+//        }
+//    }
+    
+
+
 //    public List<Playlist> getAllPlaylists() {
 //        if (playlistList.isEmpty()) {
 //            return null;
@@ -76,6 +93,7 @@ public class FileManager {
         }
     }
 
+
     public void addPlaylist(Playlist p) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw")) {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
@@ -98,6 +116,22 @@ public class FileManager {
 
     public List<Playlist> getAll() throws IOException {
         try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), "rw")) {
+//=======
+//    public void addPlaylist(Playlist p) throws IOException
+//    {
+//        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
+//        {
+//            raf.seek(raf.length());  // place the file pointer at the end of the file.
+//            raf.writeInt(p.getID());
+//            raf.writeBytes(String.format("%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
+//        }
+//    }
+//
+//    public List<Playlist> getAll() throws IOException
+//    {
+//        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
+//        {
+//>>>>>>> origin/RasmusDevelopment
             List<Playlist> playlists = new ArrayList<>();
 
             while (rafp.getFilePointer() < rafp.length()) {
@@ -126,6 +160,7 @@ public class FileManager {
 
     private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
+
         int id = raf.readInt();
         raf.read(bytes);
         String playlistName = new String(bytes).trim();
@@ -144,6 +179,7 @@ public class FileManager {
         String songArtist = new String(artist).trim();
         return new Song(songName, songPath, songArtist);
     }
+
 
     public Playlist getByPlaylist(String playlistName) throws IOException {
         try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), "rw")) {
@@ -176,12 +212,26 @@ public class FileManager {
         }
     }
 
-    public void deleteByPlaylist(String playlistName) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw")) {
-            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST) {
+//    public void deleteByPlaylist(String playlistName) throws IOException {
+//        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw")) {
+//            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST) {
+//                raf.seek(pos);
+//                String playlist = raf.readLine();
+//                if (playlist.equals(playlistName)) {
+//
+    public void deleteByPlaylist(int id) throws IOException
+    {
+        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
+        {
+            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST)
+            {
                 raf.seek(pos);
-                String playlist = raf.readLine();
-                if (playlist.equals(playlistName)) {
+                //String playlist = raf.readLine();
+                //if (playlist.equals(playlistName))
+                    int currentId = raf.readInt();
+                if (currentId == id)    
+                {
+//>>>>>>> origin/RasmusDevelopment
                     raf.seek(pos);
                     raf.write(new byte[RECORD_SIZE_PLAYLIST]); // write as many blank bytes as one record
                 }

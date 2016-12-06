@@ -20,8 +20,9 @@ import mytunes.GUI.Model.SongManager;
  *
  * @author Fjord82
  */
-public class SongTableViewController extends SongManager implements Initializable
+public class SongTableViewController implements Initializable
 {
+    private SongManager songManager = SongManager.getInstance();
 
     @FXML
     private ComboBox<?> comboCategory;
@@ -70,7 +71,7 @@ public class SongTableViewController extends SongManager implements Initializabl
     @FXML
     private void clickSaveAddSong(ActionEvent event)
     {
-        super.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
+        songManager.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
