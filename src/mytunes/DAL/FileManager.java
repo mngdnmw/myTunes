@@ -98,7 +98,7 @@ public class FileManager {
         try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), "rw")) {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
             raf.writeInt(p.getId());
-            raf.writeBytes(String.format("\n" + "%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
+            raf.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
         }
     }
 
@@ -107,7 +107,7 @@ public class FileManager {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
             //raf.writeInt(p.getId());
             //writing song name, path and artist
-            raf.writeBytes(String.format("\n" + "%-" + SONG_NAME_SIZE + "s", s.getSongName()).substring(0, SONG_NAME_SIZE));
+            raf.writeBytes(String.format("%-" + SONG_NAME_SIZE + "s", s.getSongName()).substring(0, SONG_NAME_SIZE));
             raf.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
             raf.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
 

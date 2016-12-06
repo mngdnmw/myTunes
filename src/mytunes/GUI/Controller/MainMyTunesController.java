@@ -99,6 +99,13 @@ public class MainMyTunesController implements Initializable {
         tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("songArtist"));
         tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("category"));
         tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("duration"));
+        try {
+            loadSongsIntoLibrary();
+        } catch (IOException ex) {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
 
         String path = "src/mytunes/MusicLibrary/" + "RedArmyChoir.mp3";
         media = new Media(new File(path).toURI().toString());
@@ -147,11 +154,7 @@ public class MainMyTunesController implements Initializable {
         }
     }
 
-    private void loadPlaylistsIntoViewer() {
-        ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(songManager.getAllPlaylists());
-        tblViewPlaylists.setItems(playlistLists);
-
-    }
+    
 
     @FXML
     private void clickEditPlaylist(ActionEvent event) {
@@ -226,7 +229,7 @@ public class MainMyTunesController implements Initializable {
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        readSongsIntoLibrary();
+        loadSongsIntoLibrary();
     }
 
     @FXML
@@ -302,10 +305,16 @@ public class MainMyTunesController implements Initializable {
 //
 //        tblViewLibrary.setItems(songLibrary);
 //    }
-    private void readSongsIntoLibrary() throws IOException {
+    private void loadSongsIntoLibrary() throws IOException {
         //if (super.getAllSongs() == null) {}
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
+    }
+    
+    private void loadPlaylistsIntoViewer() {
+        ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(songManager.getAllPlaylists());
+        tblViewPlaylists.setItems(playlistLists);
+
     }
 
     private void clickNextButton(ActionEvent event) {

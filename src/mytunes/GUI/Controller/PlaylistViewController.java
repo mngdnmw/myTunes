@@ -39,18 +39,18 @@ public class PlaylistViewController implements Initializable
         stage.close();
     }
     
-    
+
     
     public void savePlaylistFromView(){
         List<Playlist> playlist = new ArrayList();
     }
     
-    public TextField getTextFiledNamePlaylist()
+    public TextField getTextFileNamePlaylist()
     {
         return textFileNamePlaylist;
     }
 
-    public void setTextFiledNamePlaylist(TextField textFileNamePlaylist)
+    public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
     {
         this.textFileNamePlaylist = textFileNamePlaylist;
     }
