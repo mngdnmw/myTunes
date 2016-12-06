@@ -13,11 +13,12 @@ import javafx.stage.Stage;
 import mytunes.BE.Playlist;
 import mytunes.GUI.Model.SongManager;
 
-public class PlaylistViewController extends SongManager implements Initializable
+public class PlaylistViewController implements Initializable
 {
+    private SongManager songManager = SongManager.getInstance();
 
     @FXML
-    private TextField textFiledNamePlaylist;
+    private TextField textFileNamePlaylist;
     @FXML
     private Button cancelBtn;
     @FXML
@@ -32,25 +33,26 @@ public class PlaylistViewController extends SongManager implements Initializable
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
-        super.addPlaylist(textFiledNamePlaylist.getText());
+        songManager.addPlaylist(textFileNamePlaylist.getText());
+
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }
     
-    
+
     
     public void savePlaylistFromView(){
         List<Playlist> playlist = new ArrayList();
     }
     
-    public TextField getTextFiledNamePlaylist()
+    public TextField getTextFileNamePlaylist()
     {
-        return textFiledNamePlaylist;
+        return textFileNamePlaylist;
     }
 
-    public void setTextFiledNamePlaylist(TextField textFiledNamePlaylist)
+    public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
     {
-        this.textFiledNamePlaylist = textFiledNamePlaylist;
+        this.textFileNamePlaylist = textFileNamePlaylist;
     }
 
     @FXML

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.BE;
 
 /**
@@ -11,16 +6,21 @@ package mytunes.BE;
  */
 public class Song
 {
-
+    ///also need to implement duartion
     private final String songName;
     private final String songPath;
     private final String songArtist;
+    private final String category;
+    private final int duration;
 
     public Song(String songName, String songPath, String songArtist)
     {
         this.songName = songName;
         this.songPath = songPath;
         this.songArtist = songArtist;
+        category = null;//need to work on this, may have to set an enum file?
+        duration = 0; //need to work on this
+        
     }
 
     public String getSongName()
