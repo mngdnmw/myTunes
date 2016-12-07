@@ -18,7 +18,7 @@ public class PlaylistViewController implements Initializable
     private SongManager songManager = SongManager.getInstance();
 
     @FXML
-    private TextField textFiledNamePlaylist;
+    private TextField textFileNamePlaylist;
     @FXML
     private Button cancelBtn;
     @FXML
@@ -33,25 +33,30 @@ public class PlaylistViewController implements Initializable
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
+<<<<<<< HEAD
         songManager.addPlaylist(textFiledNamePlaylist.getText());
+=======
+        songManager.addPlaylist(textFileNamePlaylist.getText());
+
+>>>>>>> Development
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }
     
-    
+
     
     public void savePlaylistFromView(){
         List<Playlist> playlist = new ArrayList();
     }
     
-    public TextField getTextFiledNamePlaylist()
+    public TextField getTextFileNamePlaylist()
     {
-        return textFiledNamePlaylist;
+        return textFileNamePlaylist;
     }
 
-    public void setTextFiledNamePlaylist(TextField textFiledNamePlaylist)
+    public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
     {
-        this.textFiledNamePlaylist = textFiledNamePlaylist;
+        this.textFileNamePlaylist = textFileNamePlaylist;
     }
 
     @FXML

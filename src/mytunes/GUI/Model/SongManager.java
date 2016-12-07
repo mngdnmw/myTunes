@@ -1,5 +1,6 @@
 package mytunes.GUI.Model;
 
+import java.io.IOException;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
@@ -30,12 +31,12 @@ public class SongManager
     
     FileParser fileParser = new FileParser();
 
-    public void addSong(String songName, String songPath, String songArtist)
+    public void addSong(String songTitle, String songArtist, String songCategory, String songPath)
     {
-        fileParser.addSong(songName, songPath, songArtist);
+        fileParser.sendSongInfo(songTitle, songArtist, songCategory, songPath);
     }
 
-    public List<Song> getAllSongs()
+    public List<Song> getAllSongs() throws IOException
     {
         return fileParser.getSongs();
     }

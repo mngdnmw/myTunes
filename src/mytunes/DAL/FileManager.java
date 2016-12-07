@@ -3,14 +3,16 @@ package mytunes.DAL;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mytunes.BE.Playlist;
 
+import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
+<<<<<<< HEAD
 /**
  *
  * @author jeppe
@@ -36,42 +38,130 @@ public class FileManager
     {
         if (songList.isEmpty())
         {
+=======
+public class FileManager {
+    
+    //Final variables for songlist.txt
+    private static final int SONG_TITLE_SIZE = 20;
+    private static final int SONG_ARTIST_SIZE = 20;
+    private static final int SONG_CATEGORY_SIZE = 10;
+    private static final int SONG_DURATION_SIZE = 5;
+    private static final int SONG_PATH_SIZE = 100;
+    private static final int RECORD_SIZE_SONGLIST = SONG_TITLE_SIZE 
+            + SONG_ARTIST_SIZE 
+            + SONG_CATEGORY_SIZE 
+            + SONG_DURATION_SIZE
+            + SONG_PATH_SIZE;
+    
+    //Final variables for playlistlist.txt
+    private static final int PLAYLIST_NAME_SIZE = 50;
+    private static final int PLAYLIST_ID_SIZE = 50;
+    private static final int RECORD_SIZE_PLAYLIST = PLAYLIST_NAME_SIZE + PLAYLIST_ID_SIZE;
+
+    //Final variables for songRelations.txt
+    private static final int RECORD_SIZE_RELATIONS = PLAYLIST_ID_SIZE + SONG_TITLE_SIZE;
+    
+    private final String rw = "rw";
+
+    public FileManager() {
+    }
+    
+    public void saveSong(String songTitle,String songArtist, String songCategory, String songPath) {
+        Song song = new Song(songTitle, songArtist, songCategory, songPath);
+        try {
+            addSong(song);
+        } catch (IOException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addSong(Song s) throws IOException {
+        try (RandomAccessFile raf = new RandomAccessFile(new File("songlist.txt"), "rw")) {
+            
+            //place the file pointer at the end of the file
+            raf.seek(raf.length());  
+            
+            //writing song info into songlist.txt
+            raf.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
+            raf.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
+            raf.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
+            raf.writeBytes(String.format("%-" + SONG_DURATION_SIZE + "s", s.getSongDuration()).substring(0, SONG_DURATION_SIZE));
+            raf.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
+        }
+    }
+    
+     private Song getOneSong(final RandomAccessFile rafs) throws IOException {
+         
+        //creates empty byte arrays corresponding to the size of each song property 
+        byte[] title = new byte[SONG_TITLE_SIZE];
+        byte[] artist = new byte[SONG_ARTIST_SIZE];
+        byte[] category = new byte[SONG_CATEGORY_SIZE];
+        byte[] duration = new byte[SONG_DURATION_SIZE];
+        byte[] path = new byte[SONG_PATH_SIZE];
+        
+        //reads into the byte arrays
+        rafs.read(title);
+        rafs.read(artist);
+        rafs.read(category);
+        rafs.read(duration);
+        rafs.read(path);
+        
+        //type casts the byte arrays into strings
+        String songTitle = new String(title).trim();
+        String songArtist = new String(artist).trim();
+        String songCategory = new String(category).trim();
+        int songDuration = ByteBuffer.wrap(duration).getInt();
+        String songPath = new String(path).trim();
+        
+        
+        return new Song(songTitle, songArtist, songCategory, songPath);
+    }
+    
+    public List<Song> getAllSongs() throws IOException {
+
+        try(RandomAccessFile rafs = new RandomAccessFile(new File("songlist.txt"), rw)){
+            
+            //makes an arraylist to store the songs 
+            List<Song> listOfSongs = new ArrayList<>();
+            
+            while (rafs.getFilePointer() < rafs.length()) {
+                listOfSongs.add(getOneSong(rafs));
+            }
+            return listOfSongs;
+        } 
+        
+    }
+       
+    public Song getBySong(String songTitle) throws IOException {
+        
+        try (RandomAccessFile rafs = new RandomAccessFile(new File("songlist.txt"), rw)) {
+            for (int pos = 0; pos < rafs.length(); pos += RECORD_SIZE_SONGLIST) {
+                
+                //starts reading at the beginning of every song record
+                rafs.seek(pos);
+                String song = rafs.readLine();
+
+                if (songTitle.equals(song)) {
+                    rafs.seek(pos);
+                    return getOneSong(rafs);
+                }
+            }
+>>>>>>> Development
             return null;
-        } else
-        {
-            return songList;
         }
     }
     
 
-//    public List<Playlist> getAllPlaylists() {
-//        if (playlistList.isEmpty()) {
-//            return null;
-//        } else {
-//            return playlistList;
-//        }
-//    }
-    public void savePlaylist(String playlistName)
-    {
-//
-//        try (BufferedWriter bw
-//                = new BufferedWriter(new FileWriter(playlistName + ".txt"))) {
-//            bw.write(playlistName);
-//        } catch (IOException ex) {
-//            Logger.getLogger(PlaylistViewController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
+    public void savePlaylist(String playlistName) {
         Playlist playlist = new Playlist(playlistName);
-        try
-        {
-            //        playlistList.add(playlist);
+        try {
             addPlaylist(playlist);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+<<<<<<< HEAD
     public void addPlaylist(Playlist p) throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
@@ -86,25 +176,52 @@ public class FileManager
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
         {
+=======
+    
+
+
+    public void addPlaylist(Playlist p) throws IOException {
+        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), rw)) {
+            raf.seek(raf.length());  // place the file pointer at the end of the file.
+            raf.writeInt(p.getId());
+            raf.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
+        }
+    }
+
+    
+    public List<Playlist> getAll() throws IOException {
+        try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
+
+>>>>>>> Development
             List<Playlist> playlists = new ArrayList<>();
 
-            while (raf.getFilePointer() < raf.length())
-            {
-                playlists.add(getOnePlaylist(raf));
+            while (rafp.getFilePointer() < rafp.length()) {
+                playlists.add(getOnePlaylist(rafp));
             }
             return playlists;
         }
     }
 
+<<<<<<< HEAD
     private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_SIZE];
+=======
+    
+
+    private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException {
+        byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
+
+>>>>>>> Development
         int id = raf.readInt();
         raf.read(bytes);
         String playlistName = new String(bytes).trim();
         return new Playlist(playlistName);
     }
+    
+   
 
+<<<<<<< HEAD
     public Playlist getByPlaylist(int playlistID) throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
@@ -119,34 +236,66 @@ public class FileManager
                 {
                     raf.seek(pos);
                     return getOnePlaylist(raf);
+=======
+
+    public Playlist getByPlaylist(String playlistName) throws IOException {
+        try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
+            for (int pos = 0; pos < rafp.length(); pos += RECORD_SIZE_PLAYLIST) {
+                rafp.seek(pos);
+                //int id = raf.readInt();
+                String playlist = rafp.readLine();
+
+                if (playlist.equals(playlistName)) {
+                    rafp.seek(pos);
+                    return getOnePlaylist(rafp);
+>>>>>>> Development
                 }
             }
             return null;
         }
     }
 
+<<<<<<< HEAD
     public void deleteByPlaylist(int id) throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
+=======
+ 
+
+    public void deleteByPlaylist(int id) throws IOException
+    {
+        try (RandomAccessFile raf = new RandomAccessFile(new File("playlist.txt"), rw))
+>>>>>>> Development
         {
-            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE)
+            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST)
             {
                 raf.seek(pos);
+<<<<<<< HEAD
                 //String playlist = raf.readLine();
                 //if (playlist.equals(playlistName))
+=======
+>>>>>>> Development
                     int currentId = raf.readInt();
                 if (currentId == id)    
                 {
                     raf.seek(pos);
-                    raf.write(new byte[RECORD_SIZE]); // write as many blank bytes as one record
+                    raf.write(new byte[RECORD_SIZE_PLAYLIST]); // write as many blank bytes as one record
+                }
+            }
+        }
+    }
+    
+    public void deleteBySong(String songName) throws IOException {
+        try (RandomAccessFile raf = new RandomAccessFile(new File("songlist.txt"), rw)) {
+            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_SONGLIST) {
+                raf.seek(pos);
+                String song = raf.readLine();
+                if (songName.equals(song)) {
+                    raf.seek(pos);
+                    raf.write(new byte[RECORD_SIZE_SONGLIST]); // write as many blank bytes as one record
                 }
             }
         }
     }
 
-    public void addSong(String songName, String songPath, String songArtist)
-    {
-        Song s = new Song(songName, songPath, songArtist);
-        songList.add(s);
-    }
 }

@@ -7,7 +7,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Playlist {
 
-    //private final int id;
+    //private int id = 0;
+    //private final int id; need to come back and to change id to final 
     private String name;
     private String playlistDuration;
     private List<Integer> songsRelations;
@@ -19,13 +20,26 @@ public class Playlist {
         //this.id = id;
         this.name = name;
         songsRelations = new ArrayList<>();
+<<<<<<< HEAD
+=======
+
+        //id++;//need to change implementation
+
+>>>>>>> Development
         id = new SimpleIntegerProperty(nextId++);
         
     }
     
+<<<<<<< HEAD
     public int getID()
     {
         return id.get();
+=======
+    public int getId()
+    {
+        return id.get();
+
+>>>>>>> Development
     }
 
     public String getName() {
