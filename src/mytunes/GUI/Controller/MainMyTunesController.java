@@ -4,6 +4,7 @@ import java.io.File;
 import mytunes.BE.Playlist;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +35,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import mytunes.BE.Song;
 import mytunes.GUI.Model.SongManager;
 import mytunes.MyTunes;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 public class MainMyTunesController implements Initializable {
 
@@ -89,9 +94,35 @@ public class MainMyTunesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateLists();
+         
         
-
+        try {
+            getDurationWithMp3Spi(new File("src/mytunes/MusicLibrary/RedArmyChoir.mp3"));
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
     }
+    
+    private static void getDurationWithMp3Spi(File song) throws UnsupportedAudioFileException, IOException {
+
+    AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(song);
+    if (fileFormat instanceof TAudioFileFormat) {
+        Map<String, Object> properties = ((TAudioFileFormat) fileFormat).properties();
+        String key = "duration";
+        Long microseconds = (Long) properties.get(key);
+        int mili = (int) (microseconds / 1000);
+        int sec = (mili / 1000) % 60;
+        int min = (mili / 1000) / 60;
+        System.out.println("time = " + min + ":" + sec);
+    } else {
+        throw new UnsupportedAudioFileException();
+    }
+
+}
+    
     private void populateLists(){
         //Playlist viewer
         columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
