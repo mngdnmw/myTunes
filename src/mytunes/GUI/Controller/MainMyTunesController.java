@@ -100,9 +100,16 @@ public class MainMyTunesController implements Initializable
      */
     private void setStartingSong()
     {
-        selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
-        media = new Media(new File(selectedSong).toURI().toString());
+        if (tblViewLibrary.getItems().isEmpty())
+        {
+            selectedSong = null;
+        } else
+        {
+            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
+            media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
+        }
+        
 
         System.out.println(selectedSong);
     }
@@ -379,7 +386,7 @@ public class MainMyTunesController implements Initializable
     }
 
     /**
-     * Sends a request through the layers of the program to receive all songs, 
+     * Sends a request through the layers of the program to receive all songs,
      * arranges them into an observable list and loads said list into the view.
      */
     private void loadSongsIntoLibrary() throws IOException
@@ -388,10 +395,11 @@ public class MainMyTunesController implements Initializable
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
     }
-    
+
     /**
-     * Sends a request through the layers of the program to receive all playlists, 
-     * arranges them into an observable list and loads said list into the view.
+     * Sends a request through the layers of the program to receive all
+     * playlists, arranges them into an observable list and loads said list into
+     * the view.
      */
     private void loadPlaylistsIntoViewer()
     {
@@ -407,7 +415,8 @@ public class MainMyTunesController implements Initializable
 
     /**
      * Resets the currently playing song. Does not pause.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void clickReloadButton(ActionEvent event)
@@ -422,13 +431,16 @@ public class MainMyTunesController implements Initializable
     }
 
     /**
-     * Sets the currently playing song to whichever song is selected in library view.
-     * @param event 
+     * Sets the currently playing song to whichever song is selected in library
+     * view.
+     *
+     * @param event
      */
     @FXML
     private void setSong(MouseEvent event)
     {
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
+        media = new Media(new File(selectedSong).toURI().toString());
         System.out.println(selectedSong);
     }
 
