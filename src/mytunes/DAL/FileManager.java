@@ -87,7 +87,7 @@ public class FileManager {
         String songPath = new String(path).trim();
         
         
-        return new Song(songTitle, songArtist, songCategory, songDuration);
+        return new Song(songTitle, songArtist, songCategory, songPath);
     }
     
     public List<Song> getAllSongs() throws IOException {
