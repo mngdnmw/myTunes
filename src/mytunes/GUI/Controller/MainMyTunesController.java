@@ -88,38 +88,27 @@ public class MainMyTunesController implements Initializable {
     //Initializes the controller class.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        populateLists();
+        
+
+    }
+    private void populateLists(){
         //Playlist viewer
         columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
-        tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
-        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
+    //    tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+    //   tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
         loadPlaylistsIntoViewer();
 
         //Song viewer
-        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("songName"));
+        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("songTitle"));
         tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("songArtist"));
-        tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("category"));
-        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("duration"));
+        tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("songCategory"));
+        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("songDuration"));
         try {
             loadSongsIntoLibrary();
         } catch (IOException ex) {
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-
-        String path = "src/mytunes/MusicLibrary/" + "RedArmyChoir.mp3";
-        media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-
-        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener() {
-
-            @Override
-            public void invalidated(Observable observable) {
-                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
-            }
-        });
-
     }
 
     @FXML
@@ -153,8 +142,6 @@ public class MainMyTunesController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    
 
     @FXML
     private void clickEditPlaylist(ActionEvent event) {
@@ -252,6 +239,7 @@ public class MainMyTunesController implements Initializable {
 
     @FXML
     private void clickCloseProgram(ActionEvent event) {
+        System.exit(0);
     }
 
     @FXML
@@ -293,7 +281,20 @@ public class MainMyTunesController implements Initializable {
             mediaPlayer.play();
             playButton.setText("||");
         }
+//String path = "src/mytunes/MusicLibrary/" + "RedArmyChoir.mp3";
+        String path = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
 
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+
+        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+
+            @Override
+            public void invalidated(Observable observable) {
+                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
+            }
+        });
     }
 
 //    private void readSongsIntoLibrary()
@@ -306,11 +307,11 @@ public class MainMyTunesController implements Initializable {
 //        tblViewLibrary.setItems(songLibrary);
 //    }
     private void loadSongsIntoLibrary() throws IOException {
-        //if (super.getAllSongs() == null) {}
+
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
     }
-    
+
     private void loadPlaylistsIntoViewer() {
         ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(songManager.getAllPlaylists());
         tblViewPlaylists.setItems(playlistLists);
