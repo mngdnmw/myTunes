@@ -95,8 +95,8 @@ public class MainMyTunesController implements Initializable {
     private void populateLists(){
         //Playlist viewer
         columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
-        tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
-        tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
+    //    tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+    //   tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
         loadPlaylistsIntoViewer();
 
         //Song viewer

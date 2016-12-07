@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mytunes.BE.Playlist;
 
+import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
 public class FileManager {
