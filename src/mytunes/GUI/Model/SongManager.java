@@ -1,5 +1,6 @@
 package mytunes.GUI.Model;
 
+import java.io.IOException;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
@@ -9,17 +10,33 @@ import mytunes.BLL.FileParser;
  *
  * @author jeppe
  */
-public abstract class SongManager
+public class SongManager
 {
-
-    FileParser fileParser = new FileParser();
-
-    public void addSong(String songName, String songPath, String songArtist)
+    private static SongManager instance;
+    
+    public static SongManager getInstance()
     {
-        fileParser.addSong(songName, songPath, songArtist);
+        if(instance==null)
+            instance = new SongManager();
+        
+        return instance;
+        
     }
 
-    public List<Song> getAllSongs()
+    private SongManager()
+    {
+    }
+    
+    
+    
+    FileParser fileParser = new FileParser();
+
+    public void addSong(String songTitle, String songArtist, String songCategory, String songPath)
+    {
+        fileParser.sendSongInfo(songTitle, songArtist, songCategory, songPath);
+    }
+
+    public List<Song> getAllSongs() throws IOException
     {
         return fileParser.getSongs();
     }
@@ -32,5 +49,10 @@ public abstract class SongManager
     public List<Playlist> getAllPlaylists()
     {
         return fileParser.getAllPlaylists();
+    }
+    
+    public void removePlaylist(int id)
+    {
+        fileParser.removePlaylist(id);
     }
 }

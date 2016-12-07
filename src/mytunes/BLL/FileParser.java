@@ -13,14 +13,14 @@ public class FileParser
 
     FileManager fileManager = new FileManager();
 
-    public List<Song> getSongs()
+    public List<Song> getSongs() throws IOException
     {
         return fileManager.getAllSongs();
     }
 
-    public void addSong(String songName, String songPath, String songArtist)
+    public void sendSongInfo(String songTitle, String songArtist, String songCategory, String songPath)
     {
-        fileManager.addSong(songName, songPath, songArtist);
+        fileManager.saveSong(songTitle, songArtist, songCategory, songPath);
     }
 
     public void sendPlaylistName(String playlistName)
@@ -38,5 +38,16 @@ public class FileParser
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public void removePlaylist(int id)
+    {
+        try
+        {
+            fileManager.deleteByPlaylist(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
