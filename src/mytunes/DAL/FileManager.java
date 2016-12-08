@@ -15,11 +15,11 @@ import mytunes.BE.Song;
 public class FileManager {
     
     //Final variables for songlist.txt
-    private static final int SONG_TITLE_SIZE = 20;
-    private static final int SONG_ARTIST_SIZE = 20;
-    private static final int SONG_CATEGORY_SIZE = 10;
+    private static final int SONG_TITLE_SIZE = 50;
+    private static final int SONG_ARTIST_SIZE = 50;
+    private static final int SONG_CATEGORY_SIZE = 20;
     private static final int SONG_DURATION_SIZE = 5;
-    private static final int SONG_PATH_SIZE = 100;
+    private static final int SONG_PATH_SIZE = 400;
     private static final int RECORD_SIZE_SONGLIST = SONG_TITLE_SIZE 
             + SONG_ARTIST_SIZE 
             + SONG_CATEGORY_SIZE 
@@ -87,7 +87,7 @@ public class FileManager {
         String songPath = new String(path).trim();
         
         
-        return new Song(songTitle, songArtist, songCategory, songDuration);
+        return new Song(songTitle, songArtist, songCategory, songPath);
     }
     
     public List<Song> getAllSongs() throws IOException {

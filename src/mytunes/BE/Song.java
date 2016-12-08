@@ -22,13 +22,6 @@ public class Song
         this.songPath = songPath;
     }
     
-    public Song(String songTitle, String songArtist, String songCategory, int songDuration){
-        
-        this.songTitle = songTitle;
-        this.songArtist = songArtist;
-        this.songCategory = songCategory;
-        this.songDuration = songDuration;
-    }
 
     public String getSongTitle() {
         return songTitle;
