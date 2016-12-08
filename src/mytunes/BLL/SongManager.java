@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
-import mytunes.BLL.FileParser;
 
 /**
  *
@@ -30,9 +29,9 @@ public class SongManager
 
     FileParser fileParser = new FileParser();
 
-    public void addSong(String songTitle, String songArtist, String songCategory, String songPath)
+    public void addSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
-        fileParser.sendSongInfo(songTitle, songArtist, songCategory, songPath);
+        fileParser.sendSongInfo(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
     public List<Song> getAllSongs() throws IOException
@@ -69,6 +68,14 @@ public class SongManager
         }
 
         return searchList;
+    }
+    
+    public String calcDuration(Long microseconds) {
+        String duration;
+        int mili = (int) (microseconds / 1000);
+        int sec = (mili / 1000) % 60;
+        int min = (mili / 1000) / 60;
+        return duration = min +"min" + " " + sec +"sec";
     }
 
 }

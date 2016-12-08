@@ -85,6 +85,7 @@ public class MainMyTunesController implements Initializable
     private TableColumn<Song, String> tblViewLibraryColumnCategory;
     @FXML
     private TableColumn<Song, String> tblViewLibraryColumnTime;
+   
     private Duration duration;
     @FXML
     private Button playButton;
@@ -131,7 +132,7 @@ public class MainMyTunesController implements Initializable
         tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("songTitle"));
         tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("songArtist"));
         tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("songCategory"));
-        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("songDuration"));
+        tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("readableDuration"));
         try {
             loadSongsIntoLibrary();
         } catch (IOException ex) {
@@ -409,7 +410,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void setSong(MouseEvent event)
     {
-        mediaPlayer.stop();
+       // mediaPlayer.stop();
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
