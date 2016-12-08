@@ -14,17 +14,17 @@ public class Song {
     private String songCategory;
     private Long songDuration;
     private String songPath;
-    private String readableDuration;
+    private String readDuration;
 
     SongManager songManager = SongManager.getInstance();
 
     public Song(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
         this.songTitle = songTitle;
         this.songArtist = songArtist;
-        this.songCategory = songCategory;//need to work on this, may have to set an enum file?
+        this.songCategory = songCategory;
         this.songDuration = songDuration; //need to work on this
         this.songPath = songPath;
-        readableDuration = readableDuration(songDuration);
+        readDuration = readableDuration(this.songDuration);
     }
 
     public String getSongTitle() {
