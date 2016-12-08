@@ -14,4 +14,4 @@ myTunes
 Compulsory Assignment 4
 
 Group members:
-Meng Dunmow, Jeppe Ganderup, Rasmus Fjord & Kristoffer Christensen.
+Meng Dunmow, Jeppe Ehmsen, Rasmus Fjord,  Kristoffer Christensen & Jonas Husted Andersen.
