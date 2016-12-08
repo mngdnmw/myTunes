@@ -30,8 +30,8 @@ public class FileManager {
             + SONG_PATH_SIZE;
     
     //Final variables for playlistlist.txt
-    private static final int PLAYLIST_NAME_SIZE = 50;
-    private static final int PLAYLIST_ID_SIZE = 50;
+    private static final int PLAYLIST_NAME_SIZE = 100;
+    private static final int PLAYLIST_ID_SIZE = 4;
     private static final int RECORD_SIZE_PLAYLIST = PLAYLIST_NAME_SIZE + PLAYLIST_ID_SIZE;
 
     //Final variables for songRelations.txt
