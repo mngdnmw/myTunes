@@ -38,6 +38,8 @@ public class FileManager {
     private static final int RECORD_SIZE_RELATIONS = PLAYLIST_ID_SIZE + SONG_TITLE_SIZE;
     
     private final String rw = "rw";
+    private final String songlistPath = "songlist.txt";
+    private final String playlistPath = "playlists.txt";
 
     public FileManager() {
     }
@@ -52,7 +54,7 @@ public class FileManager {
     }
     
     public void addSong(Song s) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("songlist.txt"), "rw")) {
+        try (RandomAccessFile raf = new RandomAccessFile(new File(songlistPath), rw)) {
             
             //place the file pointer at the end of the file
             raf.seek(raf.length());  
@@ -107,7 +109,7 @@ public class FileManager {
     
     public List<Song> getAllSongs() throws IOException {
 
-        try(RandomAccessFile rafs = new RandomAccessFile(new File("songlist.txt"), rw)){
+        try(RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw)){
             
             //makes an arraylist to store the songs 
             List<Song> listOfSongs = new ArrayList<>();
@@ -122,7 +124,7 @@ public class FileManager {
        
     public Song getBySong(String songTitle) throws IOException {
         
-        try (RandomAccessFile rafs = new RandomAccessFile(new File("songlist.txt"), rw)) {
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw)) {
             for (int pos = 0; pos < rafs.length(); pos += RECORD_SIZE_SONGLIST) {
                 
                 //starts reading at the beginning of every song record
@@ -151,7 +153,7 @@ public class FileManager {
 
 
     public void addPlaylist(Playlist p) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlists.txt"), rw)) {
+        try (RandomAccessFile raf = new RandomAccessFile(new File(playlistPath), rw)) {
             raf.seek(raf.length());  // place the file pointer at the end of the file.
             raf.writeInt(p.getId());
             raf.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
@@ -160,7 +162,7 @@ public class FileManager {
 
     
     public List<Playlist> getAll() throws IOException {
-        try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
+        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw)) {
 
             List<Playlist> playlists = new ArrayList<>();
 
@@ -186,7 +188,7 @@ public class FileManager {
 
 
     public Playlist getByPlaylist(String playlistName) throws IOException {
-        try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
+        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw)) {
             for (int pos = 0; pos < rafp.length(); pos += RECORD_SIZE_PLAYLIST) {
                 rafp.seek(pos);
                 //int id = raf.readInt();
@@ -205,7 +207,7 @@ public class FileManager {
 
     public void deleteByPlaylist(int id) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("playlist.txt"), rw))
+        try (RandomAccessFile raf = new RandomAccessFile(new File(playlistPath), rw))
         {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST)
             {
@@ -221,7 +223,7 @@ public class FileManager {
     }
     
     public void deleteBySong(int id) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(new File("songlist.txt"), rw)) {
+        try (RandomAccessFile raf = new RandomAccessFile(new File(songlistPath), rw)) {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_SONGLIST) {
                 raf.seek(pos);
                 int currentId = raf.readInt();
