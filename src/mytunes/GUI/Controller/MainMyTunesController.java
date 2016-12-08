@@ -1,9 +1,11 @@
 package mytunes.GUI.Controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import mytunes.BE.Playlist;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,16 +20,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-<<<<<<< HEAD
-=======
 import javafx.scene.control.Button;
->>>>>>> Development
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -37,14 +37,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import mytunes.BE.Song;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
+import mytunes.GUI.Model.SongModel;
 import mytunes.MyTunes;
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> Development
 public class MainMyTunesController implements Initializable
 {
 
@@ -60,10 +56,10 @@ public class MainMyTunesController implements Initializable
     private Window primaryStage;
 
     private boolean atEndOfMedia = false;
-    
-    private SongManager songManager = SongManager.getInstance();
 
     private SongManager songManager = SongManager.getInstance();
+    
+    private SongModel songModel = new SongModel();
 
     private String selectedSong;
 
@@ -101,7 +97,6 @@ public class MainMyTunesController implements Initializable
     {
         populateLists();
         setStartingSong();
-
     }
 
     /**
@@ -119,7 +114,6 @@ public class MainMyTunesController implements Initializable
             media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         }
-        
 
         System.out.println(selectedSong);
     }
@@ -189,16 +183,6 @@ public class MainMyTunesController implements Initializable
         }
     }
 
-<<<<<<< HEAD
-    private void loadPlaylistsIntoViewer()
-    {
-        ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(songManager.getAllPlaylists());
-        tblViewPlaylists.setItems(playlistLists);
-
-    }
-
-=======
->>>>>>> Development
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
@@ -219,11 +203,7 @@ public class MainMyTunesController implements Initializable
             
             alert.showAndWait();
         }*/
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> Development
     }
 
     /**
@@ -233,24 +213,9 @@ public class MainMyTunesController implements Initializable
      * @param event
      */
     @FXML
-    private void handleDeletePlaylist(ActionEvent event)
+    private void clickDeletePlaylist(ActionEvent event)
     {
         int selectedIndex = tblViewPlaylists.getSelectionModel().getSelectedIndex();
-<<<<<<< HEAD
-        
-        if(selectedIndex >= 0) {
-        tblViewPlaylists.getItems().remove(selectedIndex);
-        songManager.removePlaylist(tblViewPlaylists.getSelectionModel().getSelectedItem().getID());
-        loadPlaylistsIntoViewer();
-    }
-        else{
-            Alert alert = new Alert(AlertType.WARNING);
-          //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
-            alert.setTitle("No Slection");
-            alert.setHeaderText("No Playlist Selected");
-            alert.setContentText("Please select a playlist in the table.");
-            
-=======
 
         if (selectedIndex >= 0)
         {
@@ -265,7 +230,6 @@ public class MainMyTunesController implements Initializable
             alert.setHeaderText("No playlist selected");
             alert.setContentText("Please select a playlist in the table.");
 
->>>>>>> Development
             alert.showAndWait();
         }
     }
@@ -280,8 +244,6 @@ public class MainMyTunesController implements Initializable
     {
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Opens a new dialogue window to add a song to the library, and pauses
      * execution until it has closed again.
@@ -292,7 +254,6 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickNewSongLibrary(ActionEvent event) throws IOException
     {
->>>>>>> Development
 
         try
         {
@@ -324,9 +285,6 @@ public class MainMyTunesController implements Initializable
     private void clickEditSongLibrary(ActionEvent event)
     {
     }
-<<<<<<< HEAD
-   
-=======
 
     /**
      * Removes a selected song from the song library. Pops up with an alert
@@ -334,19 +292,10 @@ public class MainMyTunesController implements Initializable
      *
      * @param event
      */
->>>>>>> Development
     @FXML
-    private void handleRemoveSongLibrary(ActionEvent event)
+    private void clickRemoveSongLibrary(ActionEvent event)
     {
         int selectedIndex = tblViewLibrary.getSelectionModel().getSelectedIndex();
-<<<<<<< HEAD
-        if(selectedIndex >= 0) {
-        tblViewLibrary.getItems().remove(selectedIndex);
-    }
-        else{
-            Alert alert = new Alert(AlertType.WARNING);
-          //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
-=======
         if (selectedIndex >= 0)
         {
             tblViewLibrary.getItems().remove(selectedIndex);
@@ -354,22 +303,17 @@ public class MainMyTunesController implements Initializable
         {
             Alert alert = new Alert(AlertType.WARNING);
             //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
->>>>>>> Development
             alert.setTitle("No Selection");
             alert.setHeaderText("No Song Selected");
             alert.setContentText("Please select a song inside the music library.");
         }
     }
 
-<<<<<<< HEAD
-
-=======
     /**
      * Exits the program.
      *
      * @param event
      */
->>>>>>> Development
     @FXML
     private void clickCloseProgram(ActionEvent event)
     {
@@ -451,13 +395,6 @@ public class MainMyTunesController implements Initializable
      */
     private void loadSongsIntoLibrary() throws IOException
     {
-<<<<<<< HEAD
-        if (songManager.getAllSongs() == null)
-        {
-        }
-        ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
-=======
->>>>>>> Development
 
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
@@ -493,12 +430,6 @@ public class MainMyTunesController implements Initializable
     }
 
     @FXML
-<<<<<<< HEAD
-    private void handleRemoveSongPlaylist(ActionEvent event)
-    {
-    }
-
-=======
     private void clickRemoveSongPlaylist(ActionEvent event)
     {
     }
@@ -516,6 +447,32 @@ public class MainMyTunesController implements Initializable
         media = new Media(new File(selectedSong).toURI().toString());
         System.out.println(selectedSong);
     }
+    
+    @FXML
+    private void search(KeyEvent event) throws IOException
+    {
+        if (textFieldFilterSearch.textProperty().get().isEmpty()) {
+            tblViewLibrary.setItems(songModel.getSongList());
+        }
+        String query = textFieldFilterSearch.getText().trim();
+        tblViewLibrary.setItems(getSongList(query));
 
->>>>>>> Development
+    }
+
+    public ObservableList<Song> getSongList(String query) throws FileNotFoundException, IOException
+    {
+        List<Song> allSongs = songManager.getAllSongs();
+        if (query.isEmpty()) {
+            return FXCollections.observableArrayList(allSongs);
+        }
+        ObservableList<Song> searchList = FXCollections.observableArrayList();
+
+        for (Song song : allSongs) {
+            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase())) {
+                searchList.add(song);
+            }
+        }
+        return searchList;
+    }
+
 }

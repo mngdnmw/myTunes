@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-=======
 <?import javafx.geometry.Insets?>
->>>>>>> Development
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -14,12 +11,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="554.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
+<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="554.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
 
-<<<<<<< HEAD
-<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
-=======
->>>>>>> Development
    <children>
       <Slider fx:id="volumeSlider" layoutX="16.0" layoutY="9.0" orientation="VERTICAL" prefHeight="67.0" prefWidth="16.0" />
       <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" prefHeight="400.0" prefWidth="228.0">
@@ -44,30 +37,18 @@
       </TableView>
       <Button layoutX="14.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickNewPlaylist" prefHeight="26.0" prefWidth="70.0" text="New" />
       <Button layoutX="99.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickEditPlaylist" prefHeight="26.0" prefWidth="58.0" text="Edit" />
-<<<<<<< HEAD
-      <Button layoutX="172.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleDeletePlaylist" prefHeight="26.0" prefWidth="70.0" text="Delete" />
-      <ToggleButton layoutX="256.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickToggleUpPlaylist" prefHeight="26.0" prefWidth="58.0" text="ToggleButton" />
-      <ToggleButton layoutX="327.0" layoutY="516.0" mnemonicParsing="false" onAction="#clcikToggleDownPlaylist" prefHeight="26.0" prefWidth="58.0" text="ToggleButton" />
-      <Button layoutX="398.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleRemoveSongPlaylist" text="Delete" />
-      <Button layoutX="542.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickNewSongLibrary" prefHeight="26.0" prefWidth="70.0" text="New" />
-      <Button layoutX="624.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickEditSongLibrary" prefHeight="26.0" prefWidth="70.0" text="Edit" />
-      <Button layoutX="703.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleRemoveSongLibrary" prefHeight="26.0" prefWidth="70.0" text="Delete" />
-      <Button layoutX="924.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickCloseProgram" text="Close" />
-=======
       <Button layoutX="172.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" prefHeight="26.0" prefWidth="70.0" text="Delete" />
       <Button layoutX="398.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickRemoveSongPlaylist" text="Delete" />
       <Button layoutX="542.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickNewSongLibrary" prefHeight="26.0" prefWidth="70.0" text="New" />
       <Button layoutX="624.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickEditSongLibrary" prefHeight="26.0" prefWidth="70.0" text="Edit" />
       <Button layoutX="703.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickRemoveSongLibrary" prefHeight="26.0" prefWidth="70.0" text="Delete" />
       <Button cancelButton="true" layoutX="924.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickCloseProgram" text="Close" />
->>>>>>> Development
       <Label layoutX="16.0" layoutY="84.0" text="Playlists" />
       <Label layoutX="256.0" layoutY="84.0" text="Songs on Playlist" />
       <Label layoutX="542.0" layoutY="84.0" text="Songs" />
       <Label layoutX="353.0" layoutY="34.0" text="Currently Playing" />
-      <Label layoutX="694.0" layoutY="34.0" text="Filter" />
-      <TextField fx:id="textFieldFilterSearch" layoutX="738.0" layoutY="29.0" />
-      <Button layoutX="914.0" layoutY="29.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
+      <Label layoutX="773.0" layoutY="76.0" text="Filter" />
+      <TextField fx:id="textFieldFilterSearch" layoutX="813.0" layoutY="71.0" onKeyReleased="#search" />
     <Button fx:id="playButton" defaultButton="true" layoutX="135.0" layoutY="27.0" minWidth="38.0" mnemonicParsing="false" onAction="#clickPlayPauseButton" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 100; -fx-font-size: 30;" text="▷">
          <opaqueInsets>
             <Insets />

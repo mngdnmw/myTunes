@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.BE.Song;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
 
 /**
  * FXML Controller class
@@ -73,12 +73,8 @@ public class SongTableViewController implements Initializable
     @FXML
     private void clickSaveAddSong(ActionEvent event)
     {
-<<<<<<< HEAD
-        songManager.addSong(textFieldTitle.getText(), textFieldFilePath.getText(), textFieldArtist.getText());
-=======
         songManager.addSong(textFieldTitle.getText(), textFieldArtist.getText(), comboCategory.getValue(),textFieldFilePath.getText());
         
->>>>>>> Development
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
