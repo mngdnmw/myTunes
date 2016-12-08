@@ -106,14 +106,14 @@ public class MainMyTunesController implements Initializable
      */
     private void setStartingSong()
     {
-        if (tblViewLibrary.getItems().isEmpty()) {
-            selectedSong = null;
-        } else {
-            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
-            media = new Media(new File(selectedSong).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-        }
-
+//        if (tblViewLibrary.getItems().isEmpty()) {
+//            selectedSong = "";
+//        } else {
+//            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
+//            media = new Media(new File(selectedSong).toURI().toString());
+//            mediaPlayer = new MediaPlayer(media);
+//        }
+        selectedSong = "blank.mp3";
         System.out.println(selectedSong);
     }
 
