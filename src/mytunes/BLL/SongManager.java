@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
-import mytunes.BLL.FileParser;
 
 /**
  *
@@ -53,6 +52,11 @@ public class SongManager
     public void removePlaylist(int id)
     {
         fileParser.removePlaylist(id);
+    }
+    
+    public void removeSongLibrary(int id)
+    {
+        fileParser.removeSong(id);
     }
 
     public List<Song> search(String query) throws FileNotFoundException, IOException

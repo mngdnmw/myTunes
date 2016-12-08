@@ -1,5 +1,8 @@
 package mytunes.BE;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  *
  * @author jeppe
@@ -13,6 +16,9 @@ public class Song
     private String songCategory;
     private int songDuration;
     private String songPath;
+    
+    private static int nextId = 0;
+    private final IntegerProperty songId;
 
     public Song(String songTitle, String songArtist, String songCategory, String songPath)
     {
@@ -21,6 +27,8 @@ public class Song
         this.songCategory = songCategory;//need to work on this, may have to set an enum file?
         songDuration = getSongDuration(); //need to work on this
         this.songPath = songPath;
+        
+        songId = new SimpleIntegerProperty(nextId++);
     }
 
     public String getSongTitle()
@@ -76,6 +84,11 @@ public class Song
     public String getAllSongStringInfo()
     {
         return songArtist + " " + songTitle;
+    }
+
+    public int getId()
+    {
+    return songId.get();
     }
 
 }

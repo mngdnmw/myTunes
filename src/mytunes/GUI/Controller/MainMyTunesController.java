@@ -58,7 +58,7 @@ public class MainMyTunesController implements Initializable
     private boolean atEndOfMedia = false;
 
     private SongManager songManager = SongManager.getInstance();
-    
+
     private SongModel songModel = new SongModel();
 
     private String selectedSong;
@@ -97,6 +97,7 @@ public class MainMyTunesController implements Initializable
     {
         populateLists();
         setStartingSong();
+//        volumeControl();
     }
 
     /**
@@ -112,7 +113,7 @@ public class MainMyTunesController implements Initializable
         {
             selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
             media = new Media(new File(selectedSong).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+            mediaPlayer = new MediaPlayer(media);
         }
 
         System.out.println(selectedSong);
@@ -294,9 +295,13 @@ public class MainMyTunesController implements Initializable
     private void clickRemoveSongLibrary(ActionEvent event)
     {
         int selectedIndex = tblViewLibrary.getSelectionModel().getSelectedIndex();
+        
         if (selectedIndex >= 0)
-        {
-            tblViewLibrary.getItems().remove(selectedIndex);
+        {   
+
+            songManager.removeSongLibrary(tblViewLibrary.getSelectionModel().getSelectedItem().getId());
+                        tblViewLibrary.getItems().remove(selectedIndex);
+            
         } else
         {
             Alert alert = new Alert(AlertType.WARNING);
@@ -331,29 +336,8 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickStopButton(ActionEvent event)
     {
-        MediaPlayer.Status status = mediaPlayer.getStatus();
-
-        if (status == MediaPlayer.Status.UNKNOWN || status == status.HALTED)
-        {
-            return;
-        }
-
-        if (status == MediaPlayer.Status.PAUSED
-                || status == status.READY
-                || status == status.STOPPED)
-        {
-            if (atEndOfMedia)
-            {
-                mediaPlayer.seek(mediaPlayer.getStartTime());
-                atEndOfMedia = false;
-            }
-            mediaPlayer.play();
-
-        } else
-        {
-            mediaPlayer.stop();
-            playButton.setText("▷");
-        }
+        mediaPlayer.stop();
+        playButton.setText("▷");
     }
 
     /**
@@ -374,17 +358,6 @@ public class MainMyTunesController implements Initializable
             mediaPlayer.play();
             playButton.setText("||");
         }
-
-        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener()
-        {
-
-            @Override
-            public void invalidated(Observable observable)
-            {
-                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
-            }
-        });
     }
 
     /**
@@ -441,17 +414,18 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void setSong(MouseEvent event)
     {
-        mediaPlayer.stop();
+        //mediaPlayer.stop();
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         System.out.println(selectedSong);
     }
-    
+
     @FXML
     private void search(KeyEvent event) throws IOException
     {
-        if (textFieldFilterSearch.textProperty().get().isEmpty()) {
+        if (textFieldFilterSearch.textProperty().get().isEmpty())
+        {
             tblViewLibrary.setItems(songModel.getSongList());
         }
         String query = textFieldFilterSearch.getText().trim();
@@ -462,17 +436,36 @@ public class MainMyTunesController implements Initializable
     public ObservableList<Song> getSongList(String query) throws FileNotFoundException, IOException
     {
         List<Song> allSongs = songManager.getAllSongs();
-        if (query.isEmpty()) {
+        if (query.isEmpty())
+        {
             return FXCollections.observableArrayList(allSongs);
         }
         ObservableList<Song> searchList = FXCollections.observableArrayList();
 
-        for (Song song : allSongs) {
-            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase())) {
+        for (Song song : allSongs)
+        {
+            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase()))
+            {
                 searchList.add(song);
             }
         }
         return searchList;
+    }
+
+    private void volumeControl()
+    {
+        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
+
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
+
+            @Override
+            public void invalidated(Observable observable)
+            {
+                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
+            }
+        });
+
     }
 
 }

@@ -15,12 +15,15 @@ import mytunes.BE.Song;
 public class FileManager {
     
     //Final variables for songlist.txt
+    private static final int SONG_ID_SIZE = 10;
     private static final int SONG_TITLE_SIZE = 50;
     private static final int SONG_ARTIST_SIZE = 50;
     private static final int SONG_CATEGORY_SIZE = 20;
     private static final int SONG_DURATION_SIZE = 5;
     private static final int SONG_PATH_SIZE = 400;
-    private static final int RECORD_SIZE_SONGLIST = SONG_TITLE_SIZE 
+    private static final int RECORD_SIZE_SONGLIST = 
+            SONG_ID_SIZE
+            + SONG_TITLE_SIZE 
             + SONG_ARTIST_SIZE 
             + SONG_CATEGORY_SIZE 
             + SONG_DURATION_SIZE
@@ -55,6 +58,7 @@ public class FileManager {
             raf.seek(raf.length());  
             
             //writing song info into songlist.txt
+            raf.writeBytes(String.format("%-" + SONG_ID_SIZE + "s", s.getId()).substring(0, SONG_ID_SIZE));
             raf.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
             raf.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
             raf.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
@@ -66,6 +70,7 @@ public class FileManager {
      private Song getOneSong(final RandomAccessFile rafs) throws IOException {
          
         //creates empty byte arrays corresponding to the size of each song property 
+        byte[] id = new byte[SONG_ID_SIZE];
         byte[] title = new byte[SONG_TITLE_SIZE];
         byte[] artist = new byte[SONG_ARTIST_SIZE];
         byte[] category = new byte[SONG_CATEGORY_SIZE];
@@ -73,6 +78,7 @@ public class FileManager {
         byte[] path = new byte[SONG_PATH_SIZE];
         
         //reads into the byte arrays
+        rafs.read(id);
         rafs.read(title);
         rafs.read(artist);
         rafs.read(category);
@@ -80,6 +86,7 @@ public class FileManager {
         rafs.read(path);
         
         //type casts the byte arrays into strings
+        int songId = ByteBuffer.wrap(id).getInt();
         String songTitle = new String(title).trim();
         String songArtist = new String(artist).trim();
         String songCategory = new String(category).trim();
@@ -205,12 +212,12 @@ public class FileManager {
         }
     }
     
-    public void deleteBySong(String songName) throws IOException {
+    public void deleteBySong(int id) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(new File("songlist.txt"), rw)) {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_SONGLIST) {
                 raf.seek(pos);
-                String song = raf.readLine();
-                if (songName.equals(song)) {
+                int currentId = raf.readInt();
+                if (currentId == id) {
                     raf.seek(pos);
                     raf.write(new byte[RECORD_SIZE_SONGLIST]); // write as many blank bytes as one record
                 }
