@@ -122,8 +122,7 @@ public class MainMyTunesController implements Initializable
     {
         //Playlist viewer
         columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
-        //    tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
-        //   tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
+
         loadPlaylistsIntoViewer();
 
         //Song viewer
@@ -221,8 +220,7 @@ public class MainMyTunesController implements Initializable
         } else
         {
             Alert alert = new Alert(AlertType.WARNING);
-            //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
-            alert.setTitle("No eelection");
+            alert.setTitle("No selection");
             alert.setHeaderText("No playlist selected");
             alert.setContentText("Please select a playlist in the table.");
 
