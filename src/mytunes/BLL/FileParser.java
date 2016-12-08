@@ -50,4 +50,15 @@ public class FileParser
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void removeSong(int id)
+    {
+        try
+        {
+            fileManager.deleteBySong(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -98,6 +98,8 @@ public class MainMyTunesController implements Initializable
     {
         populateLists();
         setStartingSong();
+//        volumeControl();
+
     }
 
     /**
@@ -106,14 +108,18 @@ public class MainMyTunesController implements Initializable
      */
     private void setStartingSong()
     {
-//        if (tblViewLibrary.getItems().isEmpty()) {
-//            selectedSong = "";
-//        } else {
-//            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
-//            media = new Media(new File(selectedSong).toURI().toString());
-//            mediaPlayer = new MediaPlayer(media);
-//        }
-        selectedSong = "blank.mp3";
+
+        if (tblViewLibrary.getItems().isEmpty())
+        {
+            selectedSong = null;
+        } else
+        {
+            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
+            media = new Media(new File(selectedSong).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+        }
+
+
         System.out.println(selectedSong);
     }
 
@@ -293,9 +299,13 @@ public class MainMyTunesController implements Initializable
     private void clickRemoveSongLibrary(ActionEvent event)
     {
         int selectedIndex = tblViewLibrary.getSelectionModel().getSelectedIndex();
+        
         if (selectedIndex >= 0)
-        {
-            tblViewLibrary.getItems().remove(selectedIndex);
+        {   
+
+            songManager.removeSongLibrary(tblViewLibrary.getSelectionModel().getSelectedItem().getId());
+                        tblViewLibrary.getItems().remove(selectedIndex);
+            
         } else
         {
             Alert alert = new Alert(AlertType.WARNING);
@@ -330,7 +340,6 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickStopButton(ActionEvent event)
     {
-        MediaPlayer.Status status = mediaPlayer.getStatus();
 
         mediaPlayer.stop();
         playButton.setText("▷");
@@ -355,17 +364,6 @@ public class MainMyTunesController implements Initializable
             mediaPlayer.play();
             playButton.setText("||");
         }
-
-        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener()
-        {
-
-            @Override
-            public void invalidated(Observable observable)
-            {
-                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
-            }
-        });
     }
 
     /**
@@ -422,10 +420,12 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void setSong(MouseEvent event)
     {
+
         if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
         {
             mediaPlayer.stop();
         }
+
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
@@ -462,5 +462,22 @@ public class MainMyTunesController implements Initializable
         }
         return searchList;
     }
+
+    private void volumeControl()
+    {
+        volumeSlider.setValue(mediaPlayer.getVolume() * 100);
+
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
+
+            @Override
+            public void invalidated(Observable observable)
+            {
+                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
+            }
+        });
+
+    }
+
 
 }

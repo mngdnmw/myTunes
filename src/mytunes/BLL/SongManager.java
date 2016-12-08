@@ -27,7 +27,9 @@ public class SongManager
 
     }
 
-    FileParser fileParser = new FileParser();
+
+
+FileParser fileParser = new FileParser();
 
     public void addSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
@@ -53,6 +55,11 @@ public class SongManager
     {
         fileParser.removePlaylist(id);
     }
+    
+    public void removeSongLibrary(int id)
+    {
+        fileParser.removeSong(id);
+    }
 
     public List<Song> search(String query) throws FileNotFoundException, IOException
     {
@@ -70,12 +77,15 @@ public class SongManager
         return searchList;
     }
     
-    public String calcDuration(Long microseconds) {
-        String duration;
-        int mili = (int) (microseconds / 1000);
-        int sec = (mili / 1000) % 60;
-        int min = (mili / 1000) / 60;
-        return duration = min +"min" + " " + sec +"sec";
+    public String calcDuration(Long microSeconds)
+    {
+            int mili = (int) (microSeconds / 1000);
+            int sec = (mili / 1000) % 60;
+            int min = (mili / 1000) / 60;
+            String duration;
+            duration = min + "min" + " " + sec + "sec";
+            
+            return duration;
     }
 
 }
