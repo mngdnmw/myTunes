@@ -18,7 +18,7 @@ public class FileManager {
     private static final int SONG_TITLE_SIZE = 50;
     private static final int SONG_ARTIST_SIZE = 50;
     private static final int SONG_CATEGORY_SIZE = 20;
-    private static final int SONG_DURATION_SIZE = 5;
+    private static final int SONG_DURATION_SIZE = 8;
     private static final int SONG_PATH_SIZE = 400;
     private static final int RECORD_SIZE_SONGLIST = SONG_TITLE_SIZE 
             + SONG_ARTIST_SIZE 
@@ -39,8 +39,8 @@ public class FileManager {
     public FileManager() {
     }
     
-    public void saveSong(String songTitle,String songArtist, String songCategory, String songPath) {
-        Song song = new Song(songTitle, songArtist, songCategory, songPath);
+    public void saveSong(String songTitle,String songArtist, String songCategory, Long songDuration, String songPath) {
+        Song song = new Song(songTitle, songArtist, songCategory, songDuration, songPath);
         try {
             addSong(song);
         } catch (IOException ex) {
@@ -83,12 +83,20 @@ public class FileManager {
         String songTitle = new String(title).trim();
         String songArtist = new String(artist).trim();
         String songCategory = new String(category).trim();
-        int songDuration = ByteBuffer.wrap(duration).getInt();
+        Long songDuration = bytesToLong(duration);
         String songPath = new String(path).trim();
         
         
-        return new Song(songTitle, songArtist, songCategory, songPath);
+        return new Song(songTitle, songArtist, songCategory, songDuration, songPath);
     }
+     
+     
+     private static long bytesToLong(byte[] bytes){
+         ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+         buffer.put(bytes, 0, bytes.length);
+         buffer.flip();
+         return buffer.getLong();
+     }
     
     public List<Song> getAllSongs() throws IOException {
 
