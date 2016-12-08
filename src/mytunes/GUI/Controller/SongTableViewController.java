@@ -24,10 +24,11 @@ import mytunes.BLL.SongManager;
 
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
-public class SongTableViewController implements Initializable {
+public class SongTableViewController implements Initializable
+{
 
     private SongManager songManager = SongManager.getInstance();
-    
+
     private Long durationOfSong;
 
     @FXML
@@ -42,17 +43,20 @@ public class SongTableViewController implements Initializable {
     private TextField textFieldFilePath;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         fillComboBox();
     }
 
     @FXML
-    private void clickMoreInfo(ActionEvent event) {
+    private void clickMoreInfo(ActionEvent event)
+    {
         //TODO
     }
 
     @FXML
-    private void clickChooseFromFile(ActionEvent event) throws UnsupportedAudioFileException, IOException {
+    private void clickChooseFromFile(ActionEvent event) throws UnsupportedAudioFileException, IOException
+    {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 //new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
@@ -62,34 +66,70 @@ public class SongTableViewController implements Initializable {
         fileChooser.setTitle("Vælg sang...");
         File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow()).getAbsoluteFile();
         textFieldFilePath.setText(file.getAbsolutePath());
-        getDurationWithMp3Spi(file);
+        getArtistFromSong(file);
+        getTitleFromSong(file);
+        getDurationFromSong(file);
 
     }
 
-    private void getDurationWithMp3Spi(File song) throws UnsupportedAudioFileException, IOException {
+    private void getArtistFromSong(File song) throws UnsupportedAudioFileException, IOException
+    {
 
         AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(song);
-        if (fileFormat instanceof TAudioFileFormat) {
+        if (fileFormat instanceof TAudioFileFormat)
+        {
             Map<String, Object> properties = ((TAudioFileFormat) fileFormat).properties();
-            
-            String key = "duration";
-            
-            Long microseconds = (Long) properties.get(key);
-            
-            textFieldTime.setText(songManager.calcDuration(microseconds));
-            durationOfSong = microseconds;
-        } else {
-            throw new UnsupportedAudioFileException();
+
+            String key = "author";
+
+            String artist = (String) properties.get(key);
+            textFieldArtist.setText(artist);
         }
-        
     }
 
-    public void saveSongsFromView() {
+    private void getTitleFromSong(File song) throws UnsupportedAudioFileException, IOException
+    {
+
+        AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(song);
+        if (fileFormat instanceof TAudioFileFormat)
+        {
+            Map<String, Object> properties = ((TAudioFileFormat) fileFormat).properties();
+
+            String key = "title";
+
+            String title = (String) properties.get(key);
+            textFieldTitle.setText(title);
+        }
+    }
+
+    private void getDurationFromSong(File song) throws UnsupportedAudioFileException, IOException
+    {
+
+        AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(song);
+        if (fileFormat instanceof TAudioFileFormat)
+        {
+            Map<String, Object> properties = ((TAudioFileFormat) fileFormat).properties();
+
+            String key = "duration";
+
+            Long microseconds = (Long) properties.get(key);
+
+            textFieldTime.setText(songManager.calcDuration(microseconds));
+            durationOfSong = microseconds;
+        } else
+        {
+            throw new UnsupportedAudioFileException();
+        }
+    }
+
+    public void saveSongsFromView()
+    {
         List<Song> song = new ArrayList();
     }
 
     @FXML
-    private void clickSaveAddSong(ActionEvent event) {
+    private void clickSaveAddSong(ActionEvent event)
+    {
         songManager.addSong(textFieldTitle.getText(), textFieldArtist.getText(), comboCategory.getValue(), durationOfSong, textFieldFilePath.getText());
 
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
@@ -97,12 +137,14 @@ public class SongTableViewController implements Initializable {
     }
 
     @FXML
-    private void clickCloseAddSong(ActionEvent event) {
+    private void clickCloseAddSong(ActionEvent event)
+    {
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
 
-    private void fillComboBox() {
+    private void fillComboBox()
+    {
         ObservableList<String> comboItems
                 = FXCollections.observableArrayList("", "Blues", "Classical",
                         "Country", "Folk", "Electronic", "Jazz", "Hip-hop",
@@ -113,40 +155,49 @@ public class SongTableViewController implements Initializable {
     }
 
     //Getters for song info 
-    public TextField getTextFieldTitle() {
+    public TextField getTextFieldTitle()
+    {
         return textFieldTitle;
     }
 
-    public TextField getTextFieldArtist() {
+    public TextField getTextFieldArtist()
+    {
         return textFieldArtist;
     }
 
-    public TextField getTextFieldTime() {
+    public TextField getTextFieldTime()
+    {
         return textFieldTime;
     }
 
-    public TextField getTextFieldFilePath() {
+    public TextField getTextFieldFilePath()
+    {
         return textFieldFilePath;
     }
 
-    public ComboBox<String> getComboCategory() {
+    public ComboBox<String> getComboCategory()
+    {
         return comboCategory;
     }
 
     //Setters
-    public void setTextFieldTitle(TextField textFieldTitle) {
+    public void setTextFieldTitle(TextField textFieldTitle)
+    {
         this.textFieldTitle = textFieldTitle;
     }
 
-    public void setTextFieldArtist(TextField textFieldArtist) {
+    public void setTextFieldArtist(TextField textFieldArtist)
+    {
         this.textFieldArtist = textFieldArtist;
     }
 
-    public void setTextFieldTime(TextField textFieldTime) {
+    public void setTextFieldTime(TextField textFieldTime)
+    {
         this.textFieldTime = textFieldTime;
     }
 
-    public void setTextFieldFilePath(TextField textFieldFilePath) {
+    public void setTextFieldFilePath(TextField textFieldFilePath)
+    {
         this.textFieldFilePath = textFieldFilePath;
     }
 
