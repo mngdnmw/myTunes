@@ -1,9 +1,11 @@
 package mytunes.GUI.Controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import mytunes.BE.Playlist;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -34,7 +37,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import mytunes.BE.Song;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
+import mytunes.GUI.Model.SongModel;
 import mytunes.MyTunes;
 
 public class MainMyTunesController implements Initializable
@@ -54,6 +58,8 @@ public class MainMyTunesController implements Initializable
     private boolean atEndOfMedia = false;
 
     private SongManager songManager = SongManager.getInstance();
+    
+    private SongModel songModel = new SongModel();
 
     private String selectedSong;
 
@@ -91,7 +97,6 @@ public class MainMyTunesController implements Initializable
     {
         populateLists();
         setStartingSong();
-
     }
 
     /**
@@ -109,7 +114,6 @@ public class MainMyTunesController implements Initializable
             media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         }
-        
 
         System.out.println(selectedSong);
     }
@@ -442,6 +446,33 @@ public class MainMyTunesController implements Initializable
         media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         System.out.println(selectedSong);
+    }
+    
+    @FXML
+    private void search(KeyEvent event) throws IOException
+    {
+        if (textFieldFilterSearch.textProperty().get().isEmpty()) {
+            tblViewLibrary.setItems(songModel.getSongList());
+        }
+        String query = textFieldFilterSearch.getText().trim();
+        tblViewLibrary.setItems(getSongList(query));
+
+    }
+
+    public ObservableList<Song> getSongList(String query) throws FileNotFoundException, IOException
+    {
+        List<Song> allSongs = songManager.getAllSongs();
+        if (query.isEmpty()) {
+            return FXCollections.observableArrayList(allSongs);
+        }
+        ObservableList<Song> searchList = FXCollections.observableArrayList();
+
+        for (Song song : allSongs) {
+            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase())) {
+                searchList.add(song);
+            }
+        }
+        return searchList;
     }
 
 }

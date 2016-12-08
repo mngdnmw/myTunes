@@ -6,14 +6,15 @@ package mytunes.BE;
  */
 public class Song
 {
+
     ///also need to implement duartion
     private String songTitle;
     private String songArtist;
     private String songCategory;
     private int songDuration;
-     private String songPath;
+    private String songPath;
 
-    public Song(String songTitle, String songArtist, String songCategory,String songPath)
+    public Song(String songTitle, String songArtist, String songCategory, String songPath)
     {
         this.songTitle = songTitle;
         this.songArtist = songArtist;
@@ -21,47 +22,60 @@ public class Song
         songDuration = getSongDuration(); //need to work on this
         this.songPath = songPath;
     }
-    
 
-    public String getSongTitle() {
+    public String getSongTitle()
+    {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle) {
+    public void setSongTitle(String songTitle)
+    {
         this.songTitle = songTitle;
     }
 
-    public String getSongPath() {
+    public String getSongPath()
+    {
         return songPath;
     }
 
-    public void setSongPath(String songPath) {
+    public void setSongPath(String songPath)
+    {
         this.songPath = songPath;
     }
 
-    public String getSongArtist() {
+    public String getSongArtist()
+    {
         return songArtist;
     }
 
-    public void setSongArtist(String songArtist) {
+    public void setSongArtist(String songArtist)
+    {
         this.songArtist = songArtist;
     }
 
-    public String getSongCategory() {
+    public String getSongCategory()
+    {
         return songCategory;
     }
 
-    public void setSongCategory(String songCategory) {
+    public void setSongCategory(String songCategory)
+    {
         this.songCategory = songCategory;
     }
 
-    public int getSongDuration() {
+    public int getSongDuration()
+    {
         return songDuration;
     }
 
-    public void setSongDuration(int songDuration) {
+    public void setSongDuration(int songDuration)
+    {
         this.songDuration = songDuration;
     }
-    
-   
+
+    public String getAllSongStringInfo()
+    {
+        return songArtist + " " + songTitle;
+    }
+
 }

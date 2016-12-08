@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.BE.Playlist;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
 
 public class PlaylistViewController implements Initializable
 {
