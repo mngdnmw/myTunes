@@ -1,9 +1,11 @@
 package mytunes.GUI.Controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import mytunes.BE.Playlist;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.Slider;
@@ -27,6 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -35,10 +37,12 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import mytunes.BE.Song;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
+import mytunes.GUI.Model.SongModel;
 import mytunes.MyTunes;
 
-public class MainMyTunesController implements Initializable {
+public class MainMyTunesController implements Initializable
+{
 
     @FXML
     private TableView<Playlist> tblViewPlaylists;
@@ -54,6 +58,10 @@ public class MainMyTunesController implements Initializable {
     private boolean atEndOfMedia = false;
 
     private SongManager songManager = SongManager.getInstance();
+    
+    private SongModel songModel = new SongModel();
+
+    private String selectedSong;
 
     @FXML
     Slider volumeSlider;
@@ -77,8 +85,6 @@ public class MainMyTunesController implements Initializable {
     private TableColumn<Song, String> tblViewLibraryColumnCategory;
     @FXML
     private TableColumn<Song, String> tblViewLibraryColumnTime;
-    @FXML
-    private Slider timeSlider;
     private Duration duration;
     @FXML
     private Button playButton;
@@ -87,16 +93,41 @@ public class MainMyTunesController implements Initializable {
 
     //Initializes the controller class.
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         populateLists();
-        
-
+        setStartingSong();
     }
-    private void populateLists(){
+
+    /**
+     * Sets the player to play the first song in the library, to avoid a
+     * nullpointerexception.
+     */
+    private void setStartingSong()
+    {
+        if (tblViewLibrary.getItems().isEmpty())
+        {
+            selectedSong = null;
+        } else
+        {
+            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
+            media = new Media(new File(selectedSong).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        }
+
+        System.out.println(selectedSong);
+    }
+
+    /**
+     * Set cell value factories for the library and playlist tables, and loads
+     * files from the Model>BLL>DAL into the view.
+     */
+    private void populateLists()
+    {
         //Playlist viewer
         columnPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
-    //    tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
-    //   tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
+        //    tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+        //   tblViewLibraryColumnTitle.setCellValueFactory(new PropertyValueFactory("title"));
         loadPlaylistsIntoViewer();
 
         //Song viewer
@@ -104,22 +135,30 @@ public class MainMyTunesController implements Initializable {
         tblViewLibraryColumnArtist.setCellValueFactory(new PropertyValueFactory("songArtist"));
         tblViewLibraryColumnCategory.setCellValueFactory(new PropertyValueFactory("songCategory"));
         tblViewLibraryColumnTime.setCellValueFactory(new PropertyValueFactory("songDuration"));
-        try {
+        try
+        {
             loadSongsIntoLibrary();
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void clickAddSongPlaylist(ActionEvent event) {
+    private void clickAddSongPlaylist(ActionEvent event)
+    {
     }
 
+    /**
+     * Opens a dialogue window to create a new playlist, and pauses execution
+     * until it closes.
+     */
     @FXML
+    private void clickNewPlaylist(ActionEvent event)
+    {
 
-    private void clickNewPlaylist(ActionEvent event) {
-
-        try {
+        try
+        {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader
@@ -138,13 +177,15 @@ public class MainMyTunesController implements Initializable {
             dialogStage.showAndWait();
             loadPlaylistsIntoViewer();
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event) {
+    private void clickEditPlaylist(ActionEvent event)
+    {
         /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
         if(selectedPlaylist != null)
         {
@@ -165,19 +206,28 @@ public class MainMyTunesController implements Initializable {
 
     }
 
+    /**
+     * Gets the selected playlit from the playlist view and deletes it. Pops up
+     * with an alert message if no playlist is selected.
+     *
+     * @param event
+     */
     @FXML
-    private void clickDeletePlaylist(ActionEvent event) {
+    private void clickDeletePlaylist(ActionEvent event)
+    {
         int selectedIndex = tblViewPlaylists.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex >= 0) {
+        if (selectedIndex >= 0)
+        {
             tblViewPlaylists.getItems().remove(selectedIndex);
             songManager.removePlaylist(tblViewPlaylists.getSelectionModel().getSelectedItem().getId());
             loadPlaylistsIntoViewer();
-        } else {
+        } else
+        {
             Alert alert = new Alert(AlertType.WARNING);
             //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
-            alert.setTitle("No Slection");
-            alert.setHeaderText("No Playlist Selected");
+            alert.setTitle("No eelection");
+            alert.setHeaderText("No playlist selected");
             alert.setContentText("Please select a playlist in the table.");
 
             alert.showAndWait();
@@ -185,17 +235,28 @@ public class MainMyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickToggleUpPlaylist(ActionEvent event) {
+    private void clickToggleUpPlaylist(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickToggleDownPlaylist(ActionEvent event) {
+    private void clickToggleDownPlaylist(ActionEvent event)
+    {
     }
 
+    /**
+     * Opens a new dialogue window to add a song to the library, and pauses
+     * execution until it has closed again.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    private void clickNewSongLibrary(ActionEvent event) throws IOException {
+    private void clickNewSongLibrary(ActionEvent event) throws IOException
+    {
 
-        try {
+        try
+        {
             FXMLLoader loader = new FXMLLoader();
             loader
                     .setLocation(MyTunes.class
@@ -211,7 +272,8 @@ public class MainMyTunesController implements Initializable {
 
             dialogStage.showAndWait();
 
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
 
             Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -220,15 +282,25 @@ public class MainMyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickEditSongLibrary(ActionEvent event) {
+    private void clickEditSongLibrary(ActionEvent event)
+    {
     }
 
+    /**
+     * Removes a selected song from the song library. Pops up with an alert
+     * message if no song has been selected.
+     *
+     * @param event
+     */
     @FXML
-    private void clickRemoveSongLibrary(ActionEvent event) {
+    private void clickRemoveSongLibrary(ActionEvent event)
+    {
         int selectedIndex = tblViewLibrary.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
+        if (selectedIndex >= 0)
+        {
             tblViewLibrary.getItems().remove(selectedIndex);
-        } else {
+        } else
+        {
             Alert alert = new Alert(AlertType.WARNING);
             //alert.initOwner(mainApp ""MyTunes".getPrimaryStage());
             alert.setTitle("No Selection");
@@ -237,99 +309,170 @@ public class MainMyTunesController implements Initializable {
         }
     }
 
+    /**
+     * Exits the program.
+     *
+     * @param event
+     */
     @FXML
-    private void clickCloseProgram(ActionEvent event) {
+    private void clickCloseProgram(ActionEvent event)
+    {
         System.exit(0);
     }
 
     @FXML
-    private void clickSearch(ActionEvent event) {
+    private void clickSearch(ActionEvent event)
+    {
     }
 
+    /**
+     * Stops the currently playing song and resets it to the start again.
+     *
+     * @param event
+     */
     @FXML
-    private void clickStopButton(ActionEvent event) {
+    private void clickStopButton(ActionEvent event)
+    {
         MediaPlayer.Status status = mediaPlayer.getStatus();
 
-        if (status == MediaPlayer.Status.UNKNOWN || status == status.HALTED) {
+        if (status == MediaPlayer.Status.UNKNOWN || status == status.HALTED)
+        {
             return;
         }
 
         if (status == MediaPlayer.Status.PAUSED
                 || status == status.READY
-                || status == status.STOPPED) {
-            if (atEndOfMedia) {
+                || status == status.STOPPED)
+        {
+            if (atEndOfMedia)
+            {
                 mediaPlayer.seek(mediaPlayer.getStartTime());
                 atEndOfMedia = false;
             }
-//             << << << < HEAD
-//            
-//            mediaPlayer.play();
-//             == == ==
-//                    =  >>> >>> > origin / KingKristoffers
-        } else {
+            mediaPlayer.play();
+
+        } else
+        {
             mediaPlayer.stop();
             playButton.setText("▷");
         }
     }
 
+    /**
+     * Plays if paused, and pauses if playing. Changes the symbol on the button
+     * dynamically. Also handles the playback volume.
+     *
+     * @param event
+     */
     @FXML
-    private void clickPlayPauseButton(ActionEvent event) {
-        if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+    private void clickPlayPauseButton(ActionEvent event)
+    {
+        if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
             mediaPlayer.pause();
             playButton.setText("▷");
-        } else {
+        } else
+        {
             mediaPlayer.play();
             playButton.setText("||");
         }
-//String path = "src/mytunes/MusicLibrary/" + "RedArmyChoir.mp3";
-        String path = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
-
-        media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
 
         volumeSlider.setValue(mediaPlayer.getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
 
             @Override
-            public void invalidated(Observable observable) {
+            public void invalidated(Observable observable)
+            {
                 mediaPlayer.setVolume(volumeSlider.getValue() / 100);
             }
         });
     }
 
-//    private void readSongsIntoLibrary()
-//    {
-//        if (songManager.getAllSongs() == null)
-//        {
-//        }
-//        ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
-//
-//        tblViewLibrary.setItems(songLibrary);
-//    }
-    private void loadSongsIntoLibrary() throws IOException {
+    /**
+     * Sends a request through the layers of the program to receive all songs,
+     * arranges them into an observable list and loads said list into the view.
+     */
+    private void loadSongsIntoLibrary() throws IOException
+    {
 
         ObservableList<Song> songLibrary = FXCollections.observableArrayList(songManager.getAllSongs());
         tblViewLibrary.setItems(songLibrary);
     }
 
-    private void loadPlaylistsIntoViewer() {
+    /**
+     * Sends a request through the layers of the program to receive all
+     * playlists, arranges them into an observable list and loads said list into
+     * the view.
+     */
+    private void loadPlaylistsIntoViewer()
+    {
         ObservableList<Playlist> playlistLists = FXCollections.observableArrayList(songManager.getAllPlaylists());
         tblViewPlaylists.setItems(playlistLists);
 
     }
 
-    private void clickNextButton(ActionEvent event) {
+    private void clickNextButton(ActionEvent event)
+    {
         mediaPlayer.seek(mediaPlayer.getTotalDuration());
     }
 
+    /**
+     * Resets the currently playing song. Does not pause.
+     *
+     * @param event
+     */
     @FXML
-    private void clickReloadButton(ActionEvent event) {
+    private void clickReloadButton(ActionEvent event)
+    {
         mediaPlayer.seek(mediaPlayer.getStartTime());
         mediaPlayer.play();
     }
 
     @FXML
-    private void clickRemoveSongPlaylist(ActionEvent event) {
+    private void clickRemoveSongPlaylist(ActionEvent event)
+    {
+    }
+
+    /**
+     * Sets the currently playing song to whichever song is selected in library
+     * view.
+     *
+     * @param event
+     */
+    @FXML
+    private void setSong(MouseEvent event)
+    {
+        selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
+        media = new Media(new File(selectedSong).toURI().toString());
+        System.out.println(selectedSong);
+    }
+    
+    @FXML
+    private void search(KeyEvent event) throws IOException
+    {
+        if (textFieldFilterSearch.textProperty().get().isEmpty()) {
+            tblViewLibrary.setItems(songModel.getSongList());
+        }
+        String query = textFieldFilterSearch.getText().trim();
+        tblViewLibrary.setItems(getSongList(query));
+
+    }
+
+    public ObservableList<Song> getSongList(String query) throws FileNotFoundException, IOException
+    {
+        List<Song> allSongs = songManager.getAllSongs();
+        if (query.isEmpty()) {
+            return FXCollections.observableArrayList(allSongs);
+        }
+        ObservableList<Song> searchList = FXCollections.observableArrayList();
+
+        for (Song song : allSongs) {
+            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase())) {
+                searchList.add(song);
+            }
+        }
+        return searchList;
     }
 
 }
