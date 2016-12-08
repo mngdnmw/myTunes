@@ -20,26 +20,17 @@ public class Playlist {
         //this.id = id;
         this.name = name;
         songsRelations = new ArrayList<>();
-<<<<<<< HEAD
-=======
 
         //id++;//need to change implementation
 
->>>>>>> Development
         id = new SimpleIntegerProperty(nextId++);
         
     }
     
-<<<<<<< HEAD
-    public int getID()
-    {
-        return id.get();
-=======
     public int getId()
     {
         return id.get();
 
->>>>>>> Development
     }
 
     public String getName() {

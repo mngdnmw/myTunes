@@ -12,33 +12,6 @@ import java.util.logging.Logger;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
-<<<<<<< HEAD
-/**
- *
- * @author jeppe
- */
-public class FileManager
-{
-
-    //private String playlist;
-    private static final int PLAYLIST_SIZE = 50;
-    private static final int SONG_SIZE = 50;
-    private static final int RECORD_SIZE = PLAYLIST_SIZE + SONG_SIZE;
-
-    private List<Song> songList = new ArrayList();
-    private List<Playlist> playlistList = new ArrayList();
-    private final String filename = "playlist.txt";
-
-
-//    public FileManager(String playlistName) {
-//
-//        this.playlistName = playlistName;
-//    }
-    public List<Song> getAllSongs()
-    {
-        if (songList.isEmpty())
-        {
-=======
 public class FileManager {
     
     //Final variables for songlist.txt
@@ -146,11 +119,9 @@ public class FileManager {
                     return getOneSong(rafs);
                 }
             }
->>>>>>> Development
             return null;
         }
     }
-    
 
     public void savePlaylist(String playlistName) {
         Playlist playlist = new Playlist(playlistName);
@@ -161,22 +132,6 @@ public class FileManager {
         }
     }
 
-<<<<<<< HEAD
-    public void addPlaylist(Playlist p) throws IOException
-    {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
-        {
-            raf.seek(raf.length());  // place the file pointer at the end of the file.
-            raf.writeInt(p.getID());
-            raf.writeBytes(String.format("%-" + PLAYLIST_SIZE + "s", p.getName()).substring(0, PLAYLIST_SIZE));
-        }
-    }
-
-    public List<Playlist> getAll() throws IOException
-    {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
-        {
-=======
     
 
 
@@ -192,7 +147,6 @@ public class FileManager {
     public List<Playlist> getAll() throws IOException {
         try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
 
->>>>>>> Development
             List<Playlist> playlists = new ArrayList<>();
 
             while (rafp.getFilePointer() < rafp.length()) {
@@ -202,17 +156,11 @@ public class FileManager {
         }
     }
 
-<<<<<<< HEAD
-    private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException
-    {
-        byte[] bytes = new byte[PLAYLIST_SIZE];
-=======
     
 
     private Playlist getOnePlaylist(final RandomAccessFile raf) throws IOException {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
 
->>>>>>> Development
         int id = raf.readInt();
         raf.read(bytes);
         String playlistName = new String(bytes).trim();
@@ -221,22 +169,6 @@ public class FileManager {
     
    
 
-<<<<<<< HEAD
-    public Playlist getByPlaylist(int playlistID) throws IOException
-    {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
-        {
-            for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE)
-            {
-                raf.seek(pos);
-                int id = raf.readInt();
-                //String playlist = raf.readLine();
-
-                if (id == playlistID)
-                {
-                    raf.seek(pos);
-                    return getOnePlaylist(raf);
-=======
 
     public Playlist getByPlaylist(String playlistName) throws IOException {
         try (RandomAccessFile rafp = new RandomAccessFile(new File("playlists.txt"), rw)) {
@@ -248,33 +180,21 @@ public class FileManager {
                 if (playlist.equals(playlistName)) {
                     rafp.seek(pos);
                     return getOnePlaylist(rafp);
->>>>>>> Development
                 }
             }
             return null;
         }
     }
 
-<<<<<<< HEAD
-    public void deleteByPlaylist(int id) throws IOException
-    {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(filename), "rw"))
-=======
  
 
     public void deleteByPlaylist(int id) throws IOException
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File("playlist.txt"), rw))
->>>>>>> Development
         {
             for (int pos = 0; pos < raf.length(); pos += RECORD_SIZE_PLAYLIST)
             {
                 raf.seek(pos);
-<<<<<<< HEAD
-                //String playlist = raf.readLine();
-                //if (playlist.equals(playlistName))
-=======
->>>>>>> Development
                     int currentId = raf.readInt();
                 if (currentId == id)    
                 {
