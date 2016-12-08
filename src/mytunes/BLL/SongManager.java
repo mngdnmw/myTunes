@@ -1,6 +1,8 @@
-package mytunes.GUI.Model;
+package mytunes.BLL;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
@@ -12,23 +14,20 @@ import mytunes.BLL.FileParser;
  */
 public class SongManager
 {
+
     private static SongManager instance;
-    
+
     public static SongManager getInstance()
     {
-        if(instance==null)
+        if (instance == null)
+        {
             instance = new SongManager();
-        
+        }
+
         return instance;
-        
+
     }
 
-    private SongManager()
-    {
-    }
-    
-    
-    
     FileParser fileParser = new FileParser();
 
     public void addSong(String songTitle, String songArtist, String songCategory, String songPath)
@@ -50,9 +49,26 @@ public class SongManager
     {
         return fileParser.getAllPlaylists();
     }
-    
+
     public void removePlaylist(int id)
     {
         fileParser.removePlaylist(id);
     }
+
+    public List<Song> search(String query) throws FileNotFoundException, IOException
+    {
+        List<Song> allSongs = fileParser.getSongs();
+        List<Song> searchList = new ArrayList<>();
+
+        for (Song song : allSongs)
+        {
+            if (song.getAllSongStringInfo().toLowerCase().contains(query.toLowerCase()))
+            {
+                searchList.add(song);
+            }
+        }
+
+        return searchList;
+    }
+
 }

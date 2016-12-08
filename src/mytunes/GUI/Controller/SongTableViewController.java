@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.BE.Song;
-import mytunes.GUI.Model.SongManager;
+import mytunes.BLL.SongManager;
 
 /**
  * FXML Controller class
