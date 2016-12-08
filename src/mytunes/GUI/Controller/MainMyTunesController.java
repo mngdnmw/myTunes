@@ -437,7 +437,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void setSong(MouseEvent event)
     {
-        mediaPlayer.stop();
+        //mediaPlayer.stop();
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
