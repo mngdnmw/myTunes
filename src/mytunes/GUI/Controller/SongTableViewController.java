@@ -1,9 +1,11 @@
 package mytunes.GUI.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,17 +16,19 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import mytunes.BE.Song;
 import mytunes.BLL.SongManager;
 
-/**
- * FXML Controller class
- *
- * @author Fjord82
- */
-public class SongTableViewController implements Initializable
-{
+import org.tritonus.share.sampled.file.TAudioFileFormat;
+
+public class SongTableViewController implements Initializable {
+
     private SongManager songManager = SongManager.getInstance();
+    
+    private Long durationOfSong;
 
     @FXML
     private ComboBox<String> comboCategory;
@@ -37,22 +41,18 @@ public class SongTableViewController implements Initializable
     @FXML
     private TextField textFieldFilePath;
 
-
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         fillComboBox();
     }
 
     @FXML
-    private void clickMoreInfo(ActionEvent event)
-    {
+    private void clickMoreInfo(ActionEvent event) {
         //TODO
     }
 
     @FXML
-    private void clickChooseFromFile(ActionEvent event)
-    {
+    private void clickChooseFromFile(ActionEvent event) throws UnsupportedAudioFileException, IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 //new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
@@ -62,40 +62,56 @@ public class SongTableViewController implements Initializable
         fileChooser.setTitle("Vælg sang...");
         File file = fileChooser.showOpenDialog(textFieldFilePath.getScene().getWindow()).getAbsoluteFile();
         textFieldFilePath.setText(file.getAbsolutePath());
-        
+        getDurationWithMp3Spi(file);
+
+    }
+
+    private void getDurationWithMp3Spi(File song) throws UnsupportedAudioFileException, IOException {
+
+        AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(song);
+        if (fileFormat instanceof TAudioFileFormat) {
+            Map<String, Object> properties = ((TAudioFileFormat) fileFormat).properties();
+            
+            String key = "duration";
+            
+            Long microseconds = (Long) properties.get(key);
+            
+            textFieldTime.setText(songManager.calcDuration(microseconds));
+            durationOfSong = microseconds;
+        } else {
+            throw new UnsupportedAudioFileException();
+        }
         
     }
-    
-    public void saveSongsFromView(){
+
+    public void saveSongsFromView() {
         List<Song> song = new ArrayList();
     }
 
     @FXML
-    private void clickSaveAddSong(ActionEvent event)
-    {
-        songManager.addSong(textFieldTitle.getText(), textFieldArtist.getText(), comboCategory.getValue(),textFieldFilePath.getText());
-        
+    private void clickSaveAddSong(ActionEvent event) {
+        songManager.addSong(textFieldTitle.getText(), textFieldArtist.getText(), comboCategory.getValue(), durationOfSong, textFieldFilePath.getText());
+
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    private void clickCloseAddSong(ActionEvent event)
-    {
+    private void clickCloseAddSong(ActionEvent event) {
         Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
         stage.close();
     }
-    
-    private void fillComboBox(){
-        ObservableList<String> comboItems 
-                = FXCollections.observableArrayList("", "Blues", "Classical", 
-                        "Country", "Folk", "Electronic", "Jazz","Hip-hop",
+
+    private void fillComboBox() {
+        ObservableList<String> comboItems
+                = FXCollections.observableArrayList("", "Blues", "Classical",
+                        "Country", "Folk", "Electronic", "Jazz", "Hip-hop",
                         "Reggae", "Funk&Soul", "Rock", "Pop", "Soundtrack", "Religious",
                         "Traditional");
         comboCategory.setItems(comboItems);
         comboCategory.getSelectionModel().selectFirst();
     }
-    
+
     //Getters for song info 
     public TextField getTextFieldTitle() {
         return textFieldTitle;
@@ -116,8 +132,7 @@ public class SongTableViewController implements Initializable
     public ComboBox<String> getComboCategory() {
         return comboCategory;
     }
-    
-    
+
     //Setters
     public void setTextFieldTitle(TextField textFieldTitle) {
         this.textFieldTitle = textFieldTitle;
@@ -134,6 +149,5 @@ public class SongTableViewController implements Initializable
     public void setTextFieldFilePath(TextField textFieldFilePath) {
         this.textFieldFilePath = textFieldFilePath;
     }
-    
-    
+
 }

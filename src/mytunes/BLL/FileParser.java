@@ -18,9 +18,9 @@ public class FileParser
         return fileManager.getAllSongs();
     }
 
-    public void sendSongInfo(String songTitle, String songArtist, String songCategory, String songPath)
+    public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
-        fileManager.saveSong(songTitle, songArtist, songCategory, songPath);
+        fileManager.saveSong(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
     public void sendPlaylistName(String playlistName)
