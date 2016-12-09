@@ -44,6 +44,11 @@ public class Song
         readDuration = readableDuration(this.songDuration);
 
     }
+
+    public String getReadDuration()
+    {
+        return readDuration;
+    }
     public int getId()
     {
         return songId.get();
