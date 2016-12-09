@@ -6,9 +6,11 @@
 package mytunes.GUI.Model;
 
 import java.util.List;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.BE.Song;
+
 
 
 public class SongModel {
@@ -24,10 +26,9 @@ public class SongModel {
     }
 
     public void setSongs(List<Song> songs) {
+
         songList.clear();
         songList.addAll(songs);
     }
-
-    
 
 }
