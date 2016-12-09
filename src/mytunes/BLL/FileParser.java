@@ -18,9 +18,9 @@ public class FileParser
         return fileManager.getAllSongs();
     }
 
-    public void sendSongInfo(String songTitle, String songArtist, String songCategory, String songPath)
+    public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
-        fileManager.saveSong(songTitle, songArtist, songCategory, songPath);
+        fileManager.saveSong(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
     public void sendPlaylistName(String playlistName)
@@ -45,6 +45,17 @@ public class FileParser
         try
         {
             fileManager.deleteByPlaylist(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removeSong(int id)
+    {
+        try
+        {
+            fileManager.deleteBySong(id);
         } catch (IOException ex)
         {
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
