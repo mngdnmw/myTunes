@@ -1,6 +1,7 @@
 package mytunes.DAL;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -20,7 +21,7 @@ public class FileManager
     private static final int SONG_TITLE_SIZE = 50;
     private static final int SONG_ARTIST_SIZE = 50;
     private static final int SONG_CATEGORY_SIZE = 20;
-    private static final int SONG_DURATION_SIZE = Long.BYTES;
+    private static final int SONG_DURATION_SIZE = 8;
     private static final int SONG_PATH_SIZE = 400;
     private static final int RECORD_SIZE_SONGLIST
             = SONG_ID_SIZE
@@ -42,7 +43,23 @@ public class FileManager
     private final String songlistPath = "songlist.txt";
     private final String playlistPath = "playlists.txt";
 
-    public FileManager()
+    private static int songID = 0;
+    private static int playlistID = 0;
+
+    private static FileManager instance;
+
+    public static FileManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new FileManager();
+        }
+
+        return instance;
+
+    }
+
+    private FileManager()
     {
     }
 
@@ -255,6 +272,54 @@ public class FileManager
                 }
             }
         }
+    }
+
+    public int readID(String type)
+    {
+        String mode = "";
+        int recordSize = 0;
+        int ID = 0;
+        try
+        {
+
+            if (type.equals("Song"))
+            {
+                mode = songlistPath;
+                recordSize = RECORD_SIZE_SONGLIST;
+            } else if (type.equals("Playlist"))
+            {
+                mode = playlistPath;
+                recordSize = RECORD_SIZE_PLAYLIST;
+            }
+
+            RandomAccessFile raf = new RandomAccessFile(new File(mode), rw);
+
+            try
+            {
+                if (raf.length() >= recordSize)
+                {
+                    raf.seek(0);
+                    try
+                    {
+                        ID = raf.readInt();
+                    } catch (IOException ex)
+                    {
+                        Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, "1", ex);
+                    }
+                } else
+                {
+                    ID = 0;
+                }
+            } catch (IOException ex)
+            {
+                Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, "2", ex);
+            }
+
+        } catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, "3", ex);
+        }
+        return ID;
     }
 
 }
