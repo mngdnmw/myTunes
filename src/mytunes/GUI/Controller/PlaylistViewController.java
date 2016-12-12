@@ -16,6 +16,7 @@ import mytunes.BLL.SongManager;
 public class PlaylistViewController implements Initializable
 {
     private SongManager songManager = SongManager.getInstance();
+    
     private Playlist currentPlaylist=null;
 
     @FXML
