@@ -7,13 +7,10 @@ import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
-/**
- *
- * @author jeppe
- */
 public class SongManager {
 
     private static SongManager instance;
+    FileParser fileParser = new FileParser();
 
     public static SongManager getInstance() {
         if (instance == null) {
@@ -24,9 +21,8 @@ public class SongManager {
 
     }
 
-    FileParser fileParser = new FileParser();
-
-    public void addSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
+    public void addSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
+    {
         fileParser.sendSongInfo(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
@@ -46,6 +42,7 @@ public class SongManager {
         fileParser.removePlaylist(id);
     }
 
+
     public void removeSongLibrary(int id) {
         fileParser.removeSong(id);
     }
@@ -62,6 +59,7 @@ public class SongManager {
 
         return searchList;
     }
+    
 
     public String calcDuration(Long microSeconds) {
         

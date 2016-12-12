@@ -5,10 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 import mytunes.BLL.SongManager;
 
-/**
- *
- * @author jeppe
- */
 public class Song {
 
     ///also need to implement duartion
@@ -21,7 +17,7 @@ public class Song {
     private String readDuration;
 
     private static int nextId = 0;
-    private IntegerProperty songId;
+    private final IntegerProperty songId;
 
     SongManager songManager = SongManager.getInstance();
 
@@ -32,7 +28,6 @@ public class Song {
         this.songCategory = songCategory;
         this.songDuration = songDuration; //need to work on this
         this.songPath = songPath;
-
         songId = new SimpleIntegerProperty(nextId++);
 
         readDuration = readableDuration(this.songDuration);
@@ -43,7 +38,6 @@ public class Song {
 
         this(songTitle, songArtist, songCategory, songDuration, songPath);
         this.songId.set(songId);
-
     }
 
     public String getReadDuration() {
@@ -103,11 +97,13 @@ public class Song {
             int mili = (int) (songDuration / 1000);
             int sec = (mili / 1000) % 60;
             int min = (mili / 1000) / 60;
+
             if (sec < 10) {
                 duration = min + ":" + "0" + sec;
             } else {
                 duration = min + ":" + sec;
             }
+
         } else {
             duration = "";
         }

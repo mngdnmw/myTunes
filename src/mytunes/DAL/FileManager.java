@@ -81,6 +81,7 @@ public class FileManager
             rafs.writeLong(s.getSongDuration());
             //raf.writeBytes(String.format("%-" + SONG_DURATION_SIZE + "s", s.getSongDuration()).substring(0, SONG_DURATION_SIZE));
             rafs.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
+
         }
     }
 
@@ -88,6 +89,7 @@ public class FileManager
     {
 
         //creates empty byte arrays corresponding to the size of each song property 
+        //byte[] id = new byte[SONG_ID_SIZE];
         byte[] title = new byte[SONG_TITLE_SIZE];
         byte[] artist = new byte[SONG_ARTIST_SIZE];
         byte[] category = new byte[SONG_CATEGORY_SIZE];
@@ -95,6 +97,7 @@ public class FileManager
         byte[] path = new byte[SONG_PATH_SIZE];
 
         //reads into the byte arrays
+
         int songId = rafs.readInt();
         rafs.read(title);
         rafs.read(artist);
@@ -104,6 +107,7 @@ public class FileManager
         rafs.read(path);
 
         //type casts the byte arrays into strings
+
         //int songId = id;
         String songTitle = new String(title).trim();
         String songArtist = new String(artist).trim();
