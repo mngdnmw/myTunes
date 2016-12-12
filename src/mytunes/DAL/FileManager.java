@@ -60,21 +60,28 @@ public class FileManager
 
     public void addSong(Song s) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(songlistPath), rw))
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
         {
+            //place the pointer where there are blank spaces (still working on****)
+//            Song song = getOneSong(rafs);
+//                
+//                if(song!=null){
+//                    listOfSongs.add(song);
+//                }
 
             //place the file pointer at the end of the file
-            raf.seek(raf.length());
+            rafs.seek(rafs.length());
 
             //writing song info into songlist.txt
-            raf.writeInt(s.getId());
+            rafs.writeInt(s.getId());
             //raf.writeBytes(String.format("%-" + SONG_ID_SIZE + "s", s.getId()).substring(0, SONG_ID_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
-            raf.writeLong(s.getSongDuration());
+            rafs.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
+            rafs.writeLong(s.getSongDuration());
             //raf.writeBytes(String.format("%-" + SONG_DURATION_SIZE + "s", s.getSongDuration()).substring(0, SONG_DURATION_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
+
         }
     }
 
@@ -82,30 +89,38 @@ public class FileManager
     {
 
         //creates empty byte arrays corresponding to the size of each song property 
-        byte[] id = new byte[SONG_ID_SIZE];
+        //byte[] id = new byte[SONG_ID_SIZE];
         byte[] title = new byte[SONG_TITLE_SIZE];
         byte[] artist = new byte[SONG_ARTIST_SIZE];
         byte[] category = new byte[SONG_CATEGORY_SIZE];
-        byte[] duration = new byte[SONG_DURATION_SIZE];
+       // byte[] duration = new byte[SONG_DURATION_SIZE];
         byte[] path = new byte[SONG_PATH_SIZE];
 
         //reads into the byte arrays
-        rafs.read(id);
+
+        int songId = rafs.readInt();
         rafs.read(title);
         rafs.read(artist);
         rafs.read(category);
-        rafs.read(duration);
+        //rafs.read(duration);
+        long songDuration = rafs.readLong();
         rafs.read(path);
 
         //type casts the byte arrays into strings
-        int songId = ByteBuffer.wrap(id).getInt();
+
+        //int songId = id;
         String songTitle = new String(title).trim();
         String songArtist = new String(artist).trim();
         String songCategory = new String(category).trim();
-        Long songDuration = bytesToLong(duration);
+       // Long songDuration = bytesToLong(duration);
         String songPath = new String(path).trim();
-
-        return new Song(songTitle, songArtist, songCategory, songDuration, songPath);
+        
+        if (songId ==-1){
+            return null;
+        }
+        
+        return new Song(songId, songTitle, songArtist, songCategory, songDuration, songPath);
+        
     }
 
     private static long bytesToLong(byte[] bytes)
@@ -125,9 +140,13 @@ public class FileManager
             //makes an arraylist to store the songs 
             List<Song> listOfSongs = new ArrayList<>();
 
-            while (rafs.getFilePointer() < rafs.length())
-            {
-                listOfSongs.add(getOneSong(rafs));
+            while (rafs.getFilePointer() < rafs.length()){
+            
+                Song song = getOneSong(rafs);
+                
+                if(song!=null){
+                    listOfSongs.add(song);
+                }
             }
             return listOfSongs;
         }
@@ -251,7 +270,9 @@ public class FileManager
                 if (currentId == id)
                 {
                     raf.seek(pos);
-                    raf.write(new byte[RECORD_SIZE_SONGLIST]); // write as many blank bytes as one record
+                    Integer nullId = -1 ;
+                    raf.writeInt(nullId);
+                    raf.write(new byte[RECORD_SIZE_SONGLIST-4]); // write as many blank bytes as one record
                 }
             }
         }

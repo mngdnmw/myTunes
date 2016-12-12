@@ -152,9 +152,18 @@ public class MainMyTunesController implements Initializable
     private void clickAddSongPlaylist(ActionEvent event)
     {
     }
+
     
     private void showPlaylistWindow(String title, Playlist playlist)
     {
+
+
+    /**
+     * Opens a dialogue window to create a new playlist, and pauses execution
+     * until it closes.
+     */
+    
+   
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -164,6 +173,7 @@ public class MainMyTunesController implements Initializable
             AnchorPane page = (AnchorPane) loader.load();
             PlaylistViewController controller = loader.getController();
             controller.setPlaylist(playlist);
+
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle(title);
@@ -178,23 +188,25 @@ public class MainMyTunesController implements Initializable
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+    }
+    @FXML
+    private void clickNewPlaylist(ActionEvent event)
+    {
+
+        showPlaylistWindow("New Playlist", null);
     }
     
     /**
      * Opens a dialogue window to create a new playlist, and pauses execution
      * until it closes.
      */
-    @FXML
-    private void clickNewPlaylist(ActionEvent event)
-    {
-        showPlaylistWindow ("New Playlist", null);
- 
-    }
 
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
         Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+
         showPlaylistWindow ("Edit Playlist", selectedPlaylist);
         /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
         if(selectedPlaylist != null)
@@ -213,6 +225,8 @@ public class MainMyTunesController implements Initializable
             
             alert.showAndWait();
         }*/
+
+   
 
     }
 

@@ -16,7 +16,10 @@ import mytunes.BLL.SongManager;
 public class PlaylistViewController implements Initializable
 {
     private SongManager songManager = SongManager.getInstance();
-    private Playlist currentPlaylist = null;
+
+    
+    private Playlist currentPlaylist=null;
+
 
     @FXML
     private TextField textFileNamePlaylist;
@@ -34,15 +37,16 @@ public class PlaylistViewController implements Initializable
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
-        if(currentPlaylist == null)
-        {
+        if(currentPlaylist==null){
             songManager.addPlaylist(textFileNamePlaylist.getText());
-        }else
-        {
-            //Needs to make a method thats modifies existing playlist
-            //mangler at fortælle songmanager at der redigeres i navnet 
+        }else{
+            //Needs to make a method that modifies existing playlist
+            //we are missing a statement that tells the songmanager that we are 
+            //editing the name of the playlist
+            
             currentPlaylist.setName(textFileNamePlaylist.getText());
         }
+
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }
@@ -64,11 +68,10 @@ public class PlaylistViewController implements Initializable
         stage.close();
     }
 
-    void setPlaylist(Playlist playlist)
-    {
-        currentPlaylist = playlist;
-        if(currentPlaylist != null)
-        {
+
+    void setPlaylist(Playlist playlist) {
+        currentPlaylist =  playlist;
+        if(currentPlaylist!=null){
             this.textFileNamePlaylist.setText(playlist.getName());
         }
     }

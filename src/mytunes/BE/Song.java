@@ -1,20 +1,11 @@
 package mytunes.BE;
 
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import mytunes.BLL.SongManager;
 
-
-/**
- *
- * @author jeppe
- */
-
-public class Song
-{
-
+public class Song {
 
     ///also need to implement duartion
     private String songTitle;
@@ -24,7 +15,7 @@ public class Song
     private Long songDuration;
     private String songPath;
     private String readDuration;
-    
+
     private static int nextId = 0;
     private final IntegerProperty songId;
 
@@ -37,60 +28,55 @@ public class Song
         this.songCategory = songCategory;
         this.songDuration = songDuration; //need to work on this
         this.songPath = songPath;
-
-        
         songId = new SimpleIntegerProperty(nextId++);
 
         readDuration = readableDuration(this.songDuration);
 
     }
 
-    public String getReadDuration()
-    {
+    public Song(int songId, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
+
+        this(songTitle, songArtist, songCategory, songDuration, songPath);
+        this.songId.set(songId);
+    }
+
+    public String getReadDuration() {
         return readDuration;
     }
-    public int getId()
-    {
+
+    public int getId() {
         return songId.get();
     }
 
-    public String getSongTitle()
-    {
+    public String getSongTitle() {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle)
-    {
+    public void setSongTitle(String songTitle) {
         this.songTitle = songTitle;
     }
 
-    public String getSongPath()
-    {
+    public String getSongPath() {
         return songPath;
     }
 
-    public void setSongPath(String songPath)
-    {
+    public void setSongPath(String songPath) {
         this.songPath = songPath;
     }
 
-    public String getSongArtist()
-    {
+    public String getSongArtist() {
         return songArtist;
     }
 
-    public void setSongArtist(String songArtist)
-    {
+    public void setSongArtist(String songArtist) {
         this.songArtist = songArtist;
     }
 
-    public String getSongCategory()
-    {
+    public String getSongCategory() {
         return songCategory;
     }
 
-    public void setSongCategory(String songCategory)
-    {
+    public void setSongCategory(String songCategory) {
         this.songCategory = songCategory;
     }
 
@@ -111,7 +97,13 @@ public class Song
             int mili = (int) (songDuration / 1000);
             int sec = (mili / 1000) % 60;
             int min = (mili / 1000) / 60;
-            duration = min + "min" + " " + sec + "sec";
+
+            if (sec < 10) {
+                duration = min + ":" + "0" + sec;
+            } else {
+                duration = min + ":" + sec;
+            }
+
         } else {
             duration = "";
         }
