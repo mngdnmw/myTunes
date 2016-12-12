@@ -16,8 +16,10 @@ import mytunes.BLL.SongManager;
 public class PlaylistViewController implements Initializable
 {
     private SongManager songManager = SongManager.getInstance();
+
     
     private Playlist currentPlaylist=null;
+
 
     @FXML
     private TextField textFileNamePlaylist;
@@ -49,12 +51,6 @@ public class PlaylistViewController implements Initializable
         stage.close();
     }
     
-
-    
-    public void savePlaylistFromView(){
-        List<Playlist> playlist = new ArrayList();
-    }
-    
     public TextField getTextFileNamePlaylist()
     {
         return textFileNamePlaylist;
@@ -71,6 +67,7 @@ public class PlaylistViewController implements Initializable
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
+
 
     void setPlaylist(Playlist playlist) {
         currentPlaylist =  playlist;

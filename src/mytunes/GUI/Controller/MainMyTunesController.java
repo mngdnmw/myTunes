@@ -153,13 +153,17 @@ public class MainMyTunesController implements Initializable
     {
     }
 
+    
+    private void showPlaylistWindow(String title, Playlist playlist)
+    {
+
+
     /**
      * Opens a dialogue window to create a new playlist, and pauses execution
      * until it closes.
      */
     
-    
-    private void showPlaylistWindow(String title, Playlist playlist){
+   
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -192,12 +196,37 @@ public class MainMyTunesController implements Initializable
 
         showPlaylistWindow("New Playlist", null);
     }
+    
+    /**
+     * Opens a dialogue window to create a new playlist, and pauses execution
+     * until it closes.
+     */
 
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
         Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
-        showPlaylistWindow("Edit Playlist", selectedPlaylist);
+
+        showPlaylistWindow ("Edit Playlist", selectedPlaylist);
+        /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+        if(selectedPlaylist != null)
+        {
+            boolean okClicked = MyTunes.showPlaylistView(selectedPlaylist);
+            if(okClicked) {
+                showPlaylistView(selectedPlaylist);
+            }
+        } else
+        {
+            Alert alert = new Alert(AlertType.WARNING);
+            //alert.initOwner(MyTunes.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Playlist selected");
+            alert.setContentText("Please select a playlist to edit.");
+            
+            alert.showAndWait();
+        }*/
+
+   
 
     }
 
