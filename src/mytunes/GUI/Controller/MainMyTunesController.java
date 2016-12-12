@@ -152,15 +152,9 @@ public class MainMyTunesController implements Initializable
     private void clickAddSongPlaylist(ActionEvent event)
     {
     }
-
-    /**
-     * Opens a dialogue window to create a new playlist, and pauses execution
-     * until it closes.
-     */
-    @FXML
-    private void clickNewPlaylist(ActionEvent event)
+    
+    private void showPlaylistWindow(String title, Playlist playlist)
     {
-
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -168,10 +162,11 @@ public class MainMyTunesController implements Initializable
                     .setLocation(MyTunes.class
                             .getResource("GUI/View/PlaylistView.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
-
+            PlaylistViewController controller = loader.getController();
+            controller.setPlaylist(playlist);
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Playlist");
+            dialogStage.setTitle(title);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -184,10 +179,23 @@ public class MainMyTunesController implements Initializable
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Opens a dialogue window to create a new playlist, and pauses execution
+     * until it closes.
+     */
+    @FXML
+    private void clickNewPlaylist(ActionEvent event)
+    {
+        showPlaylistWindow ("New Playlist", null);
+ 
+    }
 
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
+        Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+        showPlaylistWindow ("Edit Playlist", selectedPlaylist);
         /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
         if(selectedPlaylist != null)
         {
@@ -198,7 +206,7 @@ public class MainMyTunesController implements Initializable
         } else
         {
             Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(MyTunes.getPrimaryStage());
+            //alert.initOwner(MyTunes.getPrimaryStage());
             alert.setTitle("No Selection");
             alert.setHeaderText("No Playlist selected");
             alert.setContentText("Please select a playlist to edit.");
