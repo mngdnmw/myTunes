@@ -1,24 +1,24 @@
 package mytunes.GUI.Controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mytunes.BE.Playlist;
+import mytunes.BLL.SongManager;
 
 public class PlaylistViewController implements Initializable
 {
+    private SongManager songManager = SongManager.getInstance();
 
     @FXML
-    private TextField textFiledNamePlaylist;
+    private TextField textFileNamePlaylist;
     @FXML
     private Button cancelBtn;
     @FXML
@@ -33,29 +33,26 @@ public class PlaylistViewController implements Initializable
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
-        String playlistName = "";
-        playlistName = textFiledNamePlaylist.getText();
-        try(BufferedWriter bw =
-                new BufferedWriter(new FileWriter("playlist.txt")))
-        {
-            bw.write(playlistName);
-        } catch (IOException ex)
-        {
-            Logger.getLogger(PlaylistViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        songManager.addPlaylist(textFileNamePlaylist.getText());
+
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }
+    
 
-    public TextField getTextFiledNamePlaylist()
+    
+    public void savePlaylistFromView(){
+        List<Playlist> playlist = new ArrayList();
+    }
+    
+    public TextField getTextFileNamePlaylist()
     {
-        return textFiledNamePlaylist;
+        return textFileNamePlaylist;
     }
 
-    public void setTextFiledNamePlaylist(TextField textFiledNamePlaylist)
+    public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
     {
-        this.textFiledNamePlaylist = textFiledNamePlaylist;
+        this.textFileNamePlaylist = textFileNamePlaylist;
     }
 
     @FXML

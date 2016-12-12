@@ -1,31 +1,64 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.BLL;
 
+import java.io.IOException;
 import java.util.List;
-import javafx.beans.property.StringProperty;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 import mytunes.DAL.FileManager;
 
-/**
- *
- * @author jeppe
- */
 public class FileParser
 {
+
     FileManager fileManager = new FileManager();
-    
-    public List<Song> getSongs()
+
+    public List<Song> getSongs() throws IOException
     {
         return fileManager.getAllSongs();
     }
-    
-    public void addSong(StringProperty songName, StringProperty songPath)
+
+    public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
-        fileManager.addSong(songName, songPath);
+        fileManager.saveSong(songTitle, songArtist, songCategory, songDuration, songPath);
+    }
+
+    public void sendPlaylistName(String playlistName)
+    {
+        fileManager.savePlaylist(playlistName);
+    }
+
+    public List<Playlist> getAllPlaylists()
+    {
+        try
+        {
+            return fileManager.getAll();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
+    public void removePlaylist(int id)
+    {
+        try
+        {
+            fileManager.deleteByPlaylist(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removeSong(int id)
+    {
+        try
+        {
+            fileManager.deleteBySong(id);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
