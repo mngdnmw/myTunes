@@ -60,21 +60,27 @@ public class FileManager
 
     public void addSong(Song s) throws IOException
     {
-        try (RandomAccessFile raf = new RandomAccessFile(new File(songlistPath), rw))
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
         {
+            //place the pointer where there are blank spaces (still working on****)
+//            Song song = getOneSong(rafs);
+//                
+//                if(song!=null){
+//                    listOfSongs.add(song);
+//                }
 
             //place the file pointer at the end of the file
-            raf.seek(raf.length());
+            rafs.seek(rafs.length());
 
             //writing song info into songlist.txt
-            raf.writeInt(s.getId());
+            rafs.writeInt(s.getId());
             //raf.writeBytes(String.format("%-" + SONG_ID_SIZE + "s", s.getId()).substring(0, SONG_ID_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
-            raf.writeLong(s.getSongDuration());
+            rafs.writeBytes(String.format("%-" + SONG_TITLE_SIZE + "s", s.getSongTitle()).substring(0, SONG_TITLE_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_ARTIST_SIZE + "s", s.getSongArtist()).substring(0, SONG_ARTIST_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_CATEGORY_SIZE + "s", s.getSongCategory()).substring(0, SONG_CATEGORY_SIZE));
+            rafs.writeLong(s.getSongDuration());
             //raf.writeBytes(String.format("%-" + SONG_DURATION_SIZE + "s", s.getSongDuration()).substring(0, SONG_DURATION_SIZE));
-            raf.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
+            rafs.writeBytes(String.format("%-" + SONG_PATH_SIZE + "s", s.getSongPath()).substring(0, SONG_PATH_SIZE));
         }
     }
 
