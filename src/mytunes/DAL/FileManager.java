@@ -82,30 +82,35 @@ public class FileManager
     {
 
         //creates empty byte arrays corresponding to the size of each song property 
-        byte[] id = new byte[SONG_ID_SIZE];
         byte[] title = new byte[SONG_TITLE_SIZE];
         byte[] artist = new byte[SONG_ARTIST_SIZE];
         byte[] category = new byte[SONG_CATEGORY_SIZE];
-        byte[] duration = new byte[SONG_DURATION_SIZE];
+       // byte[] duration = new byte[SONG_DURATION_SIZE];
         byte[] path = new byte[SONG_PATH_SIZE];
 
         //reads into the byte arrays
-        rafs.read(id);
+        int songId = rafs.readInt();
         rafs.read(title);
         rafs.read(artist);
         rafs.read(category);
-        rafs.read(duration);
+        //rafs.read(duration);
+        long songDuration = rafs.readLong();
         rafs.read(path);
 
         //type casts the byte arrays into strings
-        int songId = ByteBuffer.wrap(id).getInt();
+        //int songId = id;
         String songTitle = new String(title).trim();
         String songArtist = new String(artist).trim();
         String songCategory = new String(category).trim();
-        Long songDuration = bytesToLong(duration);
+       // Long songDuration = bytesToLong(duration);
         String songPath = new String(path).trim();
-
-        return new Song(songTitle, songArtist, songCategory, songDuration, songPath);
+        
+        if (songId ==-1){
+            return null;
+        }
+        
+        return new Song(songId, songTitle, songArtist, songCategory, songDuration, songPath);
+        
     }
 
     private static long bytesToLong(byte[] bytes)
@@ -125,9 +130,13 @@ public class FileManager
             //makes an arraylist to store the songs 
             List<Song> listOfSongs = new ArrayList<>();
 
-            while (rafs.getFilePointer() < rafs.length())
-            {
-                listOfSongs.add(getOneSong(rafs));
+            while (rafs.getFilePointer() < rafs.length()){
+            
+                Song song = getOneSong(rafs);
+                
+                if(song!=null){
+                    listOfSongs.add(song);
+                }
             }
             return listOfSongs;
         }
@@ -251,7 +260,9 @@ public class FileManager
                 if (currentId == id)
                 {
                     raf.seek(pos);
-                    raf.write(new byte[RECORD_SIZE_SONGLIST]); // write as many blank bytes as one record
+                    Integer nullId = -1 ;
+                    raf.writeInt(nullId);
+                    raf.write(new byte[RECORD_SIZE_SONGLIST-4]); // write as many blank bytes as one record
                 }
             }
         }

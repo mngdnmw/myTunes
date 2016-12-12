@@ -26,7 +26,7 @@ public class Song
     private String readDuration;
     
     private static int nextId = 0;
-    private final IntegerProperty songId;
+    private IntegerProperty songId;
 
     SongManager songManager = SongManager.getInstance();
 
@@ -44,6 +44,15 @@ public class Song
         readDuration = readableDuration(this.songDuration);
 
     }
+
+    public Song(int songId, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
+        
+        this(songTitle, songArtist, songCategory, songDuration, songPath);
+        this.songId.set(songId);
+
+    }
+    
+    
 
     public String getReadDuration()
     {
