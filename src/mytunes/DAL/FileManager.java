@@ -211,7 +211,7 @@ public class FileManager
         try (RandomAccessFile raf = new RandomAccessFile(new File(playlistPath), rw))
         {
             getFirstAvailPointer();
-            raf.writeInt(p.getId());
+            raf.writeInt(p.getPlaylistId());
             raf.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
         }
     }

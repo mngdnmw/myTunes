@@ -30,9 +30,7 @@ public class Playlist {
         this.playlistId.set(playlistId);
     }
     
-    
-    
-    public int getId()
+    public int getPlaylistId()
     {
         return playlistId.get();
 
