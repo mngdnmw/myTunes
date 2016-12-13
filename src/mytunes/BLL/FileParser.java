@@ -11,7 +11,7 @@ import mytunes.DAL.FileManager;
 public class FileParser
 {
 
-    FileManager fileManager = new FileManager();
+    FileManager fileManager = FileManager.getInstance();
 
     public List<Song> getSongs() throws IOException
     {
@@ -39,7 +39,7 @@ public class FileParser
         }
         return null;
     }
-    
+
     public void removePlaylist(int id)
     {
         try
@@ -50,7 +50,7 @@ public class FileParser
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void removeSong(int id)
     {
         try
