@@ -174,6 +174,25 @@ public class FileManager
             return null;
         }
     }
+    
+    public long getFirstAvailPointer() throws IOException
+    {
+        try(RandomAccessFile rafs = new RandomAccessFile(new File(playlistPath), "r"))
+        {
+            for (long i = 0; i < rafs.length(); i+=RECORD_SIZE_PLAYLIST)
+                
+            {
+                rafs.seek(i);
+                int playlistId = rafs.readInt();
+                if(playlistId==-1)
+                {
+                    return i;
+                }
+                
+            }
+            return rafs.length();
+        }
+    }
 
     public void savePlaylist(String playlistName)
     {
@@ -191,24 +210,30 @@ public class FileManager
     {
         try (RandomAccessFile raf = new RandomAccessFile(new File(playlistPath), rw))
         {
-            raf.seek(raf.length());  // place the file pointer at the end of the file.
+            getFirstAvailPointer();
             raf.writeInt(p.getId());
             raf.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", p.getName()).substring(0, PLAYLIST_NAME_SIZE));
         }
     }
 
-    public List<Playlist> getAll() throws IOException
+    public List<Playlist> getAllPlaylists() throws IOException
     {
         try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw))
         {
 
-            List<Playlist> playlists = new ArrayList<>();
+            List<Playlist> listOfPlaylists = new ArrayList<>();
 
             while (rafp.getFilePointer() < rafp.length())
             {
-                playlists.add(getOnePlaylist(rafp));
+                Playlist playlist = getOnePlaylist(rafp);
+                
+                if(playlist != null)
+                {
+                    listOfPlaylists.add(playlist);
+                }
+                    
             }
-            return playlists;
+            return listOfPlaylists;
         }
     }
 
@@ -216,10 +241,15 @@ public class FileManager
     {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
 
-        int id = raf.readInt();
+        int playlistId = raf.readInt();
         raf.read(bytes);
         String playlistName = new String(bytes).trim();
-        return new Playlist(playlistName);
+        if(playlistId == -1)
+        {
+            return null;
+        }
+            
+        return new Playlist(playlistId, playlistName);
     }
 
     public Playlist getByPlaylist(String playlistName) throws IOException
@@ -253,7 +283,9 @@ public class FileManager
                 if (currentId == id)
                 {
                     raf.seek(pos);
-                    raf.write(new byte[RECORD_SIZE_PLAYLIST]); // write as many blank bytes as one record
+                    Integer nullId=-1;
+                    raf.writeInt(nullId);
+                    raf.write(new byte[RECORD_SIZE_PLAYLIST-4]); // write as many blank bytes as one record
                 }
             }
         }

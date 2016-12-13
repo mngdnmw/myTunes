@@ -32,7 +32,7 @@ public class FileParser
     {
         try
         {
-            return fileManager.getAll();
+            return fileManager.getAllPlaylists();
         } catch (IOException ex)
         {
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);

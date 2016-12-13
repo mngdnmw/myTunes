@@ -33,16 +33,19 @@ public class SongManager {
     public void addPlaylist(String playlistName) {
         fileParser.sendPlaylistName(playlistName);
     }
+    public void editPlaylistName(String playlistName)
+    {
+        
+    }
 
-    public List<Playlist> getAllPlaylists() {
+    public List<Playlist> getAllPlaylists(){
         return fileParser.getAllPlaylists();
     }
 
     public void removePlaylist(int id) {
         fileParser.removePlaylist(id);
     }
-
-
+    
     public void removeSongLibrary(int id) {
         fileParser.removeSong(id);
     }

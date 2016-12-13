@@ -13,23 +13,28 @@ public class Playlist {
     private String playlistDuration;
     private List<Integer> songsRelations;
     private static int nextId = 0;
-    private final IntegerProperty id;
+    private final IntegerProperty playlistId;
     
 
-    public Playlist(String name) {
-        //this.id = id;
-        this.name = name;
-        songsRelations = new ArrayList<>();
+    public Playlist(String playlistName) {
 
-        //id++;//need to change implementation
-
-        id = new SimpleIntegerProperty(nextId++);
+        this.name = playlistName;
+    
+        playlistId = new SimpleIntegerProperty(nextId++);
         
     }
+
+    public Playlist(int playlistId, String playlistName)
+    {
+        this(playlistName);
+        this.playlistId.set(playlistId);
+    }
+    
+    
     
     public int getId()
     {
-        return id.get();
+        return playlistId.get();
 
     }
 

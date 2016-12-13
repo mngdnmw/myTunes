@@ -27,13 +27,13 @@ public class PlaylistViewController implements Initializable
     private Button cancelBtn;
     @FXML
     private Button saveBtn;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
     }    
-
+    
     @FXML
     private void clickSaveNewPlaylist(ActionEvent event)
     {
@@ -69,7 +69,7 @@ public class PlaylistViewController implements Initializable
     }
 
 
-    void setPlaylist(Playlist playlist) {
+    public void setPlaylist(Playlist playlist) {
         currentPlaylist =  playlist;
         if(currentPlaylist!=null){
             this.textFileNamePlaylist.setText(playlist.getName());

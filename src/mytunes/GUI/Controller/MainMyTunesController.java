@@ -156,14 +156,10 @@ public class MainMyTunesController implements Initializable
     
     private void showPlaylistWindow(String title, Playlist playlist)
     {
-
-
     /**
      * Opens a dialogue window to create a new playlist, and pauses execution
      * until it closes.
      */
-    
-   
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -242,9 +238,10 @@ public class MainMyTunesController implements Initializable
         int selectedIndex = tblViewPlaylists.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            tblViewPlaylists.getItems().remove(selectedIndex);
+            
             songManager.removePlaylist(tblViewPlaylists.getSelectionModel().getSelectedItem().getId());
-            loadPlaylistsIntoViewer();
+            tblViewPlaylists.getItems().remove(selectedIndex);
+            
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("No selection");
