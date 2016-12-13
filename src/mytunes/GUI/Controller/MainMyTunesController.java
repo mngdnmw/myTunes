@@ -63,6 +63,9 @@ public class MainMyTunesController implements Initializable
 
     private String selectedSong;
 
+    private Song lastSelectedSong;
+    private Playlist lastSelectedPlaylist;
+
     @FXML
     Slider volumeSlider;
 
@@ -152,6 +155,9 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickAddSongPlaylist(ActionEvent event)
     {
+        
+        
+        
     }
 
     /**
@@ -329,11 +335,6 @@ public class MainMyTunesController implements Initializable
         System.exit(0);
     }
 
-    @FXML
-    private void clickSearch(ActionEvent event)
-    {
-    }
-
     /**
      * Stops the currently playing song and resets it to the start again.
      *
@@ -421,6 +422,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void setSong(MouseEvent event)
     {
+        lastSelectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
 
         if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
         {
@@ -478,6 +480,12 @@ public class MainMyTunesController implements Initializable
             }
         });
 
+    }
+
+    @FXML
+    private void setPlaylist(MouseEvent event)
+    {
+        lastSelectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
     }
 
 }
