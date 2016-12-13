@@ -43,7 +43,8 @@ public class SongManager {
     }
 
 
-    public void removeSongLibrary(int id) {
+    public void removeSongLibrary(int id)
+    {
         fileParser.removeSong(id);
     }
 
@@ -59,10 +60,10 @@ public class SongManager {
 
         return searchList;
     }
-    
 
-    public String calcDuration(Long microSeconds) {
-        
+
+    public String calcDuration(Long microSeconds)
+    {
         int mili = (int) (microSeconds / 1000);
         int sec = (mili / 1000) % 60;
         int min = (mili / 1000) / 60;
@@ -72,6 +73,7 @@ public class SongManager {
         } else {
             duration = min + ":" + sec;
         }
+
 
         return duration;
     }
