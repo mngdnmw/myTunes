@@ -64,30 +64,12 @@ public class FileManager
     {
     }
 
-//    public void saveSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
-//    {
-//        Song song = new Song(songTitle, songArtist, songCategory, songDuration, songPath);
-//        try
-//        {
-//            addSong(song);
-//        } catch (IOException ex)
-//        {
-//            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     public void saveSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
 
         int nextId;
         try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
         {
-            //place the pointer where there are blank spaces (still working on****)
-//            Song song = getOneSong(rafs);
-//                
-//                if(song!=null){
-//                    listOfSongs.add(song);
-//                }
-
             //place the file pointer at the end of the file
             if (rafs.length() == 0)
             {
@@ -197,6 +179,7 @@ public class FileManager
                 rafp.writeInt(1);
                 rafp.seek(0);
             }
+
             nextId = rafp.readInt(); //header
             rafp.seek(0);
             rafp.writeInt(nextId + 1); //+1 on our nextid in our header
@@ -205,35 +188,48 @@ public class FileManager
             rafp.seek(rafp.length());  // place the file pointer at the end of the file.
             rafp.writeInt(nextId);
             rafp.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", playlistName).substring(0, PLAYLIST_NAME_SIZE));
+
         } catch (IOException ex)
         {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public List<Playlist> getAll() throws IOException
+    public List<Playlist> getAllPlaylists() throws IOException
     {
         try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw))
         {
 
-            List<Playlist> playlists = new ArrayList<>();
+            List<Playlist> listOfPlaylists = new ArrayList<>();
 
             while (rafp.getFilePointer() < rafp.length())
             {
-                playlists.add(getOnePlaylist(rafp));
+                Playlist playlist = getOnePlaylist(rafp);
+
+                if (playlist != null)
+                {
+                    listOfPlaylists.add(playlist);
+                }
+
             }
-            return playlists;
+            return listOfPlaylists;
         }
     }
 
     private Playlist getOnePlaylist(final RandomAccessFile rafp) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
-
         int playlistId = rafp.readInt();
+
         rafp.read(bytes);
         String playlistName = new String(bytes).trim();
-        return new Playlist(playlistId, playlistName);
+        if (playlistId == -1)
+        {
+            return null;
+        } else
+        {
+            return new Playlist(playlistId, playlistName);
+        }
     }
 
     public void deleteByPlaylist(int id) throws IOException

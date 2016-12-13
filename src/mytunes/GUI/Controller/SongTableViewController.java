@@ -49,17 +49,10 @@ public class SongTableViewController implements Initializable
     }
 
     @FXML
-    private void clickMoreInfo(ActionEvent event)
-    {
-        //TODO
-    }
-
-    @FXML
     private void clickChooseFromFile(ActionEvent event) throws UnsupportedAudioFileException, IOException
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                //new FileChooser.ExtensionFilter(".mp4", "*.mp4"),
                 new FileChooser.ExtensionFilter(".mp3", "*.mp3"),
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );
@@ -120,11 +113,6 @@ public class SongTableViewController implements Initializable
         {
             throw new UnsupportedAudioFileException();
         }
-    }
-
-    public void saveSongsFromView()
-    {
-        List<Song> song = new ArrayList();
     }
 
     @FXML

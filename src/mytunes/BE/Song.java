@@ -1,15 +1,9 @@
 package mytunes.BE;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-//import mytunes.BLL.IDManager;
-
 import mytunes.BLL.SongManager;
 
 public class Song
 {
-
-    ///also need to implement duartion
     private int songID;
     private String songTitle;
     private String songArtist;
@@ -19,38 +13,16 @@ public class Song
     private String songPath;
     private String readDuration;
 
-    //private final IntegerProperty songId;
-
-//    private static int nextId = 0;
-//    private final IntegerProperty songId;
     SongManager songManager = SongManager.getInstance();
-    //IDManager idManager = IDManager.getInstance();
 
-//    public Song(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
-//    {
-//
-//        this.songTitle = songTitle;
-//        this.songArtist = songArtist;
-//        this.songCategory = songCategory;
-//        this.songDuration = songDuration; //need to work on this
-//        this.songPath = songPath;
-//
-//
-//
-//        readDuration = readableDuration(this.songDuration);
-//        songID = idManager.getIDForSong();
-//            System.out.println("Song ID: " + songID);
-//
-//    }
     public Song(int songID, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
 
-        //this(songID, songTitle, songArtist, songCategory, songDuration, songPath);
         this.songID = songID;
         this.songTitle = songTitle;
         this.songArtist = songArtist;
         this.songCategory = songCategory;
-        this.songDuration = songDuration; //need to work on this
+        this.songDuration = songDuration;
         this.songPath = songPath;
         readDuration = readableDuration(this.songDuration);
 
@@ -63,7 +35,7 @@ public class Song
         return readDuration;
     }
 
-    public int getId()
+    public int getSongId()
     {
         return songID;
 
@@ -116,13 +88,6 @@ public class Song
 
     public String readableDuration(Long songDuration)
     {
-//        String time;
-//        if (songDuration != null) {
-//            time = songManager.calcDuration(songDuration);
-//        } else {
-//            time = "";
-//        }
-//        return time;
         String duration;
         if (songDuration != null)
         {
