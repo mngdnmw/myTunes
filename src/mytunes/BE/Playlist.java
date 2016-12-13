@@ -1,38 +1,26 @@
 package mytunes.BE;
 
-import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import mytunes.BLL.IDManager;
 
 public class Playlist
 {
 
-    //private int id = 0;
-    //private final int id; need to come back and to change id to final 
-    private static int playlistID;
-    private String name;
+    private int playlistID;
+    private String playlistName;
     private String playlistDuration;
     private List<Integer> songsRelations;
 
-//    private final IntegerProperty id;
-    IDManager idManager = IDManager.getInstance();
-
-    public Playlist(String name)
+    public Playlist(int playlistID, String playlistName)
     {
-        //this.id = id;
-        this.name = name;
-        songsRelations = new ArrayList<>();
 
-        //id++;//need to change implementation
-        //id = new SimpleIntegerProperty(nextId++);
-        playlistID = idManager.getIDForPlaylist();
-        System.out.println("Playlist: " +playlistID);
+        this.playlistID = playlistID;
+        this.playlistName = playlistName;
+
+        System.out.println(playlistName + " : " + playlistID);
 
     }
 
-    public int getId()
+    public int getPlaylistId()
     {
         return playlistID;
 
@@ -40,12 +28,12 @@ public class Playlist
 
     public String getName()
     {
-        return name;
+        return playlistName;
     }
 
-    public void setName(String name)
+    public void setName(String playlistName)
     {
-        this.name = name;
+        this.playlistName = playlistName;
     }
 
     public String getPlaylistDuration()
@@ -67,8 +55,4 @@ public class Playlist
     {
         this.songsRelations = songsRelations;
     }
-
-//    public int getId() {
-//        return id;
-//    }
 }

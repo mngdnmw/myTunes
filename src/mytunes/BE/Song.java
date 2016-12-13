@@ -1,17 +1,9 @@
 package mytunes.BE;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import mytunes.BLL.IDManager;
-
 import mytunes.BLL.SongManager;
-
 
 public class Song
 {
-
-
-    ///also need to implement duartion
     private int songID;
     private String songTitle;
     private String songArtist;
@@ -21,76 +13,71 @@ public class Song
     private String songPath;
     private String readDuration;
 
-    private static int nextId = 0;
-    private final IntegerProperty songId;
-
-
-//    private static int nextId = 0;
-//    private final IntegerProperty songId;
     SongManager songManager = SongManager.getInstance();
-    IDManager idManager = IDManager.getInstance();
 
-    public Song(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
+    public Song(int songID, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
 
+        this.songID = songID;
         this.songTitle = songTitle;
         this.songArtist = songArtist;
         this.songCategory = songCategory;
-        this.songDuration = songDuration; //need to work on this
+        this.songDuration = songDuration;
         this.songPath = songPath;
-
-        songId = new SimpleIntegerProperty(nextId++);
-
         readDuration = readableDuration(this.songDuration);
-        songID = idManager.getIDForSong();
-            System.out.println("Song ID: " + songID);
+
+        System.out.println("Song ID: " + songID);
 
     }
 
-    public Song(int songId, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
-
-        this(songTitle, songArtist, songCategory, songDuration, songPath);
-        this.songId.set(songId);
-    }
-
-    public String getReadDuration() {
+    public String getReadDuration()
+    {
         return readDuration;
     }
 
-    public int getId() {
-        return songId.get();
+    public int getSongId()
+    {
+        return songID;
 
     }
 
-    public String getSongTitle() {
+    public String getSongTitle()
+    {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle) {
+    public void setSongTitle(String songTitle)
+    {
         this.songTitle = songTitle;
     }
 
-    public String getSongPath() {
+    public String getSongPath()
+    {
         return songPath;
     }
 
-    public void setSongPath(String songPath) {
+    public void setSongPath(String songPath)
+    {
         this.songPath = songPath;
     }
 
-    public String getSongArtist() {
+    public String getSongArtist()
+    {
         return songArtist;
     }
 
-    public void setSongArtist(String songArtist) {
+    public void setSongArtist(String songArtist)
+    {
         this.songArtist = songArtist;
     }
 
-    public String getSongCategory() {
+    public String getSongCategory()
+    {
         return songCategory;
     }
 
-    public void setSongCategory(String songCategory) {
+    public void setSongCategory(String songCategory)
+    {
         this.songCategory = songCategory;
     }
 
@@ -101,13 +88,6 @@ public class Song
 
     public String readableDuration(Long songDuration)
     {
-//        String time;
-//        if (songDuration != null) {
-//            time = songManager.calcDuration(songDuration);
-//        } else {
-//            time = "";
-//        }
-//        return time;
         String duration;
         if (songDuration != null)
         {
@@ -115,13 +95,16 @@ public class Song
             int sec = (mili / 1000) % 60;
             int min = (mili / 1000) / 60;
 
-            if (sec < 10) {
+            if (sec < 10)
+            {
                 duration = min + ":" + "0" + sec;
-            } else {
+            } else
+            {
                 duration = min + ":" + sec;
             }
 
-        } else {
+        } else
+        {
 
             duration = "";
         }
