@@ -26,7 +26,7 @@ public class Song
         this.songPath = songPath;
         readDuration = readableDuration(this.songDuration);
 
-        System.out.println("Song ID: " + songID);
+        System.out.println(songTitle + " : " + songID);
 
     }
 

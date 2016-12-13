@@ -16,8 +16,10 @@ import mytunes.BE.Song;
 public class FileManager
 {
 
+    private static final int ID_SIZE = Integer.BYTES;
+    
     //Final variables for songlist.txt
-    private static final int SONG_ID_SIZE = Integer.BYTES;
+    private static final int SONG_ID_SIZE = ID_SIZE;
     private static final int SONG_TITLE_SIZE = 50;
     private static final int SONG_ARTIST_SIZE = 50;
     private static final int SONG_CATEGORY_SIZE = 20;
@@ -32,20 +34,17 @@ public class FileManager
             + SONG_PATH_SIZE;
 
     //Final variables for playlistlist.txt
-    private static final int PLAYLIST_ID_SIZE = Integer.BYTES;
+    private static final int PLAYLIST_ID_SIZE = ID_SIZE;
     private static final int PLAYLIST_NAME_SIZE = 100;
     private static final int RECORD_SIZE_PLAYLIST = PLAYLIST_ID_SIZE + PLAYLIST_NAME_SIZE;
 
     //Final variables for songRelations.txt
     private static final int RECORD_SIZE_RELATIONS = PLAYLIST_ID_SIZE + SONG_TITLE_SIZE;
 
-    private final String rw = "rw";
     private final String songlistPath = "songlist.txt";
     private final String playlistPath = "playlists.txt";
 
-    private static int songID = 0;
-    private static int playlistID = 0;
-    private static final int idSize = Integer.BYTES;
+
 
     private static FileManager instance;
 
@@ -66,18 +65,17 @@ public class FileManager
 
     public void saveSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
-
         int nextId;
-        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
+        
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), "rw"))
         {
-            //place the file pointer at the end of the file
+            
             if (rafs.length() == 0)
             {
-                rafs.writeInt(0);
+                rafs.writeInt(1);
                 rafs.seek(0);
             }
             nextId = rafs.readInt(); //header
-            //rafs.seek(rafs.length() - rafs.length());
             rafs.seek(0);
             rafs.writeInt(nextId + 1); //+1 on our nextid in our header
 
@@ -109,7 +107,7 @@ public class FileManager
         //reads into the byte arrays
         if (rafs.getFilePointer() == 0)
         {
-            rafs.seek(idSize);
+            rafs.seek(ID_SIZE);
         }
         int songId = rafs.readInt();
 
@@ -147,7 +145,7 @@ public class FileManager
     public List<Song> getAllSongs() throws IOException
     {
 
-        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), "r"))
         {
 
             //makes an arraylist to store the songs 
@@ -172,7 +170,7 @@ public class FileManager
     {
         int nextId;
 
-        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw))
+        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), "rw"))
         {
             if (rafp.length() == 0)
             {
@@ -185,7 +183,7 @@ public class FileManager
             rafp.writeInt(nextId + 1); //+1 on our nextid in our header
 
             rafp.seek(getFirstAvailPointer("Playlist"));
-            rafp.seek(rafp.length());  // place the file pointer at the end of the file.
+            
             rafp.writeInt(nextId);
             rafp.writeBytes(String.format("%-" + PLAYLIST_NAME_SIZE + "s", playlistName).substring(0, PLAYLIST_NAME_SIZE));
 
@@ -197,7 +195,7 @@ public class FileManager
 
     public List<Playlist> getAllPlaylists() throws IOException
     {
-        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw))
+        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), "r"))
         {
 
             List<Playlist> listOfPlaylists = new ArrayList<>();
@@ -219,24 +217,29 @@ public class FileManager
     private Playlist getOnePlaylist(final RandomAccessFile rafp) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
+        
+        if(rafp.getFilePointer()==0){
+            rafp.seek(ID_SIZE);
+        }
+        
         int playlistId = rafp.readInt();
 
         rafp.read(bytes);
         String playlistName = new String(bytes).trim();
+        
         if (playlistId == -1)
         {
             return null;
-        } else
-        {
-            return new Playlist(playlistId, playlistName);
         }
+            return new Playlist(playlistId, playlistName);
+        
     }
 
     public void deleteByPlaylist(int id) throws IOException
     {
-        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), rw))
+        try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), "rw"))
         {
-            for (int pos = idSize; pos < rafp.length(); pos += RECORD_SIZE_PLAYLIST)
+            for (int pos = ID_SIZE; pos < rafp.length(); pos += RECORD_SIZE_PLAYLIST)
             {
                 rafp.seek(pos);
                 int currentId = rafp.readInt();
@@ -245,7 +248,7 @@ public class FileManager
                     rafp.seek(pos);
                     Integer nullId = -1;
                     rafp.writeInt(nullId);
-                    rafp.write(new byte[RECORD_SIZE_PLAYLIST - idSize]); // write as many blank bytes as one record, minus the id.
+                    rafp.write(new byte[RECORD_SIZE_PLAYLIST - ID_SIZE]); // write as many blank bytes as one record, minus the id.
                 }
             }
         }
@@ -253,9 +256,9 @@ public class FileManager
 
     public void deleteBySong(int id) throws IOException
     {
-        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), rw))
+        try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), "rw"))
         {
-            for (int pos = idSize; pos < rafs.length(); pos += RECORD_SIZE_SONGLIST)
+            for (int pos = ID_SIZE; pos < rafs.length(); pos += RECORD_SIZE_SONGLIST)
             {
                 rafs.seek(pos);
                 int currentId = rafs.readInt();
@@ -264,7 +267,7 @@ public class FileManager
                     rafs.seek(pos);
                     Integer nullId = -1;
                     rafs.writeInt(nullId);
-                    rafs.write(new byte[RECORD_SIZE_SONGLIST - idSize]); // write as many blank bytes as one record, minus the id.
+                    rafs.write(new byte[RECORD_SIZE_SONGLIST - ID_SIZE]); // write as many blank bytes as one record, minus the id.
                 }
             }
         }
@@ -290,7 +293,7 @@ public class FileManager
         {
             //starts reading at the beginning of the file
 
-            for (long i = idSize; i < raf.length(); i += recordSize)
+            for (long i = ID_SIZE; i < raf.length(); i += recordSize)
             {
                 raf.seek(i);
                 int songId = raf.readInt();
