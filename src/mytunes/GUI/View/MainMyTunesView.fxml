@@ -13,7 +13,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="550.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
+=======
+<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="562.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
+>>>>>>> origin/Jeppe
 
    <children>
       <ImageView fitHeight="554.0" fitWidth="1000.0" pickOnBounds="true">
@@ -22,7 +26,7 @@
          </image>
       </ImageView>
       <Slider fx:id="volumeSlider" layoutX="16.0" layoutY="9.0" orientation="VERTICAL" prefHeight="67.0" prefWidth="16.0" />
-      <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" prefHeight="400.0" prefWidth="228.0">
+      <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" onMouseClicked="#setPlaylist" prefHeight="400.0" prefWidth="228.0">
         <columns>
           <TableColumn fx:id="columnPlaylistName" prefWidth="75.0" text="Name" />
           <TableColumn fx:id="columnNumSongs" prefWidth="66.0" text="Songs" />
@@ -53,9 +57,15 @@
       <Label layoutX="16.0" layoutY="84.0" text="Playlists" />
       <Label layoutX="256.0" layoutY="84.0" text="Songs on Playlist" />
       <Label layoutX="542.0" layoutY="84.0" text="Songs" />
+<<<<<<< HEAD
       <Label fx:id="labelCurrently" layoutX="353.0" layoutY="34.0" text="Currently Playing" />
       <Label layoutX="773.0" layoutY="76.0" text="Filter" />
       <TextField fx:id="textFieldFilterSearch" layoutX="810.0" layoutY="71.0" onKeyReleased="#search" />
+=======
+      <Label fx:id="labelCurrentlyPlaying" layoutX="353.0" layoutY="34.0" />
+      <Label layoutX="748.0" layoutY="76.0" text="Filter" />
+      <TextField fx:id="textFieldFilterSearch" layoutX="788.0" layoutY="71.0" onKeyReleased="#search" />
+>>>>>>> origin/Jeppe
     <Button fx:id="playButton" defaultButton="true" layoutX="135.0" layoutY="27.0" minWidth="38.0" mnemonicParsing="false" onAction="#clickPlayPauseButton" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 100; -fx-font-size: 30;" text="▷">
          <opaqueInsets>
             <Insets />
