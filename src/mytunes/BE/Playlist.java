@@ -52,11 +52,6 @@ public class Playlist
         return songList;
     }
 
-    public void setSongList(List<Song> songList)
-    {
-        this.songList = songList;
-    }
-
     public void addSongToPlaylist(Song song)
     {
         songList.add(song);
