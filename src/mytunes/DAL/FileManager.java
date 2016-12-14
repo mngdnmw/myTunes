@@ -289,7 +289,6 @@ public class FileManager
 
     public List<Integer> getSongPlaylistRelations(int playlistID) throws IOException
     {
-        //System.out.println("Tesdt");
         try (RandomAccessFile rafsr = new RandomAccessFile(new File(songRelationPath), "r"))
         {
 
@@ -299,7 +298,6 @@ public class FileManager
                 return songIds;
             }
 
-            //getOneSongRelation(rafsr);
             for (int i = 0; i < rafsr.length(); i +=RECORD_SIZE_RELATIONS)
             {
                 rafsr.seek(i);
@@ -318,24 +316,7 @@ public class FileManager
         }
     }
 
-//    public int[] getOneSongRelation(RandomAccessFile rafsr)
-//    {
-//        try
-//        {
-//            int[] relation = new int[2];
-//
-//
-//            relation[0] = rafsr.readInt();
-//            relation[1] = rafsr.readInt();
-//            System.out.println("int array: "+ relation[0] + relation [1]);
-//            return relation;
-//
-//        } catch (IOException ex)
-//        {
-//            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
+
 
     public long getFirstAvailPointer(String type) throws FileNotFoundException, IOException
     {
