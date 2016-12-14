@@ -1,5 +1,6 @@
 package mytunes.GUI.Controller;
 
+import static com.sun.deploy.config.JREInfo.clear;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +28,8 @@ public class SongTableViewController implements Initializable {
     private SongManager songManager = SongManager.getInstance();
     private Song currentSong =null;
     private Long durationOfSong;
-
+    
+    
     @FXML
     private ComboBox<String> comboCategory;
     @FXML
@@ -103,23 +105,7 @@ public class SongTableViewController implements Initializable {
         }
     }
 
-    @FXML
-    private void clickSaveAddSong(ActionEvent event) {
-        if (currentSong == null) {
-            songManager.addSong(
-                    textFieldTitle.getText(), 
-                    textFieldArtist.getText(), 
-                    comboCategory.getValue(), 
-                    durationOfSong, 
-                    textFieldFilePath.getText());
-        }
-        else{
-            //TODO
-        }
-
-        Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
-        stage.close();
-    }
+ 
 
     @FXML
     private void clickCloseAddSong(ActionEvent event) {
@@ -127,6 +113,7 @@ public class SongTableViewController implements Initializable {
         stage.close();
     }
 
+    
     private void fillComboBox() {
         ObservableList<String> comboItems
                 = FXCollections.observableArrayList("", "Blues", "Classical",
@@ -175,6 +162,30 @@ public class SongTableViewController implements Initializable {
         this.textFieldFilePath = textFieldFilePath;
     }
 
+       @FXML
+    private void clickSaveAddSong(ActionEvent event) {
+        if (currentSong == null) {
+            songManager.addSong(
+                    textFieldTitle.getText(), 
+                    textFieldArtist.getText(), 
+                    comboCategory.getValue(), 
+                    durationOfSong, 
+                    textFieldFilePath.getText());
+        }
+        else{
+            durationOfSong = currentSong.getSongDuration();
+            songManager.removeSongLibrary(currentSong.getSongId());
+            songManager.addSong(
+                    textFieldTitle.getText(), 
+                    textFieldArtist.getText(), 
+                    comboCategory.getValue(), 
+                    durationOfSong, 
+                    textFieldFilePath.getText());}
+
+        Stage stage = (Stage) textFieldFilePath.getScene().getWindow();
+        stage.close();
+    } 
+    
     public void setSong(Song song)
     {
         currentSong =  song;
@@ -184,8 +195,16 @@ public class SongTableViewController implements Initializable {
             this.textFieldTime.setText(song.getReadDuration());
             this.textFieldFilePath.setText(song.getSongPath());
         }
-        
-        
+        /*songManager.removeSongLibrary(currentSong.getSongId());
+        songManager.addSong(
+                
+                textFieldTitle.getText(),
+                textFieldArtist.getText(),
+                comboCategory.getValue(),
+                song.getSongDuration(),
+                textFieldFilePath.getText());*/
+        //clickSaveAddSong();
+                
+    
     }
-
 }

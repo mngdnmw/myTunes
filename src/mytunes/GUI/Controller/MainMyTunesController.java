@@ -212,10 +212,12 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
-        Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+        if (!tblViewPlaylists.getSelectionModel().isEmpty())
+        {
+            Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
 
-        showPlaylistWindow("Edit Playlist", selectedPlaylist);
-        /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+            showPlaylistWindow("Edit Playlist", selectedPlaylist);
+            /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
         if(selectedPlaylist != null)
         {
             boolean okClicked = MyTunes.showPlaylistView(selectedPlaylist);
@@ -233,6 +235,7 @@ public class MainMyTunesController implements Initializable
             alert.showAndWait();
         }*/
 
+        }
     }
 
     /**
@@ -277,6 +280,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickToggleUpPlaylist(ActionEvent event)
     {
+        
     }
 
     @FXML
@@ -332,10 +336,14 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickEditSongLibrary(ActionEvent event) throws IOException
     {
-        Song selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
+        if (!tblViewLibrary.getSelectionModel().isEmpty())
+        {
+            Song selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
 
-        showSongTableWindow("Edit Song", selectedSong);
+            showSongTableWindow("Edit Song", selectedSong);
+            loadSongsIntoLibrary();
 
+        }
     }
 
     /**
