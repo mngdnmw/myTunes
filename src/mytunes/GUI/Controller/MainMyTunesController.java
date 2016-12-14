@@ -35,6 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import static javafx.scene.media.MediaPlayer.Status.PLAYING;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -65,6 +66,7 @@ public class MainMyTunesController implements Initializable
     private SongModel songModel = new SongModel();
 
     private String selectedSong;
+    private int songPlaying;
 
     private Song lastSelectedSong;
     private Playlist lastSelectedPlaylist;
@@ -99,6 +101,11 @@ public class MainMyTunesController implements Initializable
     private Button rldButton;
     @FXML
     private Label labelCurrentlyPlaying;
+    
+    @FXML
+    private Label lblCurrentSong;
+    @FXML
+    private Button lblPreviousSong;
 
     //Initializes the controller class.
     @Override
@@ -121,9 +128,10 @@ public class MainMyTunesController implements Initializable
         {
 
             selectedSong = null;
-        } else
-        {
-            selectedSong = tblViewLibrary.getItems().get(0).getSongPath();
+
+        } else {
+            songPlaying=0;
+            selectedSong = tblViewLibrary.getItems().get(songPlaying).getSongPath();
             media = new Media(new File(selectedSong).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
         }
@@ -436,9 +444,55 @@ public class MainMyTunesController implements Initializable
 
     }
 
-    private void clickNextButton(ActionEvent event)
+    @FXML
+    private void clickNextButton(ActionEvent actionevent)
     {
         mediaPlayer.seek(mediaPlayer.getTotalDuration());
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            System.out.println("does nothing");
+            Song music = null;
+           /* if (playingFrom == SONGS_ON_PLAYLIST) {
+                if (songPlaying < tblSongsOnPlaylist.getItems().size()) {
+                    songPlaying++;
+                    tblSongsOnPlaylist.getSelectionModel().clearAndSelect(songPlaying);
+                    System.out.println("reaches here?");
+                    music = tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
+
+                } else {
+                    songPlaying = 0;
+                    System.out.println("Does this when reaching the end");
+                    tblSongsOnPlaylist.getSelectionModel().clearAndSelect(songPlaying);
+                    music = tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
+                }
+            }
+            if (playingFrom == ALL_SONGS) {*/
+                if (songPlaying < tblViewLibrary.getItems().size() - 1) {
+                    songPlaying++;
+                    tblViewLibrary.getSelectionModel().clearAndSelect(songPlaying);
+                    System.out.println("reaches here?");
+                    music = tblViewLibrary.getSelectionModel().getSelectedItem();
+
+                    selectedSong = tblViewLibrary.getItems().get(songPlaying).getSongPath();
+                    media = new Media(new File(selectedSong).toURI().toString());
+                } else {
+                    songPlaying = 0;
+                    System.out.println("Does this when reaching the end");
+                    tblViewLibrary.getSelectionModel().clearAndSelect(songPlaying);
+                    music = tblViewLibrary.getSelectionModel().getSelectedItem();
+                }
+            //}
+            if (music != null) {
+                String path = music.getSongPath();
+                lblCurrentSong.setText("Song: "
+                        + music.getSongTitle()
+                        + " Artist: "
+                        + music.getSongArtist());
+                Media media = new Media(new File(path).toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+               mediaPlayer.play();
+               }
+        }
     }
 
     /**
@@ -478,7 +532,9 @@ public class MainMyTunesController implements Initializable
 
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
+        
         mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setOnEndOfMedia(new endOfSongEvent());
         System.out.println(selectedSong);
     }
 
@@ -534,4 +590,50 @@ public class MainMyTunesController implements Initializable
     {
         lastSelectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
     }
+    
+    public void ClickPreviousSong(ActionEvent event)
+    {
+        {
+        mediaPlayer.seek(mediaPlayer.getTotalDuration());
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            System.out.println("does nothing");
+            Song music = null;
+           
+                if (songPlaying > 0) {
+                    songPlaying--;
+                    tblViewLibrary.getSelectionModel().clearAndSelect(songPlaying);
+                    System.out.println("reaches here?");
+                    music = tblViewLibrary.getSelectionModel().getSelectedItem();
+
+                    selectedSong = tblViewLibrary.getItems().get(songPlaying).getSongPath();
+                    media = new Media(new File(selectedSong).toURI().toString());
+                } else {
+                    songPlaying = tblViewLibrary.getItems().size() -1;
+                    System.out.println("Does this when reaching the end");
+                    tblViewLibrary.getSelectionModel().clearAndSelect(songPlaying);
+                    music = tblViewLibrary.getSelectionModel().getSelectedItem();
+                }
+            //}
+            if (music != null) {
+                String path = music.getSongPath();
+                lblCurrentSong.setText("Song: "
+                        + music.getSongTitle()
+                        + " Artist: "
+                        + music.getSongArtist());
+                Media media = new Media(new File(path).toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+               mediaPlayer.play();
+               }
+        }
+    }
+    }
+
+    
+    private class endOfSongEvent implements Runnable
+            {
+                public void run(){
+                clickNextButton(null);
+                }
+            }
 }
