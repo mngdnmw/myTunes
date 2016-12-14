@@ -2,74 +2,63 @@ package mytunes.BE;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
-public class Playlist
-{
+public class Playlist {
 
-    private int playlistID;
-    private String playlistName;
+    //private int id = 0;
+    //private final int id; need to come back and to change id to final 
+    private String name;
     private String playlistDuration;
-    private List<Song> songList = new ArrayList();
+    private List<Integer> songsRelations;
+    private static int nextId = 0;
+    private final IntegerProperty id;
+    
 
-    public Playlist(int playlistID, String playlistName)
+    public Playlist(String name) {
+        //this.id = id;
+        this.name = name;
+        songsRelations = new ArrayList<>();
+
+        //id++;//need to change implementation
+
+        id = new SimpleIntegerProperty(nextId++);
+        
+    }
+    
+    public int getId()
     {
-
-        this.playlistID = playlistID;
-        this.playlistName = playlistName;
+        return id.get();
 
     }
 
-    public int getPlaylistId()
-    {
-        return playlistID;
-
+    public String getName() {
+        return name;
     }
 
-    public String getName()
-    {
-        return playlistName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setName(String playlistName)
-    {
-        this.playlistName = playlistName;
-    }
-
-    public String getPlaylistDuration()
-    {
+    public String getPlaylistDuration() {
         return playlistDuration;
     }
 
-    public void setPlaylistDuration(String playlistDuration)
-    {
+    public void setPlaylistDuration(String playlistDuration) {
         this.playlistDuration = playlistDuration;
     }
 
-    public List<Song> getSongList()
-    {
-        return songList;
+    public List<Integer> getSongsRelations() {
+        return songsRelations;
     }
 
-    public void addSongToPlaylist(Song song)
-    {
-        songList.add(song);
+    public void setSongsRelations(List<Integer> songsRelations) {
+        this.songsRelations = songsRelations;
     }
 
-    /**
-     * Removes a song from a playlist.
-     *
-     * @param song
-     */
-    public void removeSongFromPlaylist(Song song)
-    {
-        for (Song song1 : songList)
-        {
-            if (song1.equals(song))
-            {
-                songList.remove(song);
-            }
-        }
-
-    }
+//    public int getId() {
+//        return id;
+//    }
 
 }

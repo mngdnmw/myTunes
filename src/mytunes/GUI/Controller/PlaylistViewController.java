@@ -1,6 +1,8 @@
 package mytunes.GUI.Controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,14 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.BE.Playlist;
-import mytunes.BLL.SongManager;
+import mytunes.GUI.Model.SongManager;
 
 public class PlaylistViewController implements Initializable
 {
-
     private SongManager songManager = SongManager.getInstance();
-
-    private Playlist currentPlaylist = null;
 
     @FXML
     private TextField textFileNamePlaylist;
@@ -29,73 +28,38 @@ public class PlaylistViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-    }
+    }    
 
-    /**
-     * Saves a new playlist.
-     *
-     * @param event
-     */
     @FXML
-    private void clickSaveAddPlaylist(ActionEvent event)
+    private void clickSaveNewPlaylist(ActionEvent event)
     {
-        if (currentPlaylist == null)
-        {
-            songManager.addPlaylist(textFileNamePlaylist.getText());
-        } else
-        {
-            songManager.removePlaylist(currentPlaylist.getPlaylistId());
-            songManager.addPlaylist(textFileNamePlaylist.getText());
-        }
+        songManager.addPlaylist(textFileNamePlaylist.getText());
 
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
     }
+    
 
-    /**
-     * Returns the text field.
-     *
-     * @return
-     */
+    
+    public void savePlaylistFromView(){
+        List<Playlist> playlist = new ArrayList();
+    }
+    
     public TextField getTextFileNamePlaylist()
     {
         return textFileNamePlaylist;
     }
 
-    /**
-     * Sets the textfield.
-     *
-     * @param textFileNamePlaylist
-     */
     public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
     {
         this.textFileNamePlaylist = textFileNamePlaylist;
     }
 
-    /**
-     * Cancels adding a new playlist.
-     *
-     * @param event
-     */
     @FXML
     private void clickCancelNewPlaylist(ActionEvent event)
     {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
-
-    /**
-     * Sets the playlist to a given playlist.
-     *
-     * @param playlist
-     */
-    public void setPlaylist(Playlist playlist)
-    {
-        currentPlaylist = playlist;
-        if (currentPlaylist != null)
-        {
-            this.textFileNamePlaylist.setText(playlist.getName());
-        }
-    }
-
+    
 }

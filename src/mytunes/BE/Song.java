@@ -1,137 +1,67 @@
 package mytunes.BE;
 
-import mytunes.BLL.SongManager;
-
+/**
+ *
+ * @author jeppe
+ */
 public class Song
 {
-
-    private int songID;
+    ///also need to implement duartion
     private String songTitle;
     private String songArtist;
     private String songCategory;
-    private Long songDuration;
-    private String songPath;
-    private String readDuration;
+    private int songDuration;
+     private String songPath;
 
-    SongManager songManager = SongManager.getInstance();
-
-    public Song(int songID, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
+    public Song(String songTitle, String songArtist, String songCategory,String songPath)
     {
-
-        this.songID = songID;
         this.songTitle = songTitle;
         this.songArtist = songArtist;
-        this.songCategory = songCategory;
-        this.songDuration = songDuration;
+        this.songCategory = songCategory;//need to work on this, may have to set an enum file?
+        songDuration = getSongDuration(); //need to work on this
         this.songPath = songPath;
-        readDuration = readableDuration(this.songDuration);
-
     }
+    
 
-    public String getReadDuration()
-    {
-        return readDuration;
-    }
-
-    public int getSongId()
-    {
-        return songID;
-
-    }
-
-    public String getSongTitle()
-    {
+    public String getSongTitle() {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle)
-    {
+    public void setSongTitle(String songTitle) {
         this.songTitle = songTitle;
     }
 
-    public String getSongPath()
-    {
+    public String getSongPath() {
         return songPath;
     }
 
-    public void setSongPath(String songPath)
-    {
+    public void setSongPath(String songPath) {
         this.songPath = songPath;
     }
 
-    public String getSongArtist()
-    {
+    public String getSongArtist() {
         return songArtist;
     }
 
-    public void setSongArtist(String songArtist)
-    {
+    public void setSongArtist(String songArtist) {
         this.songArtist = songArtist;
     }
 
-    public String getSongCategory()
-    {
+    public String getSongCategory() {
         return songCategory;
     }
 
-    public void setSongCategory(String songCategory)
-    {
+    public void setSongCategory(String songCategory) {
         this.songCategory = songCategory;
     }
 
-    public Long getSongDuration()
-    {
+    public int getSongDuration() {
         return songDuration;
     }
 
-    /**
-     * Transforms the duration of the song from microseconds and into something
-     * readable.
-     *
-     * @param songDuration
-     * @return
-     */
-    public String readableDuration(Long songDuration)
-    {
-        String duration;
-        if (songDuration != null)
-        {
-            int mili = (int) (songDuration / 1000);
-            int sec = (mili / 1000) % 60;
-            int min = (mili / 1000) / 60;
-
-            if (sec < 10)
-            {
-                duration = min + ":" + "0" + sec;
-            } else
-            {
-                duration = min + ":" + sec;
-            }
-
-        } else
-        {
-
-            duration = "";
-        }
-
-        return duration;
-
-    }
-
-    public void setSongDuration(Long songDuration)
-    {
+    public void setSongDuration(int songDuration) {
         this.songDuration = songDuration;
-
     }
-
-    /**
-     * Gets all string information for the song and adds them together.
-     *
-     * @return
-     */
-    public String getAllSongStringInfo()
-    {
-        return songArtist + " " + songTitle;
-    }
-
+    
+   
 }

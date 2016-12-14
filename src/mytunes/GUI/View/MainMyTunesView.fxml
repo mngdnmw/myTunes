@@ -6,21 +6,23 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="562.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
+<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="554.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
 
    <children>
       <Slider fx:id="volumeSlider" layoutX="16.0" layoutY="9.0" orientation="VERTICAL" prefHeight="67.0" prefWidth="16.0" />
-      <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" onMouseClicked="#setPlaylist" prefHeight="400.0" prefWidth="228.0">
+      <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" prefHeight="400.0" prefWidth="228.0">
         <columns>
           <TableColumn fx:id="columnPlaylistName" prefWidth="75.0" text="Name" />
           <TableColumn fx:id="columnNumSongs" prefWidth="66.0" text="Songs" />
             <TableColumn fx:id="columnDuration" prefWidth="85.0" text="Time" />
         </columns>
       </TableView>
+      <TextArea fx:id="tblSongsOnPlaylist" layoutX="256.0" layoutY="108.0" minHeight="400.0" prefWidth="200.0" />
       <Button layoutX="469.0" layoutY="108.0" mnemonicParsing="false" onAction="#clickAddSongPlaylist" prefHeight="50.0" prefWidth="55.0" text="⇐" textAlignment="CENTER">
          <font>
             <Font size="25.0" />
@@ -44,9 +46,10 @@
       <Label layoutX="16.0" layoutY="84.0" text="Playlists" />
       <Label layoutX="256.0" layoutY="84.0" text="Songs on Playlist" />
       <Label layoutX="542.0" layoutY="84.0" text="Songs" />
-      <Label fx:id="labelCurrentlyPlaying" layoutX="353.0" layoutY="34.0" />
-      <Label layoutX="773.0" layoutY="76.0" text="Filter" />
-      <TextField fx:id="textFieldFilterSearch" layoutX="813.0" layoutY="71.0" onKeyReleased="#search" />
+      <Label layoutX="353.0" layoutY="34.0" text="Currently Playing" />
+      <Label layoutX="694.0" layoutY="34.0" text="Filter" />
+      <TextField fx:id="textFieldFilterSearch" layoutX="738.0" layoutY="29.0" />
+      <Button layoutX="914.0" layoutY="29.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
     <Button fx:id="playButton" defaultButton="true" layoutX="135.0" layoutY="27.0" minWidth="38.0" mnemonicParsing="false" onAction="#clickPlayPauseButton" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 100; -fx-font-size: 30;" text="▷">
          <opaqueInsets>
             <Insets />
@@ -74,12 +77,12 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
+      <Button layoutX="45.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
          <padding>
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
-      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickNextButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
+      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -87,10 +90,5 @@
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
-      <TableView fx:id="tblSongsOnPlaylist" layoutX="256.0" layoutY="108.0" onMouseClicked="#selectSongInPlaylist" prefHeight="400.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="columnSongsInPlaylist" prefWidth="199.0" />
-        </columns>
-      </TableView>
    </children>
 </AnchorPane>
