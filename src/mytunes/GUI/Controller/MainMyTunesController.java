@@ -33,6 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import static javafx.scene.media.MediaPlayer.Status.PLAYING;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -469,7 +470,9 @@ public class MainMyTunesController implements Initializable
 
         selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem().getSongPath();
         media = new Media(new File(selectedSong).toURI().toString());
+        
         mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setOnEndOfMedia(new endOfSongEvent());
         System.out.println(selectedSong);
     }
 
@@ -559,5 +562,12 @@ public class MainMyTunesController implements Initializable
     }
     }
 
+    
+    private class endOfSongEvent implements Runnable
+            {
+                public void run(){
+                clickNextButton(null);
+                }
+            }
 
 }
