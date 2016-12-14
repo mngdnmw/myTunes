@@ -17,7 +17,6 @@ public class Playlist
         this.playlistID = playlistID;
         this.playlistName = playlistName;
 
-        System.out.println(playlistName + " : " + playlistID);
 
     }
 
