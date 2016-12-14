@@ -1,5 +1,6 @@
 package mytunes.BE;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist
@@ -8,7 +9,7 @@ public class Playlist
     private int playlistID;
     private String playlistName;
     private String playlistDuration;
-    private List<Integer> songsRelations;
+    private List<Song> songList = new ArrayList();
 
     public Playlist(int playlistID, String playlistName)
     {
@@ -46,13 +47,31 @@ public class Playlist
         this.playlistDuration = playlistDuration;
     }
 
-    public List<Integer> getSongsRelations()
+    public List<Song> getSongList()
     {
-        return songsRelations;
+        return songList;
     }
 
-    public void setSongsRelations(List<Integer> songsRelations)
+    public void setSongList(List<Song> songList)
     {
-        this.songsRelations = songsRelations;
+        this.songList = songList;
     }
+
+    public void addSongToPlaylist(Song song)
+    {
+        songList.add(song);
+    }
+
+    public void removeSongFromPlaylist(Song song)
+    {
+        for (Song song1 : songList)
+        {
+            if (song1.equals(song))
+            {
+                songList.remove(song);
+            }
+        }
+
+    }
+
 }
