@@ -289,14 +289,12 @@ public class FileManager
 
     public List<int[]> getSongRelations() throws IOException
     {
-        System.out.println("Tesdt");
         try (RandomAccessFile rafsr = new RandomAccessFile(new File(songRelationPath), "r"))
         {
 
             List<int[]> listOfRelations = new ArrayList<>();
             if (rafsr.length() == 0)
             {
-                System.out.println("Returned list file empty");
                 return listOfRelations;
             }
 
@@ -307,12 +305,10 @@ public class FileManager
 
                 if (relation != null)
                 {
-                    System.out.println("Added relation");
                     listOfRelations.add(relation);
                 }
 
             }
-            System.out.println("Returned list" + listOfRelations.size());
             return listOfRelations;
         }
     }
@@ -326,7 +322,6 @@ public class FileManager
 
             relation[0] = rafsr.readInt();
             relation[1] = rafsr.readInt();
-            System.out.println("int array: "+ relation[0] + relation [1]);
             return relation;
 
         } catch (IOException ex)
