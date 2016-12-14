@@ -120,7 +120,6 @@ public class MainMyTunesController implements Initializable
         populateLists();
         setStartingSong();
         //volumeControl();
-        //compareSongRelations();
         
 
     }
@@ -393,46 +392,46 @@ public class MainMyTunesController implements Initializable
     public void saveSongRelations()
     {
         songManager.saveSongRelations(lastSelectedPlaylist.getPlaylistId(), lastSelectedSong.getSongId());
-        //compareSongRelations();
+        compareSongRelations();
     }
     
-//        public void compareSongRelations()
-//    {
-//        try
-//        {
-//            List<int[]> relations = new ArrayList();
-//            relations = songManager.getSongRelations();
-//            System.out.println("Started for finding songs in playlists");
-//            
-//            for (int[] relation : relations)
-//            {
-//                System.out.println("1");
-//                for (Playlist list : songManager.getAllPlaylists())
-//                {
-//                    System.out.println("2");
-//                    if (list.getPlaylistId() == relation[0])
-//                    {
-//                        System.out.println("3");
-//                        for (Song song : songManager.getAllSongs())
-//                        {
-//                            System.out.println("4");
-//                            if (song.getSongId() == relation[1])
-//                            {
-//                                System.out.println(song.getSongTitle() + " matches " + list.getName());
-//                                list.addSongToPlaylist(song);
-//                                System.out.println("Did the thing");
-//                            }
-//                            
-//                            
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (IOException ex)
-//        {
-//            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, "Compare Song relations.", ex);
-//        }
-//    }
+        public void compareSongRelations()
+    {
+        try
+        {
+            List<int[]> relations = new ArrayList();
+            relations = songManager.getSongRelations();
+            System.out.println("Started for finding songs in playlists");
+            
+            for (int[] relation : relations)
+            {
+                System.out.println("1");
+                for (Playlist list : songManager.getAllPlaylists())
+                {
+                    System.out.println("2");
+                    if (list.getPlaylistId() == relation[0])
+                    {
+                        System.out.println("3");
+                        for (Song song : songManager.getAllSongs())
+                        {
+                            System.out.println("4");
+                            if (song.getSongId() == relation[1])
+                            {
+                                System.out.println(song.getSongTitle() + " matches " + list.getName());
+                                list.addSongToPlaylist(song);
+                                System.out.println("Did the thing");
+                            }
+                            
+                            
+                        }
+                    }
+                }
+            }
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, "Compare Song relations.", ex);
+        }
+    }
 
     /**
      * Exits the program.
@@ -521,7 +520,7 @@ public class MainMyTunesController implements Initializable
 
     private void loadSongsIntoPlaylist()
     {
-        //compareSongRelations();
+        compareSongRelations();
         if (lastSelectedPlaylist != null)
         {
             if (lastSelectedPlaylist.getSongList() != null)
@@ -622,8 +621,9 @@ public class MainMyTunesController implements Initializable
     private void setSong(MouseEvent event)
     {
         lastSelectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
-        if (lastSelectedSong != null)
+        if (!tblViewLibrary.getSelectionModel().isEmpty())
         {
+           
              if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
         {
             mediaPlayer.stop();
@@ -704,6 +704,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void selectSongInPlaylist(MouseEvent event)
     {
+        if (tblSongsOnPlaylist.getSelectionModel().getSelectedItem() != null)
         lastSelectedSong = tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
         System.out.println(lastSelectedSong.getSongTitle());
 
