@@ -393,24 +393,34 @@ public class MainMyTunesController implements Initializable
         {
             List<int[]> relations = new ArrayList();
             relations = songManager.getSongRelations();
+            System.out.println("Started for finding songs in playlists");
             
             for (int[] relation : relations)
             {
+                System.out.println("1");
                 for (Playlist list : songManager.getAllPlaylists())
                 {
+                    System.out.println("2");
                     if (list.getPlaylistId() == relation[0])
                     {
+                        System.out.println("3");
                         for (Song song : songManager.getAllSongs())
                         {
+                            System.out.println("4");
                             if (song.getSongId() == relation[1])
+                            {
                                 list.addSongToPlaylist(song);
+                                System.out.println("Did the thing");
+                            }
+                            
+                            
                         }
                     }
                 }
             }
         } catch (IOException ex)
         {
-            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, "Compare Song relations.", ex);
         }
     }
 
@@ -501,6 +511,7 @@ public class MainMyTunesController implements Initializable
 
     private void loadSongsIntoPlaylist()
     {
+        compareSongRelations();
         if (lastSelectedPlaylist != null)
         {
             if (lastSelectedPlaylist.getSongList() != null)
