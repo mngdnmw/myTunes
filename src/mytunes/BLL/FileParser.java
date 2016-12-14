@@ -61,4 +61,14 @@ public class FileParser
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public List<int[]> getSongRelations() throws IOException
+    {
+        return fileManager.getSongRelations();
+    }
+    
+    public void saveSongRelations(int playlistID, int songID)
+    {
+        fileManager.saveSongRelations(playlistID, songID);
+    }
 }
