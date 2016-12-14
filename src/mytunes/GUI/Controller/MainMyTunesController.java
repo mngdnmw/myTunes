@@ -468,7 +468,7 @@ public class MainMyTunesController implements Initializable
     public void saveSongRelations()
     {
         songManager.saveSongRelations(lastSelectedPlaylist.getPlaylistId(), lastSelectedSong.getSongId());
-        //compareSongRelations();
+        compareSongRelations();
     }
 
     /**
@@ -600,10 +600,9 @@ public class MainMyTunesController implements Initializable
 
         if (lastSelectedPlaylist != null)
         {
-            //compareSongRelations();
             if (lastSelectedPlaylist.getSongList() != null)
             {
-                FXCollections.observableArrayList(compareSongRelations());
+                songPlaylist = FXCollections.observableArrayList(compareSongRelations());
                 tblSongsOnPlaylist.setItems(songPlaylist);
             }
         } else

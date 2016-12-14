@@ -363,7 +363,6 @@ public class FileManager
                 }
 
             }
-            System.out.println("Returned list" + songIds.size());
             return songIds;
         }
     }
