@@ -4,11 +4,11 @@ import mytunes.BLL.SongManager;
 
 public class Song
 {
+
     private int songID;
     private String songTitle;
     private String songArtist;
     private String songCategory;
-
     private Long songDuration;
     private String songPath;
     private String readDuration;
@@ -25,7 +25,6 @@ public class Song
         this.songDuration = songDuration;
         this.songPath = songPath;
         readDuration = readableDuration(this.songDuration);
-
 
     }
 
@@ -85,6 +84,13 @@ public class Song
         return songDuration;
     }
 
+    /**
+     * Transforms the duration of the song from microseconds and into something
+     * readable.
+     *
+     * @param songDuration
+     * @return
+     */
     public String readableDuration(Long songDuration)
     {
         String duration;
@@ -118,6 +124,11 @@ public class Song
 
     }
 
+    /**
+     * Gets all string information for the song and adds them together.
+     *
+     * @return
+     */
     public String getAllSongStringInfo()
     {
         return songArtist + " " + songTitle;

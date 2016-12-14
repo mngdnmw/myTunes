@@ -3,9 +3,7 @@ package mytunes.BLL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
@@ -14,7 +12,6 @@ public class SongManager
 
     private static SongManager instance;
     FileParser fileParser = new FileParser();
-    
 
     public static SongManager getInstance()
     {
@@ -22,56 +19,107 @@ public class SongManager
         {
             instance = new SongManager();
         }
-
         return instance;
-
     }
 
+    /**
+     * Sends the information for adding a song down through the layers.
+     *
+     * @param songTitle
+     * @param songArtist
+     * @param songCategory
+     * @param songDuration
+     * @param songPath
+     */
     public void addSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
         fileParser.sendSongInfo(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
+    /**
+     * Gets all songs from the fileparser and sends them on.
+     *
+     * @return
+     * @throws IOException
+     */
     public List<Song> getAllSongs() throws IOException
     {
         return fileParser.getSongs();
     }
 
+    /**
+     * Sends the information for adding a playlist down through the layers.
+     *
+     * @param playlistName
+     */
     public void addPlaylist(String playlistName)
     {
         fileParser.sendPlaylistName(playlistName);
     }
-    
+
+    /**
+     * Sends the information for the song relations file down through the
+     * layers.
+     *
+     * @param playlistID
+     * @param songID
+     */
     public void saveSongRelations(int playlistID, int songID)
     {
         fileParser.saveSongRelations(playlistID, songID);
     }
-    
-        public List<Integer> getSongRelations(int playlistID) throws IOException
+
+    /**
+     * Gets the song relations info and sends it up.
+     *
+     * @param playlistID
+     * @return
+     * @throws IOException
+     */
+    public List<Integer> getSongRelations(int playlistID) throws IOException
     {
         return fileParser.getSongRelations(playlistID);
     }
 
-    public void editPlaylistName(String playlistName)
-    {
-
-    }
-
+    /**
+     * Returns all playlists from the fileparser.
+     *
+     * @return
+     */
     public List<Playlist> getAllPlaylists()
     {
         return fileParser.getAllPlaylists();
     }
 
+    /**
+     * Sends the id for a playlist that needs to be removed down through the
+     * layers.
+     *
+     * @param id
+     */
     public void removePlaylist(int id)
     {
         fileParser.removePlaylist(id);
     }
 
+    /**
+     * Sends the id for a song that needs to be removed down through the layers.
+     *
+     * @param id
+     */
     public void removeSongLibrary(int id)
     {
         fileParser.removeSong(id);
     }
 
+    /**
+     * Returns a list of all songs that match the query.
+     *
+     * @param query
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public List<Song> search(String query) throws FileNotFoundException, IOException
     {
         List<Song> allSongs = fileParser.getSongs();
@@ -88,6 +136,13 @@ public class SongManager
         return searchList;
     }
 
+    /**
+     * Gets the duration of a song in microseconds and calculates it into
+     * something more readable.
+     *
+     * @param microSeconds
+     * @return
+     */
     public String calcDuration(Long microSeconds)
     {
         int mili = (int) (microSeconds / 1000);

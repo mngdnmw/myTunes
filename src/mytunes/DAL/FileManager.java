@@ -62,6 +62,15 @@ public class FileManager
     {
     }
 
+    /**
+     * Writes a song with the given variables and stores them on the harddrive.
+     *
+     * @param songTitle
+     * @param songArtist
+     * @param songCategory
+     * @param songDuration
+     * @param songPath
+     */
     public void saveSong(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
         int nextId;
@@ -94,6 +103,13 @@ public class FileManager
         }
     }
 
+    /**
+     * Reads and returns one song from the harddrive.
+     *
+     * @param rafs
+     * @return
+     * @throws IOException
+     */
     private Song getOneSong(final RandomAccessFile rafs) throws IOException
     {
 
@@ -133,14 +149,12 @@ public class FileManager
 
     }
 
-    private static long bytesToLong(byte[] bytes)
-    {
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-        buffer.put(bytes, 0, bytes.length);
-        buffer.flip();
-        return buffer.getLong();
-    }
-
+    /**
+     * Returns a list of all songs, after reading them from the harddrive.
+     *
+     * @return
+     * @throws IOException
+     */
     public List<Song> getAllSongs() throws IOException
     {
 
@@ -165,6 +179,11 @@ public class FileManager
 
     }
 
+    /**
+     * Saves a playlist to the harddrive.
+     *
+     * @param playlistName
+     */
     public void savePlaylist(String playlistName)
     {
         int nextId;
@@ -213,6 +232,13 @@ public class FileManager
         }
     }
 
+    /**
+     * Reads and returns one playlist.
+     *
+     * @param rafp
+     * @return
+     * @throws IOException
+     */
     private Playlist getOnePlaylist(final RandomAccessFile rafp) throws IOException
     {
         byte[] bytes = new byte[PLAYLIST_NAME_SIZE];
@@ -235,6 +261,12 @@ public class FileManager
 
     }
 
+    /**
+     * Deletes a playlist by referencing its ID.
+     *
+     * @param id
+     * @throws IOException
+     */
     public void deleteByPlaylist(int id) throws IOException
     {
         try (RandomAccessFile rafp = new RandomAccessFile(new File(playlistPath), "rw"))
@@ -254,6 +286,12 @@ public class FileManager
         }
     }
 
+    /**
+     * Deletes a song by referencing its ID.
+     *
+     * @param id
+     * @throws IOException
+     */
     public void deleteBySong(int id) throws IOException
     {
         try (RandomAccessFile rafs = new RandomAccessFile(new File(songlistPath), "rw"))
@@ -273,6 +311,12 @@ public class FileManager
         }
     }
 
+    /**
+     * Saves the song relations file and writes it to the harddrive.
+     *
+     * @param playlistID
+     * @param songID
+     */
     public void saveSongRelations(int playlistID, int songID)
     {
 
@@ -287,6 +331,14 @@ public class FileManager
         }
     }
 
+    /**
+     * Reads the relations file from the harddrive, compares it with a given
+     * playlist ID, and returns the ID of songs that should be on the playlist.
+     *
+     * @param playlistID
+     * @return
+     * @throws IOException
+     */
     public List<Integer> getSongPlaylistRelations(int playlistID) throws IOException
     {
         try (RandomAccessFile rafsr = new RandomAccessFile(new File(songRelationPath), "r"))
@@ -298,7 +350,7 @@ public class FileManager
                 return songIds;
             }
 
-            for (int i = 0; i < rafsr.length(); i +=RECORD_SIZE_RELATIONS)
+            for (int i = 0; i < rafsr.length(); i += RECORD_SIZE_RELATIONS)
             {
                 rafsr.seek(i);
                 int readPlaylistId = rafsr.readInt();
@@ -316,8 +368,16 @@ public class FileManager
         }
     }
 
-
-
+    /**
+     * Reads through a file and finds all opens spaces within it. Ensures that
+     * we do not always add to the end of the file, but fill out empty spaces
+     * from previously removed songs/playlists/relations.
+     *
+     * @param type
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public long getFirstAvailPointer(String type) throws FileNotFoundException, IOException
     {
         String path = "";
