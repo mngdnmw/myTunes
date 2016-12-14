@@ -3,7 +3,9 @@ package mytunes.BLL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 
@@ -12,6 +14,7 @@ public class SongManager
 
     private static SongManager instance;
     FileParser fileParser = new FileParser();
+    
 
     public static SongManager getInstance()
     {
@@ -37,6 +40,16 @@ public class SongManager
     public void addPlaylist(String playlistName)
     {
         fileParser.sendPlaylistName(playlistName);
+    }
+    
+    public void saveSongRelations(int playlistID, int songID)
+    {
+        fileParser.saveSongRelations(playlistID, songID);
+    }
+    
+        public List<int[]> getSongRelations() throws IOException
+    {
+        return fileParser.getSongRelations();
     }
 
     public void editPlaylistName(String playlistName)
