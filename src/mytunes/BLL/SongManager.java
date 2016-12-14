@@ -47,9 +47,9 @@ public class SongManager
         fileParser.saveSongRelations(playlistID, songID);
     }
     
-        public List<int[]> getSongRelations() throws IOException
+        public List<Integer> getSongRelations(int playlistID) throws IOException
     {
-        return fileParser.getSongRelations();
+        return fileParser.getSongRelations(playlistID);
     }
 
     public void editPlaylistName(String playlistName)

@@ -66,7 +66,15 @@
             <Insets left="2.0" />
          </padding>
       </Button>
-      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#ClickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
+      <Button layoutX="256.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickToggleUpPlaylist" prefHeight="31.0" prefWidth="31.0" text="⇧">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button layoutX="293.0" layoutY="516.0" mnemonicParsing="false" onAction="#clickToggleDownPlaylist" prefHeight="31.0" prefWidth="31.0" text="⇩">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
          <padding>
             <Insets bottom="5.0" right="2.0" />
          </padding>

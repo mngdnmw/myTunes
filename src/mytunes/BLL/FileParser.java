@@ -62,9 +62,9 @@ public class FileParser
         }
     }
     
-    public List<int[]> getSongRelations() throws IOException
+    public List<Integer> getSongRelations(int playlistID) throws IOException
     {
-        return fileManager.getSongRelations();
+        return fileManager.getSongPlaylistRelations(playlistID);
     }
     
     public void saveSongRelations(int playlistID, int songID)

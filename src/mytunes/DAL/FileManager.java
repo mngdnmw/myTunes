@@ -287,49 +287,36 @@ public class FileManager
         }
     }
 
-    public List<int[]> getSongRelations() throws IOException
+    public List<Integer> getSongPlaylistRelations(int playlistID) throws IOException
     {
         try (RandomAccessFile rafsr = new RandomAccessFile(new File(songRelationPath), "r"))
         {
 
-            List<int[]> listOfRelations = new ArrayList<>();
+            List<Integer> songIds = new ArrayList<>();
             if (rafsr.length() == 0)
             {
-                return listOfRelations;
+                return songIds;
             }
 
-            getOneSongRelation(rafsr);
-            while (rafsr.getFilePointer() < rafsr.length())
+            for (int i = 0; i < rafsr.length(); i +=RECORD_SIZE_RELATIONS)
             {
-                int[] relation = getOneSongRelation(rafsr);
+                rafsr.seek(i);
+                int readPlaylistId = rafsr.readInt();
 
-                if (relation != null)
+                if (readPlaylistId == playlistID)
                 {
-                    listOfRelations.add(relation);
+                    int songId = rafsr.readInt();
+                    songIds.add(songId);
+
                 }
 
             }
-            return listOfRelations;
+            System.out.println("Returned list" + songIds.size());
+            return songIds;
         }
     }
 
-    public int[] getOneSongRelation(RandomAccessFile rafsr)
-    {
-        try
-        {
-            int[] relation = new int[2];
 
-
-            relation[0] = rafsr.readInt();
-            relation[1] = rafsr.readInt();
-            return relation;
-
-        } catch (IOException ex)
-        {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
     public long getFirstAvailPointer(String type) throws FileNotFoundException, IOException
     {
