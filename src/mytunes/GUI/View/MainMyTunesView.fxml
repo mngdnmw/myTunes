@@ -74,12 +74,12 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="45.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
+      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#ClickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
          <padding>
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
-      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
+      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickNextButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -87,6 +87,7 @@
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
+      <Label fx:id="lblCurrentSong" layoutX="483.0" layoutY="34.0" prefHeight="17.0" prefWidth="228.0" />
       <TableView fx:id="tblSongsOnPlaylist" layoutX="256.0" layoutY="108.0" onMouseClicked="#selectSongInPlaylist" prefHeight="400.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="columnSongsInPlaylist" prefWidth="199.0" />
