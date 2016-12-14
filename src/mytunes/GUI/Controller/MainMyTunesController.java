@@ -120,7 +120,6 @@ public class MainMyTunesController implements Initializable
         populateLists();
         setStartingSong();
         //volumeControl();
-        //compareSongRelations();
         
 
     }
@@ -234,10 +233,12 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
-        Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+        if (!tblViewPlaylists.getSelectionModel().isEmpty())
+        {
+            Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
 
-        showPlaylistWindow("Edit Playlist", selectedPlaylist);
-        /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
+            showPlaylistWindow("Edit Playlist", selectedPlaylist);
+            /*Playlist selectedPlaylist = tblViewPlaylists.getSelectionModel().getSelectedItem();
         if(selectedPlaylist != null)
         {
             boolean okClicked = MyTunes.showPlaylistView(selectedPlaylist);
@@ -255,6 +256,7 @@ public class MainMyTunesController implements Initializable
             alert.showAndWait();
         }*/
 
+        }
     }
 
     /**
@@ -314,10 +316,8 @@ public class MainMyTunesController implements Initializable
      * @param event
      * @throws IOException
      */
-    @FXML
-    private void clickNewSongLibrary(ActionEvent event) throws IOException
+    private void showSongTableWindow(String title, Song song) throws IOException
     {
-
         try
         {
             FXMLLoader loader = new FXMLLoader();
@@ -325,9 +325,11 @@ public class MainMyTunesController implements Initializable
                     .setLocation(MyTunes.class
                             .getResource("GUI/View/SongTableView.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
+            SongTableViewController controller = loader.getController();
+            controller.setSong(song);
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Song");
+            dialogStage.setTitle(title);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -342,11 +344,27 @@ public class MainMyTunesController implements Initializable
 
         }
         loadSongsIntoLibrary();
+
     }
 
     @FXML
-    private void clickEditSongLibrary(ActionEvent event)
+    private void clickNewSongLibrary(ActionEvent event) throws IOException
     {
+        showSongTableWindow("New Song", null);
+
+    }
+
+    @FXML
+    private void clickEditSongLibrary(ActionEvent event) throws IOException
+    {
+        if (!tblViewLibrary.getSelectionModel().isEmpty())
+        {
+            Song selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
+
+            showSongTableWindow("Edit Song", selectedSong);
+            loadSongsIntoLibrary();
+
+        }
     }
 
     /**
@@ -393,46 +411,46 @@ public class MainMyTunesController implements Initializable
     public void saveSongRelations()
     {
         songManager.saveSongRelations(lastSelectedPlaylist.getPlaylistId(), lastSelectedSong.getSongId());
-        //compareSongRelations();
+        compareSongRelations();
     }
     
-//        public void compareSongRelations()
-//    {
-//        try
-//        {
-//            List<int[]> relations = new ArrayList();
-//            relations = songManager.getSongRelations();
-//            System.out.println("Started for finding songs in playlists");
-//            
-//            for (int[] relation : relations)
-//            {
-//                System.out.println("1");
-//                for (Playlist list : songManager.getAllPlaylists())
-//                {
-//                    System.out.println("2");
-//                    if (list.getPlaylistId() == relation[0])
-//                    {
-//                        System.out.println("3");
-//                        for (Song song : songManager.getAllSongs())
-//                        {
-//                            System.out.println("4");
-//                            if (song.getSongId() == relation[1])
-//                            {
-//                                System.out.println(song.getSongTitle() + " matches " + list.getName());
-//                                list.addSongToPlaylist(song);
-//                                System.out.println("Did the thing");
-//                            }
-//                            
-//                            
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (IOException ex)
-//        {
-//            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, "Compare Song relations.", ex);
-//        }
-//    }
+        public void compareSongRelations()
+    {
+        try
+        {
+            List<int[]> relations = new ArrayList();
+            relations = songManager.getSongRelations();
+            System.out.println("Started for finding songs in playlists");
+            
+            for (int[] relation : relations)
+            {
+                System.out.println("1");
+                for (Playlist list : songManager.getAllPlaylists())
+                {
+                    System.out.println("2");
+                    if (list.getPlaylistId() == relation[0])
+                    {
+                        System.out.println("3");
+                        for (Song song : songManager.getAllSongs())
+                        {
+                            System.out.println("4");
+                            if (song.getSongId() == relation[1])
+                            {
+                                System.out.println(song.getSongTitle() + " matches " + list.getName());
+                                list.addSongToPlaylist(song);
+                                System.out.println("Did the thing");
+                            }
+                            
+                            
+                        }
+                    }
+                }
+            }
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MainMyTunesController.class.getName()).log(Level.SEVERE, "Compare Song relations.", ex);
+        }
+    }
 
     /**
      * Exits the program.
@@ -521,7 +539,7 @@ public class MainMyTunesController implements Initializable
 
     private void loadSongsIntoPlaylist()
     {
-        //compareSongRelations();
+        compareSongRelations();
         if (lastSelectedPlaylist != null)
         {
             if (lastSelectedPlaylist.getSongList() != null)
@@ -622,8 +640,9 @@ public class MainMyTunesController implements Initializable
     private void setSong(MouseEvent event)
     {
         lastSelectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
-        if (lastSelectedSong != null)
+        if (!tblViewLibrary.getSelectionModel().isEmpty())
         {
+           
              if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
         {
             mediaPlayer.stop();
@@ -704,6 +723,7 @@ public class MainMyTunesController implements Initializable
     @FXML
     private void selectSongInPlaylist(MouseEvent event)
     {
+        if (tblSongsOnPlaylist.getSelectionModel().getSelectedItem() != null)
         lastSelectedSong = tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
         System.out.println(lastSelectedSong.getSongTitle());
 
