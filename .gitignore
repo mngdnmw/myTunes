@@ -4,8 +4,17 @@
 .mtj.tmp/
 
 # Package Files #
+<<<<<<< HEAD
+*.properties
+=======
+>>>>>>> master
 *.war
 *.ear
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
+/build/
+/dist/
+=======
+>>>>>>> master
