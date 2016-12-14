@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="554.0" minWidth="992.0" prefHeight="554.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
+<AnchorPane minHeight="554.0" minWidth="992.0" prefHeight="554.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MainMyTunesController">
 
    <children>
       <Slider fx:id="volumeSlider" layoutX="16.0" layoutY="9.0" orientation="VERTICAL" prefHeight="67.0" prefWidth="16.0" />
@@ -76,12 +76,12 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="45.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
+      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#ClickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
          <padding>
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
-      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
+      <Button layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickNextButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↠">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -89,5 +89,6 @@
             <Insets bottom="5.0" right="2.0" />
          </padding>
       </Button>
+      <Label fx:id="lblCurrentSong" layoutX="483.0" layoutY="34.0" prefHeight="17.0" prefWidth="228.0" />
    </children>
 </AnchorPane>
