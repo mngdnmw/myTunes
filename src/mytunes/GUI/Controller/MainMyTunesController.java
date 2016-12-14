@@ -291,10 +291,8 @@ public class MainMyTunesController implements Initializable
      * @param event
      * @throws IOException
      */
-    @FXML
-    private void clickNewSongLibrary(ActionEvent event) throws IOException
+    private void showSongTableWindow(String title, Song song) throws IOException
     {
-
         try
         {
             FXMLLoader loader = new FXMLLoader();
@@ -302,9 +300,11 @@ public class MainMyTunesController implements Initializable
                     .setLocation(MyTunes.class
                             .getResource("GUI/View/SongTableView.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
+            SongTableViewController controller = loader.getController();
+            controller.setSong(song);
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Song");
+            dialogStage.setTitle(title);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -319,11 +319,23 @@ public class MainMyTunesController implements Initializable
 
         }
         loadSongsIntoLibrary();
+
     }
 
     @FXML
-    private void clickEditSongLibrary(ActionEvent event)
+    private void clickNewSongLibrary(ActionEvent event) throws IOException
     {
+        showSongTableWindow("New Song", null);
+
+    }
+
+    @FXML
+    private void clickEditSongLibrary(ActionEvent event) throws IOException
+    {
+        Song selectedSong = tblViewLibrary.getSelectionModel().getSelectedItem();
+
+        showSongTableWindow("Edit Song", selectedSong);
+
     }
 
     /**

@@ -175,4 +175,17 @@ public class SongTableViewController implements Initializable {
         this.textFieldFilePath = textFieldFilePath;
     }
 
+    public void setSong(Song song)
+    {
+        currentSong =  song;
+        if(currentSong!=null){
+            this.textFieldTitle.setText(song.getSongTitle());
+            this.textFieldArtist.setText(song.getSongArtist());
+            this.textFieldTime.setText(song.getReadDuration());
+            this.textFieldFilePath.setText(song.getSongPath());
+        }
+        
+        
+    }
+
 }
