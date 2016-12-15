@@ -3,55 +3,37 @@ package mytunes.BE;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist
-{
+public class Playlist {
 
-    private int playlistID;
+    private final int playlistID;
     private String playlistName;
-    private String playlistDuration;
-    private List<Song> songList = new ArrayList();
+    private final List<Song> songList = new ArrayList();
 
-    public Playlist(int playlistID, String playlistName)
-    {
+    public Playlist(int playlistID, String playlistName) {
 
         this.playlistID = playlistID;
         this.playlistName = playlistName;
 
     }
 
-    public int getPlaylistId()
-    {
+    public int getPlaylistId() {
         return playlistID;
 
     }
 
-    public String getName()
-    {
+    public String getName() {
         return playlistName;
     }
 
-    public void setName(String playlistName)
-    {
+    public void setName(String playlistName) {
         this.playlistName = playlistName;
     }
 
-    public String getPlaylistDuration()
-    {
-        return playlistDuration;
-    }
-
-    public void setPlaylistDuration(String playlistDuration)
-    {
-        this.playlistDuration = playlistDuration;
-    }
-
-    public List<Song> getSongList()
-    {
+    public List<Song> getSongList() {
         return songList;
     }
 
-    public void addSongToPlaylist(Song song)
-    {
+    public void addSongToPlaylist(Song song) {
         songList.add(song);
     }
 
@@ -60,12 +42,9 @@ public class Playlist
      *
      * @param song
      */
-    public void removeSongFromPlaylist(Song song)
-    {
-        for (Song song1 : songList)
-        {
-            if (song1.equals(song))
-            {
+    public void removeSongFromPlaylist(Song song) {
+        for (Song song1 : songList) {
+            if (song1.equals(song)) {
                 songList.remove(song);
             }
         }

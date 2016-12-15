@@ -5,13 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.BE.Song;
 
-public class SongModel
-{
+public class SongModel {
 
     private final ObservableList<Song> songList;
 
-    public SongModel()
-    {
+    public SongModel() {
         this.songList = FXCollections.observableArrayList();
     }
 
@@ -20,8 +18,7 @@ public class SongModel
      *
      * @return
      */
-    public ObservableList<Song> getSongList()
-    {
+    public ObservableList<Song> getSongList() {
         return songList;
     }
 
@@ -30,8 +27,7 @@ public class SongModel
      *
      * @param songs
      */
-    public void setSongs(List<Song> songs)
-    {
+    public void setSongs(List<Song> songs) {
 
         songList.clear();
         songList.addAll(songs);

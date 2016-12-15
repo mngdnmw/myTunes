@@ -2,21 +2,19 @@ package mytunes.BE;
 
 import mytunes.BLL.SongManager;
 
-public class Song
-{
+public class Song {
 
-    private int songID;
+    private final int songID;
     private String songTitle;
     private String songArtist;
     private String songCategory;
     private Long songDuration;
     private String songPath;
-    private String readDuration;
+    private final String readDuration;
 
     SongManager songManager = SongManager.getInstance();
 
-    public Song(int songID, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
-    {
+    public Song(int songID, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
 
         this.songID = songID;
         this.songTitle = songTitle;
@@ -28,59 +26,48 @@ public class Song
 
     }
 
-    public String getReadDuration()
-    {
+    public String getReadDuration() {
         return readDuration;
     }
 
-    public int getSongId()
-    {
+    public int getSongId() {
         return songID;
 
     }
 
-    public String getSongTitle()
-    {
+    public String getSongTitle() {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle)
-    {
+    public void setSongTitle(String songTitle) {
         this.songTitle = songTitle;
     }
 
-    public String getSongPath()
-    {
+    public String getSongPath() {
         return songPath;
     }
 
-    public void setSongPath(String songPath)
-    {
+    public void setSongPath(String songPath) {
         this.songPath = songPath;
     }
 
-    public String getSongArtist()
-    {
+    public String getSongArtist() {
         return songArtist;
     }
 
-    public void setSongArtist(String songArtist)
-    {
+    public void setSongArtist(String songArtist) {
         this.songArtist = songArtist;
     }
 
-    public String getSongCategory()
-    {
+    public String getSongCategory() {
         return songCategory;
     }
 
-    public void setSongCategory(String songCategory)
-    {
+    public void setSongCategory(String songCategory) {
         this.songCategory = songCategory;
     }
 
-    public Long getSongDuration()
-    {
+    public Long getSongDuration() {
         return songDuration;
     }
 
@@ -91,25 +78,20 @@ public class Song
      * @param songDuration
      * @return
      */
-    public String readableDuration(Long songDuration)
-    {
+    public String readableDuration(Long songDuration) {
         String duration;
-        if (songDuration != null)
-        {
+        if (songDuration != null) {
             int mili = (int) (songDuration / 1000);
             int sec = (mili / 1000) % 60;
             int min = (mili / 1000) / 60;
 
-            if (sec < 10)
-            {
+            if (sec < 10) {
                 duration = min + ":" + "0" + sec;
-            } else
-            {
+            } else {
                 duration = min + ":" + sec;
             }
 
-        } else
-        {
+        } else {
 
             duration = "";
         }
@@ -118,8 +100,7 @@ public class Song
 
     }
 
-    public void setSongDuration(Long songDuration)
-    {
+    public void setSongDuration(Long songDuration) {
         this.songDuration = songDuration;
 
     }
@@ -129,8 +110,7 @@ public class Song
      *
      * @return
      */
-    public String getAllSongStringInfo()
-    {
+    public String getAllSongStringInfo() {
         return songArtist + " " + songTitle;
     }
 
