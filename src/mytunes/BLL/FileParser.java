@@ -18,16 +18,35 @@ public class FileParser
         return fileManager.getAllSongs();
     }
 
+    /**
+     * Passes information for adding a song on.
+     *
+     * @param songTitle
+     * @param songArtist
+     * @param songCategory
+     * @param songDuration
+     * @param songPath
+     */
     public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
     {
         fileManager.saveSong(songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
+    /**
+     * Passes information for adding a playlist on.
+     *
+     * @param playlistName
+     */
     public void sendPlaylistName(String playlistName)
     {
         fileManager.savePlaylist(playlistName);
     }
 
+    /**
+     * Gets all playlists from the filemanager and passes them on.
+     *
+     * @return
+     */
     public List<Playlist> getAllPlaylists()
     {
         try
@@ -40,6 +59,11 @@ public class FileParser
         return null;
     }
 
+    /**
+     * Passes information for removing a playlist on.
+     *
+     * @param id
+     */
     public void removePlaylist(int id)
     {
         try
@@ -51,6 +75,11 @@ public class FileParser
         }
     }
 
+    /**
+     * Passes information for removing a song on.
+     *
+     * @param id
+     */
     public void removeSong(int id)
     {
         try
@@ -61,12 +90,25 @@ public class FileParser
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public List<int[]> getSongRelations() throws IOException
+
+    /**
+     * Gets song relations and passes them on.
+     *
+     * @param playlistID
+     * @return
+     * @throws IOException
+     */
+    public List<Integer> getSongRelations(int playlistID) throws IOException
     {
-        return fileManager.getSongRelations();
+        return fileManager.getSongPlaylistRelations(playlistID);
     }
-    
+
+    /**
+     * Passes information for adding songrelations on.
+     *
+     * @param playlistID
+     * @param songID
+     */
     public void saveSongRelations(int playlistID, int songID)
     {
         fileManager.saveSongRelations(playlistID, songID);

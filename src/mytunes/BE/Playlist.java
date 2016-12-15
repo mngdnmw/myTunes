@@ -17,7 +17,6 @@ public class Playlist
         this.playlistID = playlistID;
         this.playlistName = playlistName;
 
-
     }
 
     public int getPlaylistId()
@@ -51,16 +50,16 @@ public class Playlist
         return songList;
     }
 
-    public void setSongList(List<Song> songList)
-    {
-        this.songList = songList;
-    }
-
     public void addSongToPlaylist(Song song)
     {
         songList.add(song);
     }
 
+    /**
+     * Removes a song from a playlist.
+     *
+     * @param song
+     */
     public void removeSongFromPlaylist(Song song)
     {
         for (Song song1 : songList)
