@@ -711,10 +711,13 @@ public class MainMyTunesController implements Initializable
         if (!tblViewLibrary.getSelectionModel().isEmpty())
         {
 
+            if (mediaPlayer != null)
+            {
             if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
             {
                 mediaPlayer.stop();
                 playButton.setText("▷");
+            }
             }
             selectedSong = lastSelectedSong.getSongPath();
             media = new Media(new File(selectedSong).toURI().toString());
