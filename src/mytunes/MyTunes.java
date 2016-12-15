@@ -6,13 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MyTunes extends Application
-{
+public class MyTunes extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception
-    {
-        primaryStage.setTitle("MyTunes - Happy  Thoughts");
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("MyTunes - Happy  Thoughts - Fede tider");
         primaryStage.centerOnScreen();
         Parent root = FXMLLoader.load(getClass().getResource("GUI/View/MainMyTunesView.fxml"));
 
@@ -22,8 +20,7 @@ public class MyTunes extends Application
         primaryStage.show();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 

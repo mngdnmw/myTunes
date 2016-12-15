@@ -11,8 +11,7 @@ import javafx.stage.Stage;
 import mytunes.BE.Playlist;
 import mytunes.BLL.SongManager;
 
-public class PlaylistViewController implements Initializable
-{
+public class PlaylistViewController implements Initializable {
 
     private SongManager songManager = SongManager.getInstance();
 
@@ -26,26 +25,22 @@ public class PlaylistViewController implements Initializable
     private Button saveBtn;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
     /**
-     * Saves a new playlist.
+     * Saves a playlist.
      *
      * @param event
      */
     @FXML
-    private void clickSaveAddPlaylist(ActionEvent event)
-    {
-        if (currentPlaylist == null)
-        {
+    private void clickSaveAddPlaylist(ActionEvent event) {
+        if (currentPlaylist == null) {
             songManager.addPlaylist(textFileNamePlaylist.getText());
-        } else
-        {
-            songManager.removePlaylist(currentPlaylist.getPlaylistId());
-            songManager.addPlaylist(textFileNamePlaylist.getText());
+        } else {
+            songManager.editPlaylist(currentPlaylist.getPlaylistId(), textFileNamePlaylist.getText());
+
         }
 
         Stage stage = (Stage) saveBtn.getScene().getWindow();
@@ -57,8 +52,7 @@ public class PlaylistViewController implements Initializable
      *
      * @return
      */
-    public TextField getTextFileNamePlaylist()
-    {
+    public TextField getTextFileNamePlaylist() {
         return textFileNamePlaylist;
     }
 
@@ -67,8 +61,7 @@ public class PlaylistViewController implements Initializable
      *
      * @param textFileNamePlaylist
      */
-    public void setTextFileNamePlaylist(TextField textFileNamePlaylist)
-    {
+    public void setTextFileNamePlaylist(TextField textFileNamePlaylist) {
         this.textFileNamePlaylist = textFileNamePlaylist;
     }
 
@@ -78,8 +71,7 @@ public class PlaylistViewController implements Initializable
      * @param event
      */
     @FXML
-    private void clickCancelNewPlaylist(ActionEvent event)
-    {
+    private void clickCancelNewPlaylist(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
@@ -89,11 +81,9 @@ public class PlaylistViewController implements Initializable
      *
      * @param playlist
      */
-    public void setPlaylist(Playlist playlist)
-    {
+    public void setPlaylist(Playlist playlist) {
         currentPlaylist = playlist;
-        if (currentPlaylist != null)
-        {
+        if (currentPlaylist != null) {
             this.textFileNamePlaylist.setText(playlist.getName());
         }
     }
