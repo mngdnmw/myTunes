@@ -8,13 +8,11 @@ import mytunes.BE.Playlist;
 import mytunes.BE.Song;
 import mytunes.DAL.FileManager;
 
-public class FileParser
-{
+public class FileParser {
 
     FileManager fileManager = FileManager.getInstance();
 
-    public List<Song> getSongs() throws IOException
-    {
+    public List<Song> getSongs() throws IOException {
         return fileManager.getAllSongs();
     }
 
@@ -27,9 +25,21 @@ public class FileParser
      * @param songDuration
      * @param songPath
      */
-    public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath)
-    {
+    public void sendSongInfo(String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) {
         fileManager.saveSong(songTitle, songArtist, songCategory, songDuration, songPath);
+    }
+
+    /**
+     * Passes information for editing a song.
+     *
+     * @param songTitle
+     * @param songArtist
+     * @param songCategory
+     * @param songDuration
+     * @param songPath
+     */
+    void sendEditSongInfo(int songId, String songTitle, String songArtist, String songCategory, Long songDuration, String songPath) throws IOException {
+        fileManager.saveEditSong(songId, songTitle, songArtist, songCategory, songDuration, songPath);
     }
 
     /**
@@ -37,8 +47,7 @@ public class FileParser
      *
      * @param playlistName
      */
-    public void sendPlaylistName(String playlistName)
-    {
+    public void sendPlaylistName(String playlistName) {
         fileManager.savePlaylist(playlistName);
     }
 
@@ -47,13 +56,10 @@ public class FileParser
      *
      * @return
      */
-    public List<Playlist> getAllPlaylists()
-    {
-        try
-        {
+    public List<Playlist> getAllPlaylists() {
+        try {
             return fileManager.getAllPlaylists();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -64,13 +70,24 @@ public class FileParser
      *
      * @param id
      */
-    public void removePlaylist(int id)
-    {
-        try
-        {
+    public void removePlaylist(int id) {
+        try {
             fileManager.deleteByPlaylist(id);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Passes information for editing a playlist on.
+     *
+     * @param id
+     * @param playlistName
+     */
+    public void editPlaylist(int id, String playlistName) {
+        try {
+            fileManager.editByPlaylist(id, playlistName);
+        } catch (IOException ex) {
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -80,13 +97,23 @@ public class FileParser
      *
      * @param id
      */
-    public void removeSong(int id)
-    {
-        try
-        {
+    public void removeSong(int id) {
+        try {
             fileManager.deleteBySong(id);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
+            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Passes information for removing a song on.
+     *
+     * @param id
+     */
+    public void removeSongFromRelations(int id) {
+        try {
+            fileManager.deleteBySongFromRelations(id);
+        } catch (IOException ex) {
             Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -98,8 +125,7 @@ public class FileParser
      * @return
      * @throws IOException
      */
-    public List<Integer> getSongRelations(int playlistID) throws IOException
-    {
+    public List<Integer> getSongRelations(int playlistID) throws IOException {
         return fileManager.getSongPlaylistRelations(playlistID);
     }
 
@@ -109,8 +135,8 @@ public class FileParser
      * @param playlistID
      * @param songID
      */
-    public void saveSongRelations(int playlistID, int songID)
-    {
+    public void saveSongRelations(int playlistID, int songID) {
         fileManager.saveSongRelations(playlistID, songID);
     }
+
 }

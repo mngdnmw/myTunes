@@ -16,9 +16,7 @@
       <Slider fx:id="volumeSlider" layoutX="16.0" layoutY="9.0" orientation="VERTICAL" prefHeight="67.0" prefWidth="16.0" />
       <TableView fx:id="tblViewPlaylists" layoutX="14.0" layoutY="108.0" minHeight="400.0" minWidth="200.0" onMouseClicked="#setPlaylist" prefHeight="400.0" prefWidth="228.0">
         <columns>
-          <TableColumn fx:id="columnPlaylistName" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="columnNumSongs" prefWidth="66.0" text="Songs" />
-            <TableColumn fx:id="columnDuration" prefWidth="85.0" text="Time" />
+          <TableColumn fx:id="columnPlaylistName" prefWidth="227.0" />
         </columns>
       </TableView>
       <Button layoutX="469.0" layoutY="108.0" mnemonicParsing="false" onAction="#clickAddSongPlaylist" prefHeight="50.0" prefWidth="55.0" text="⇐" textAlignment="CENTER">
@@ -74,7 +72,7 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button fx:id="lblPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
+      <Button fx:id="btnPreviousSong" layoutX="45.0" layoutY="36.0" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 100; -fx-font-size: 15;" text="↞">
          <padding>
             <Insets bottom="5.0" right="2.0" />
          </padding>
